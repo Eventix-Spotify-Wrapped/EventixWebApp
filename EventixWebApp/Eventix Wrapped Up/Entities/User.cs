@@ -1,4 +1,6 @@
-﻿namespace Eventix_Wrapped_Up.Entities
+﻿
+
+namespace Eventix_Wrapped_Up.Entities
 {
 
     public class User
@@ -7,27 +9,26 @@
         private string name;
         private string password;
         private string email;
-        private string phone;
+        
 
         public User()
         {
             
         }
-        public User(string uuid, string name, string password, string email, string phone)
+        public User(Guid uuid, string name, string password, string email)
         {
-            this.uuid = uuid;
+            uuid=Guid.NewGuid();
+            this.uuid = uuid.ToString();
             this.name = name;
             this.password = password;
-            this.email = email;
-            this.phone = phone;
+            this.email = email;     
         }
 
-        public User(string name, string password, string email, string phone)
+        public User(string name, string password, string email)
         {
             this.name = name;
             this.password = password;
             this.email = email;
-            this.phone = phone;
         }
     }
 }

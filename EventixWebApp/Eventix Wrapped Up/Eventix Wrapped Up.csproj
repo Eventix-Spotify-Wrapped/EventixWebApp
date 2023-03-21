@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.13" />
+    <PackageReference Include="node-uuid" Version="1.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Managers\" />
     <Folder Include="Mediators\" />
   </ItemGroup>
 
