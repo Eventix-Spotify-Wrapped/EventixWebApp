@@ -5,7 +5,7 @@
         private string uuid;
         private string name;
         private EventType type;
-        private EventStatus status;
+        private EventStatus status; // progress
         private string locale; //event locale (en_GB, etc.)
         private Currency currency;
     }
