@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventix Wrapped Up", "Eventix Wrapped Up\Eventix Wrapped Up.csproj", "{7B84CAC0-E8FB-4FC0-BEE6-EF7736C9BDAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B84CAC0-E8FB-4FC0-BEE6-EF7736C9BDAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B84CAC0-E8FB-4FC0-BEE6-EF7736C9BDAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B84CAC0-E8FB-4FC0-BEE6-EF7736C9BDAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B84CAC0-E8FB-4FC0-BEE6-EF7736C9BDAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66BE035A-8583-46C2-A3FA-2A91FCBFC6CF}
+	EndGlobalSection
+EndGlobal
