@@ -9,7 +9,6 @@ namespace Eventix_Wrapped_Up.Entities
         private string name;
         private string password;
         private string email;
-        
 
         public User()
         {
