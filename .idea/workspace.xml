@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e248767-29a6-4e05-aed2-efa30b9ccb78" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/EventixWebApp.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/APIEventix/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/APIEventix/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/APIEventix/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/APIEventix/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/APIEventix/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/APIEventix/manage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/EventixWebApp.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/vueapp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Controllers/WeatherForecastController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Event.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Location.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/MetaData.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Product.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Scanner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Shop.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Statistics.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/Ticket.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Entities/User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/WeatherForecast.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eventix Wrapped Up/webapi/webapi.csproj" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2NdqyHOT8bjZ0ZMQPj7DvZYFdWN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/tepap/Desktop/Eventix/EventixWebApp/APIEventix/manage.py",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="EventixWebApp" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\tepap\Desktop\Eventix\EventixWebApp\eventix-wrapped\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/APIEventix" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/APIEventix/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e248767-29a6-4e05-aed2-efa30b9ccb78" name="Changes" comment="" />
+      <created>1680004561163</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680004561163</updated>
+      <workItem from="1680004563377" duration="3046000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/EventixWebApp$manage.coverage" NAME="manage Coverage Results" MODIFIED="1680007253687" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/APIEventix" />
+  </component>
+</project>
