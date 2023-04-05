@@ -13,8 +13,8 @@ def panel(request):
 
 
 def Sprint2Demo(request):
-    template = loader.get_template("demo/Sprint2.html")
-    return HttpResponse(template.render())
+    cards = [{"Title": "Title", "Text": "This some text boie"}]
+    return render(request, "demo/Sprint2.html", {"cards": cards})
 
 
 @csrf_exempt
