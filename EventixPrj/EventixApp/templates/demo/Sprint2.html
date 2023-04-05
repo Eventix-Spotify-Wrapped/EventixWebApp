@@ -24,7 +24,7 @@
     </head>
     <body>
         <div id="app">
-            <svg class="coin" viewBox="0 0 51.96 59.56"><path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
+            <svg class="coin" viewBox="0 0 51.96 59.56">test<path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
 
             <div class="slide">
                 <img class="logo" src="dist/img/logo.svg" alt="">
@@ -42,5 +42,116 @@
         </div>
     </body>
 
-    <script src="dist/js/main.js" type="module"></script>
+    <script>
+
+        // Variables
+        const amountOfSlide = 7;
+        const slideColors = [
+            {
+                main: "#ED7CB8",
+                background: "#F7CBE6"
+            },
+            {
+                main: "#F0933C",
+                background: "#F9D89D"
+            },
+            {
+                main: "#9B69F7",
+                background: "#ECD9FC"
+            },
+            {
+                main: "#6BE549",
+                background: "#CFF5C9"
+            },
+            {
+                main: "#FEFE53",
+                background: "#FAFAC9"
+            }
+        ];
+        let app = document.getElementById("app");
+        let slide = document.getElementsByClassName("slide")[0];
+        let coins = [document.getElementsByClassName("coin")[0]];
+
+        // Add all coins to array
+        for (let i = 0; i < (amountOfSlide - 1); i++) coins.push( app.appendChild(coins[0].cloneNode(true)));
+
+        // When the slot machine-handle is clicked
+        document.getElementById("machine").addEventListener("click", () => {
+
+            // Pull the lever downwards with a CSS class
+            document.getElementsByClassName("lever")[0].classList.add("lever--active");
+
+            // Animate the bottom slide
+            document.getElementsByClassName("slide__backfigure")[0].classList.add("slide__backfigure--visible");
+
+            // Calculate the left value so the coins are centered
+            let coinsWidth = amountOfSlide * 4;
+            let leftRemValue = (36 - coinsWidth) / 2 - 0.4;
+
+            setTimeout(() => {
+
+                // Position every coin centered at the bottom of the screen
+                for (let i = 0; i < coins.length; i++) {
+                    setTimeout(() => {
+                        let coin = coins[i];
+                        coin.style.top = 67 + "rem";
+                        coin.style.left = leftRemValue + "rem";
+                
+                        leftRemValue += 4;
+                
+                        // Let every second coin slide down so they are paired
+                        if (i % 2) coin.style.top = (parseInt(coin.style.top.slice(0, -3)) + 1.25) + "rem";
+
+                        // Give them another CSS transition
+                        setTimeout(() => coin.style.transition = "left .75s ease-in-out, top 2s ease-in-out", 2000);
+                    }, 50 * i);
+                }
+
+                setTimeout(() => document.getElementById("machine").style.translate = "-100vw 0", 1750);
+            }, 250);
+
+            setTimeout(() => {
+                let slideIndex = 0;
+
+                app.addEventListener("click", () => {
+                    let slideColor = slideColors[slideIndex];
+
+                    coins[slideIndex].style.left = -100 + "vw";
+                    slide.style.backgroundColor = slideColor.background;
+                    slide.getElementsByClassName("slide__backfigure")[0].style.backgroundColor = slideColor.main;
+
+                    slideIndex++;
+
+                    coinsWidth = (coins.length - slideIndex) * 4;
+                    leftRemValue = (36 - coinsWidth) / 2 - 0.4;
+
+                    for (let i = slideIndex; i < coins.length; i++) {
+                        let coin = coins[i];
+                        coin.style.left = leftRemValue + "rem";
+                        leftRemValue += 4;
+                    }
+                });
+            }, 1);
+        }, {once : true});
+
+        // Position all coins as a combined a 
+
+        // let topRemValue = 22;
+        // for (let i = 0; i < coins.length; i++) {
+        //     let coin = coins[i];
+
+        //     coin.style.zIndex = (coins.length - i) / 2;
+
+        //     coin.style.top = topRemValue + "rem";
+
+        //     if (i % 2) {
+        //         coin.style.left = "7rem";
+        //         topRemValue = topRemValue + 5;
+        //         coin.style.zIndex = coins.length - i;
+        //         coin.style.top = (parseInt(coin.style.top.slice(0, -3)) + 1) + "rem";
+        //     }
+        // }
+
+
+    </script>
 </html>
