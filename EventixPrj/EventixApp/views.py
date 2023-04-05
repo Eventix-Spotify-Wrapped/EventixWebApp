@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from . import DataManager
 import json
 from django.views.decorators.csrf import csrf_exempt
 
@@ -10,6 +9,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 def panel(request):
     template = loader.get_template("dev/panel.html")
+    return HttpResponse(template.render())
+
+
+def Sprint2Demo(request):
+    template = loader.get_template("demo/Sprint2.html")
     return HttpResponse(template.render())
 
 
