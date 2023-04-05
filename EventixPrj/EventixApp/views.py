@@ -13,8 +13,8 @@ def panel(request):
 
 
 def Sprint2Demo(request):
-    cards = [{"Title": "Title", "Text": "This some text boie"}]
-    return render(request, "demo/Sprint2.html", {"cards": cards})
+    context = ["20.025", "69", "Netherlands", "Wish outdoor", "85"]
+    return render(request, "demo/Sprint2.html", {"context": context})
 
 
 @csrf_exempt

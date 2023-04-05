@@ -3,7 +3,8 @@ from django.db import models
 
 # Create your models here.
 
-#User#
+# User#
+
 
 class User(models.Model):
     guid = models.AutoField(primary_key=True)
@@ -12,7 +13,7 @@ class User(models.Model):
     email = models.EmailField(max_length=255)
 
 
-#Coupon#
+# Coupon#
 class Coupon(models.Model):
     guid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -20,19 +21,23 @@ class Coupon(models.Model):
     FIXED_DISCOUNT = "FD"
     PERCENTAGE_DISCOUNT = "PD"
     NEW_PRICE = "NP"
-    type = [(CHEQUE, "cheque"),
-            (FIXED_DISCOUNT, "fixed-discount"),
-            (PERCENTAGE_DISCOUNT, "percentage-discount"),
-            (NEW_PRICE, "new_price"),
-            ]
+    type = [
+        (CHEQUE, "cheque"),
+        (FIXED_DISCOUNT, "fixed-discount"),
+        (PERCENTAGE_DISCOUNT, "percentage-discount"),
+        (NEW_PRICE, "new_price"),
+    ]
+
+
 class CouponCode(models.Model):
-    code = models.CharField(min_lenght=4)
+    code = models.CharField(max_length=4)
     coupon_guid = models.ForeignKey(Coupon, on_delete=models.CASCADE)
     used_count = models.IntegerField()
 
-#USEFUL?#
+
+# USEFUL?#
 class CouponCodeCreate(models.Model):
-    code = models.CharField(min_lenght=4)
+    code = models.CharField(max_length=4)
 
 
 # Event #
@@ -41,37 +46,45 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     ONCE = "ON"
     REPEATING = "RP"
-    type = [(ONCE, "once"),
-            (REPEATING, "repeating")]
+    type = [(ONCE, "once"), (REPEATING, "repeating")]
     UNAVAILABLE = "UNA"
     AVAILABLE = "AVA"
     SOLD_OUT = "SO"
     REFUNDING = "RF"
     MOVING = "MV"
-    status = [(UNAVAILABLE, "unavailable"),
-              (AVAILABLE, "available"),
-              (SOLD_OUT, "sold-out"),
-              (REFUNDING, "refunding"),
-              (MOVING, "moving")]
+    status = [
+        (UNAVAILABLE, "unavailable"),
+        (AVAILABLE, "available"),
+        (SOLD_OUT, "sold-out"),
+        (REFUNDING, "refunding"),
+        (MOVING, "moving"),
+    ]
+
 
 class EventDate(models.Model):
     guid = models.AutoField(primary_key=True)
-    start = models.CharField
+    start = models.CharField(max_length=100)
+
 
 class EventLocation(models.Model):
     name = models.CharField(max_length=255)
-    capacity = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(9999999999)])
+    capacity = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(9999999999)]
+    )
     address = models.CharField(max_length=65536)
     public = models.BooleanField
 
 
-#Shop#
+# Shop#
+
 
 class Shop(models.Model):
     guid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
-#Location#
+
+# Location#
+
 
 class Location(models.Model):
     latitude = models.FloatField
@@ -79,7 +92,7 @@ class Location(models.Model):
     count = models.IntegerField
 
 
-#Ticket#
+# Ticket#
 class Ticket(models.Model):
     guid = models.AutoField(primary_key=True)
     event_id = models.ForeignKey
@@ -87,14 +100,12 @@ class Ticket(models.Model):
     increment = models.IntegerField
 
 
-#Authenticator#
+# Authenticator#
+
 
 class OAuthClient(models.Model):
     id = models.AutoField
-    secret = models.CharField
-    name = models.CharField
-    created_at = models.CharField("d")
-    updated_at = models.CharField("d")
-
-
-
+    secret = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    created_at = models.CharField(max_length=100)
+    updated_at = models.CharField(max_length=100)
