@@ -1,0 +1,149 @@
+@import url(https://use.typekit.net/xit4rvk.css);
+h1, .h1 {
+  padding: 4rem 3rem 3rem;
+  line-height: 1.3;
+  font-size: 3.4rem;
+  text-align: center;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  box-sizing: border-box;
+  font-family: "Roc Grotesk", sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+#app {
+  width: 36rem;
+  height: 76rem;
+  overflow: hidden;
+  position: relative;
+  background-color: #BDE3FC;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -20rem;
+    visibility: visible;
+  }
+  100% {
+    bottom: -2.5rem;
+    visibility: visible;
+  }
+}
+@keyframes clickableLever {
+  0% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(20deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+@keyframes activeLever {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+.logo {
+  width: 16rem;
+  display: block;
+  margin: 0 auto;
+  padding-top: 3.5rem;
+}
+
+.coin {
+  left: 15.5rem;
+  top: 43rem;
+  z-index: 1;
+  height: 5.25rem;
+  position: absolute;
+  transition: left 2s ease-in-out, top 2s ease-in-out;
+  filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2));
+}
+
+#machine {
+  width: 26rem;
+  margin: 0 auto;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  transition: translate 2s ease-in-out;
+}
+
+#coin-machine {
+  margin-top: 2.5rem;
+  translate: 0.5rem 0;
+}
+
+#coin-machine-front {
+  top: 4rem;
+  left: 1.7rem;
+  width: 22rem;
+  z-index: 97;
+  position: absolute;
+  translate: 0.5rem 0;
+}
+
+#handle-holder {
+  top: 50%;
+  z-index: 2;
+  right: -0.7rem;
+  height: 5.5rem;
+  position: absolute;
+  translate: 0 -1rem;
+}
+
+.lever {
+  top: 50%;
+  right: 0;
+  z-index: 1;
+  height: 10rem;
+  position: absolute;
+  translate: 45% -9rem;
+  transform-origin: center bottom;
+  animation-delay: 3s;
+  animation: clickableLever 2s 0.5s infinite;
+}
+.lever--active {
+  animation: activeLever 1.25s forwards;
+}
+
+.slide {
+  height: 100%;
+  position: relative;
+  background-color: #BDE3FC;
+  transition: background-color 0.75s ease-in-out;
+}
+.slide__backfigure {
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  visibility: hidden;
+  background-color: #2B67F5;
+  transition: background-color 0.75s ease-in-out;
+}
+.slide__backfigure--visible {
+  animation: slideUp 2.5s 0.15s forwards;
+}
