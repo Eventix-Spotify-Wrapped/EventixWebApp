@@ -76,8 +76,12 @@ WSGI_APPLICATION = "EventixPrj.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "neondb",
+        "USER": "tepa.popescu",
+        "PASSWORD": "EZ9IYnarR7Od",
+        "HOST": "ep-raspy-cloud-001075.eu-central-1.aws.neon.tech",
+        "PORT": "5432",
     }
 }
 
