@@ -4,6 +4,7 @@ from django.template import loader
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from .TrendReader import TrendReader
 
 # Create your views here.
 
@@ -20,7 +21,7 @@ def Sprint2Demo(request):
 
 def Create(request):
     # args: account; creates a wrap for the account; generates cards to choose from based on found trends;
-
+    TrendReader.AnalyzeTrends(request.GET.get("account"))
     return JsonResponse(
         {
             "Eventix Wrapped": {
@@ -29,15 +30,13 @@ def Create(request):
                 "Cards": [
                     {
                         "Status": "Generated",
-                        "Context": {"value1": "template", "value2": "template"},
+                        "Trend": "Sell-out timeframe",
+                        "Context": ["Paaspop", "13 minutes"],
                     },
                     {
                         "Status": "Generated",
-                        "Context": {"value1": "template", "value2": "template"},
-                    },
-                    {
-                        "Status": "Generated",
-                        "Context": {"value1": "template", "value2": "template"},
+                        "Trend": "Country insight",
+                        "Context": ["D.O.T.", "Netherlands", "87", "Germany", "45"],
                     },
                 ],
             }
@@ -55,11 +54,13 @@ def Finalize(request):
                 "Cards": [
                     {
                         "Status": "Final",
-                        "Context": {"value1": "template", "value2": "template"},
+                        "Trend": "Sell-out timeframe",
+                        "Context": ["Paaspop", "13 minutes"],
                     },
                     {
                         "Status": "Final",
-                        "Context": {"value1": "template", "value2": "template"},
+                        "Trend": "Country insight",
+                        "Context": ["D.O.T.", "Netherlands", "87", "Germany", "45"],
                     },
                 ],
             }
