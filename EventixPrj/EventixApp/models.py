@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+
 # Create your models here.
 
 # User#
@@ -123,3 +124,108 @@ class Card(models.Model):
     id = models.AutoField(primary_key=True)
     wrap = models.ForeignKey(Wrap, on_delete=models.CASCADE)
     context = models.JSONField(default=list)
+
+
+# Transaction #
+class Transaction(models.Model):
+    oder_id = models.AutoField(primary_key=True)
+    shop_name = models.CharField(max_length=255)
+    event_name = models.CharField(max_length=255)
+    event_category = models.CharField
+    event_subcategory = models.CharField
+    first_event = models.CharField
+    last_event = models.CharField
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    ticket_name = models.CharField(max_length=255)
+    barcode = models.CharField
+    order_status = models.CharField(max_lenght=15)
+    order_invalidated = None
+    order_invalidated_at = None
+    ticket_invalidated = None
+    ticket_invalidated_at = None
+    created_at = models.CharField
+    paid_currency = models.FloatField
+    order_value = models.FloatField
+    order_fees = models.FloatField
+    transaction_fees = models.FloatField
+    ticket_value = models.FloatField
+    ticket_fees = models.FloatField
+    optionals_value = models.FloatField
+    refunded_amount = models.FloatField
+    payment_id = None
+    payment_method = None
+    coupons = None
+    device = models.CharField(max_lenght=15)
+    tracker = None
+    tracker_name = None
+    seat = None
+    is_scanned = models.BooleanField
+    first_scanned_at = models.CharField
+    order_metadata_first_name = None
+    order_metadata_last_name = None
+    order_metadata_wrong1 = None
+    order_metadata_wrong2 = None
+    order_metadata_wrong3 = None
+    order_metadata_wrong4 = None
+    order_metadata_wrong5 = None
+    order_metadata_wrong6 = None
+    order_metadata_wrong7 = None
+    order_metadata_wrong8 = None
+    order_metadata_city = models.CharField(max_lenght=15)
+    order_metadata_gender = models.CharField
+    order_metadata_province = models.CharField
+    order_metadata_company = None
+    order_metadata_country = models.CharField
+    order_metadata_covid_no_symptoms = None
+    order_metadata_age = models.IntegerField(
+        validators=[MinValueValidator(10), MaxValueValidator(120)]
+    )
+    order_metadata_wrong9 = None
+    order_metadata_wrong10 = None
+    order_metadata_wrong11 = None
+    order_metadata_wrong12 = None
+    order_metadata_wrong13 = None
+    order_metadata_wrong14 = None
+    order_ticket_metadata_first_name = None
+    order_ticket_metadata_last_name = None
+    order_ticket_wrong1 = None
+    order_ticket_metadata_email = None
+    order_ticket_metadata_street = None
+    order_ticket_metadata_street_number = None
+    order_ticket_metadata_street_number_additional = None
+    order_ticket_metadata_postal = None
+    order_ticket_metadata_date_of_birth = None
+    order_ticket_metadata_state = None
+    order_ticket_metadata_city = None
+    order_ticket_metadata_gender = None
+    order_ticket_metadata_province = None
+    order_ticket_metadata_company = None
+    order_ticket_metadata_country = None
+    order_ticket_metadata_covid_no_symptoms = None
+    order_ticket_metadata_age = None
+    order_ticket_wrong2 = None
+    order_ticket_metadata_phone = None
+    order_ticket_metadata_fullname = None
+    order_ticket_metadata_covid_one_household = None
+    order_ticket_metadata_keep_me_informed = None
+    order_ticket_metadata_Diet = None
+    geolocation_street_name = None
+    geolocation_street_number = None
+    geolocation_locality = None
+    geolocation_postal_code = None
+    geolocation_sub_locality = None
+    geolocation_admin_level_1 = None
+    geolocation_admin_level_2 = None
+    geolocation_country_code = None
+    geolocation_latitude = None
+    geolocation_longitude = None
+    ticket_pdf_link = None
+
+
+
+
+
+
+
