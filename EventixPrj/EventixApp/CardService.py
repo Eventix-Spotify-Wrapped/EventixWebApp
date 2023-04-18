@@ -1,3 +1,16 @@
+from EventixApp.models import *
+
+
+class CardService:
+    def GetWrapCards(wrapGuid):
+        return Card.objects.get(id=wrapGuid)
+
+    def GetCardWrap(cardGuid):
+        return Wrap.objects.get(
+            id=getattr(Card.objects.get(id=cardGuid), Card._meta.get_field(id).attname)
+        )
+
+
 # from enum import Enum
 
 

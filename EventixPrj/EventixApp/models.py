@@ -95,7 +95,7 @@ class Location(models.Model):
 # Ticket#
 class Ticket(models.Model):
     guid = models.AutoField(primary_key=True)
-    event_id = models.ForeignKey
+    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     increment = models.IntegerField
 
@@ -109,3 +109,17 @@ class OAuthClient(models.Model):
     name = models.CharField(max_length=100)
     created_at = models.CharField(max_length=100)
     updated_at = models.CharField(max_length=100)
+
+
+# Cards #
+
+
+class Wrap(models.Model):
+    id = models.AutoField
+    account = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Card(models.Model):
+    id = models.AutoField(primary_key=True)
+    wrap = models.ForeignKey(Wrap, on_delete=models.CASCADE)
+    context = models.JSONField(default=list)
