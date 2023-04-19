@@ -1,0 +1,61 @@
+@font-face {
+  font-family: RightGrotesk;
+  src: url(font/PPRightGrotesk-Medium.otf);
+}
+
+@font-face {
+  font-family: Suisse;
+  src: url(font/SuisseIntl-Regular.ttf);
+}
+
+  *
+  {
+    background-color: #F1F2F4;
+    font-family: "Suisse",  Helvetica, sans-serif;
+
+  }
+  
+  #login {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #logo {
+    margin: 3rem;
+    min-height: 80px;
+    position: absolute;
+  }
+
+
+
+  h1 {
+    font-family: "RightGrotesk", Helvetica, sans-serif;
+    font-size: 32px;
+    letter-spacing: -2%;
+    line-height: 36px;
+  }
+
+input {
+  border: 0.5px solid #d3d6da;
+  border-radius: 5px;
+  margin: 5% 0;
+  padding: 8px 12px;
+  width: 300px;
+  height: 20px;
+}
+
+#password {
+  background-color: #E8F0FE;
+  
+}
+
+button {
+  background-color: #006AFF;
+  color: #F1F2F4;
+  border: none;
+  border-radius: 56px;
+  padding: 12px 24px;
+}

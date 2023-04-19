@@ -140,7 +140,7 @@ class Transaction(models.Model):
     email = models.EmailField(max_length=255)
     ticket_name = models.CharField(max_length=255)
     barcode = models.CharField
-    order_status = models.CharField(max_lenght=15)
+    order_status = models.CharField(max_length=15)
     order_invalidated = None
     order_invalidated_at = None
     ticket_invalidated = None
@@ -157,7 +157,7 @@ class Transaction(models.Model):
     payment_id = None
     payment_method = None
     coupons = None
-    device = models.CharField(max_lenght=15)
+    device = models.CharField(max_length=15)
     tracker = None
     tracker_name = None
     seat = None
@@ -173,7 +173,7 @@ class Transaction(models.Model):
     order_metadata_wrong6 = None
     order_metadata_wrong7 = None
     order_metadata_wrong8 = None
-    order_metadata_city = models.CharField(max_lenght=15)
+    order_metadata_city = models.CharField(max_length=15)
     order_metadata_gender = models.CharField
     order_metadata_province = models.CharField
     order_metadata_company = None
@@ -222,10 +222,3 @@ class Transaction(models.Model):
     geolocation_latitude = None
     geolocation_longitude = None
     ticket_pdf_link = None
-
-
-
-
-
-
-

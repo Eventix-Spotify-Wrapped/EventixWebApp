@@ -6,4 +6,9 @@ urlpatterns = [
     path("sprint2demo", views.Sprint2Demo, name="Panel"),
     path("create", views.Create),
     path("finalize", views.Finalize),
+    path("event/<guid>/", views.Event),
+    path("index", views.Index),
+    path("login", views.Login),
+    path("statistics", views.Statistics),
+    path("settings", views.Settings),
 ]
