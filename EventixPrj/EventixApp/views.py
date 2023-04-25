@@ -5,6 +5,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .TrendReader import TrendReader
+from .APIMockService import APIMockService
 
 # Create your views here.
 
@@ -17,6 +18,55 @@ def panel(request):
 def Sprint2Demo(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
     return render(request, "demo/Sprint2.html", {"context": context})
+
+
+def Index(request):
+    return render(
+        request,
+        "dashboard/index.html",
+        {
+            "events": [
+                "Wish Outdoor",
+                "Verknipt",
+                "Paaspop",
+                "Pinkpop",
+                "Pukkelpop",
+                "Thuishaven",
+                "Tomorrowland",
+                "Flugel 25 Jaar",
+                "LakeDance",
+                "Dreamvillage",
+                "Malice in Wonderland",
+                "Jungle festival",
+                "Kletskoek",
+                "Defqon.1",
+                "Royal dutch",
+                "Supersized kingsday",
+                "NOX",
+            ]
+        },
+    )
+
+
+def Event(request, guid):
+    return render(request, "dashboard/event.html", {})
+
+
+def Login(request):
+    return render(request, "dashboard/login.html", {})
+
+
+def Statistics(request):
+    return HttpResponse("Bruh")
+
+
+def Settings(request):
+    return HttpResponse("Download RAM")
+
+
+# populates the dashboard with a list of organizers waiting for their Eventix Wrapped
+def GetOrganizers(request):
+    return JsonResponse(APIMockService.GetOrganizersWithNoWrap(12))
 
 
 def Create(request):

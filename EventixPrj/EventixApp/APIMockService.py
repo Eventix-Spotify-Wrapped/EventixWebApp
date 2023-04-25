@@ -7,3 +7,6 @@ class APIMockService:
 
     def GetEventTickets(eventGuid):
         return Ticket.objects.get(event_id=eventGuid)
+
+    def GetOrganizersWithNoWrap(howMany):
+        return None
