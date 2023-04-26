@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 import json
@@ -6,6 +6,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
+from django.contrib.auth import authenticate, logout, login
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -21,6 +24,9 @@ def Sprint2Demo(request):
 
 
 def Index(request):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+
     return render(
         request,
         "dashboard/index.html",
@@ -49,11 +55,57 @@ def Index(request):
 
 
 def Event(request, guid):
-    return render(request, "dashboard/event.html", {})
+    return render(request, "dashboard/event.html", {"Name": guid})
 
 
-def Login(request):
-    return render(request, "dashboard/login.html", {})
+## ALL STARTS FROM HERE
+def LoginPage(request):
+    if request.user.is_authenticated:
+        return redirect("/index")
+    return render(request, "dashboard/login/login.html", {})
+
+
+def SignUp(request):
+    return HttpResponse(True)
+
+
+@csrf_exempt
+def SignIn(request):
+    user = authenticate(
+        username=request.POST["username"], password=request.POST["password"]
+    )
+    if user is not None:
+        login(request, user)
+        return redirect("/index")
+    else:
+        return HttpResponse(False)
+
+
+def SignOut(request):
+    logout(request)
+    return redirect("/login/")
+
+
+def ChangePassword(request):
+    user = User.objects.get(username=request.POST.get("username"))
+    user.set_password(request.POST.get("password"))
+    user.save()
+    return HttpResponse(True)
+
+
+def CreateAccount(request):
+    user = User.objects.create_user(
+        request.POST.get("username"),
+        request.POST.get("email"),
+        request.POST.get("password"),
+    )
+    # user.last_name = "Lennon"
+    user.save()
+
+    return HttpResponse(user)
+
+
+## END LOGIN
 
 
 def Statistics(request):
