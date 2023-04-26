@@ -1,0 +1,26 @@
+{
+  "name": "eventixwebapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eventix-Spotify-Wrapped/EventixWebApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eventix-Spotify-Wrapped/EventixWebApp/issues"
+  },
+  "homepage": "https://github.com/Eventix-Spotify-Wrapped/EventixWebApp#readme",
+  "dependencies": {
+    "laravel-mix": "^6.0.49"
+  },
+  "devDependencies": {
+    "sass": "^1.62.0",
+    "sass-loader": "^12.6.0"
+  }
+}

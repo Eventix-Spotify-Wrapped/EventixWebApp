@@ -1,9 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/pycharm,python,vue,vuejs,intellij
-# Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,python,vue,vuejs,intellij
-
-### Intellij ###
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+# Automatic generated JS & CSS code
+EventixPrj/EventixApp/static/js/*
+EventixPrj/EventixApp/static/css/*
 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -378,5 +375,7 @@ test/
 node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
+mix-manifest.json
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python,vue,vuejs,intellij
