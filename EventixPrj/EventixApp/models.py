@@ -1,15 +1,15 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 import pandas as pd
-
-
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 # Create your models here.
 
 # User#
 
 
-class User(models.Model):
+class Organizer(models.Model):
     guid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
@@ -107,7 +107,7 @@ class Ticket(models.Model):
 
 
 class OAuthClient(models.Model):
-    id = models.AutoField
+    id = models.AutoField(primary_key=True)
     secret = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     created_at = models.CharField(max_length=100)
@@ -117,9 +117,17 @@ class OAuthClient(models.Model):
 # Cards #
 
 
+class Post(models.Model):
+    text = models.CharField(max_length=280)
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+
 class Wrap(models.Model):
-    id = models.AutoField
-    account = models.ForeignKey(User, on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    # account manager
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # event organizer
+    organizer = models.ForeignKey(Organizer, on_delete=models.CASCADE)
 
 
 class Card(models.Model):
