@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
+from .CSV_Reader import CSV_Reader
 
 # Create your views here.
 
@@ -68,7 +69,9 @@ def Settings(request):
 def GetOrganizers(request):
     return JsonResponse(APIMockService.GetOrganizersWithNoWrap(12))
 
-
+def Stef(request):
+    return HttpResponse(CSV_Reader.create_transactions_from_csv("C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv")
+                            )
 def Create(request):
     # args: account; creates a wrap for the account; generates cards to choose from based on found trends;
     TrendReader.AnalyzeTrends(request.GET.get("account"))

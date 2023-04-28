@@ -11,4 +11,6 @@ urlpatterns = [
     path("login", views.Login),
     path("statistics", views.Statistics),
     path("settings", views.Settings),
+    path("stef", views.Stef),
+    path("stats", views.Stats)
 ]
