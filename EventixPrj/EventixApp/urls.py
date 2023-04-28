@@ -7,14 +7,6 @@ urlpatterns = [
     path("create/", views.Create),
     path("finalize/", views.Finalize),
     path("event/<guid>/", views.Event),
-<<<<<<< HEAD
-    path("index", views.Index),
-    path("login", views.Login),
-    path("statistics", views.Statistics),
-    path("settings", views.Settings),
-    path("stef", views.Stef),
-    path("stats", views.Stats)
-=======
     path("index/", views.Index),
     path("login/", views.LoginPage),
     path("login/signup", views.SignUp),
@@ -24,5 +16,4 @@ urlpatterns = [
     path("login/createaccount/", views.CreateAccount),
     path("statistics/", views.Statistics),
     path("settings/", views.Settings),
->>>>>>> 8a6aecb9da61500801554be23785228a64cb31a1
 ]
