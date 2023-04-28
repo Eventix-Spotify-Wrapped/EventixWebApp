@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# EventixWebApp
-Suh bruh
-=======
 # Eventix Summary Application
 
 ## How to setup this project?
@@ -29,4 +25,3 @@ Now we can install all packages that are needed. You can find the needed package
 ```
     pip3 install -r requirements.txt
 ```
->>>>>>> 6c0ee986f38c9509992b308ccf49d07c58914f1a
