@@ -25,3 +25,13 @@ Now we can install all packages that are needed. You can find the needed package
 ```
     pip3 install -r requirements.txt
 ```
+After all the requirements are installed we just need to run the server that starts the application. We can do this by entering the following in the terminal:
+
+```
+    python3 manage.py runserver
+```
+
+Now you will see the startup screen of django in your webbrowser. Instead of this page navigate to the event summary (or dashboard) by adding one of those lines to the url:
+
+* /panel
+* /sprint2demo
