@@ -35,3 +35,15 @@ Now you will see the startup screen of django in your webbrowser. Instead of thi
 
 * /panel
 * /sprint2demo
+
+Now that django is installed we also need to install node.js because we use a package named "Laravel-Mix" which compiles all sass and javascript files to minified versions that can be read by internet browsers. Note that you need to be at the root of the directory with the terminal again.
+
+```
+    npm install
+```
+
+After that you need to run the comment below to start watching all files and start compiling them when changes are applied. You need to run this comment every time you want to change the css and/or js-files in the repository.
+
+```
+    npx mix watch
+```
