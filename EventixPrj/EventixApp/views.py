@@ -10,6 +10,7 @@ from .CSV_Reader import CSV_Reader
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
+from .mock_maker_3000 import MockMaker
 
 # Create your views here.
 
@@ -107,6 +108,14 @@ def CreateAccount(request):
 
 
 ## END LOGIN
+
+## CSV GENERATION
+def GenerateCSV(request):
+    MockMaker.GenerateMockData()
+    return HttpResponse(False)
+
+
+## END CSV
 
 
 def Statistics(request):

@@ -16,4 +16,5 @@ urlpatterns = [
     path("login/createaccount/", views.CreateAccount),
     path("statistics/", views.Statistics),
     path("settings/", views.Settings),
+    path("generateCSV/", views.GenerateCSV),
 ]
