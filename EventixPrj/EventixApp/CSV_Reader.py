@@ -17,9 +17,10 @@ class CSV_Reader:
         transactions = []
         for _, row in df_tickets.iterrows():
             transaction_data = dict(order_id=row['order_id'], shop_name=row['shop_name'], event_name=row['event_name'],
-                                    event_category=row['event_subcategories'],
-                                    first_event=row['first_event_date_start'],
-                                    last_event=row['last_event_date_end'], first_name=row['first_name'],
+                                    #   event_category=row['event_subcategories'],
+                                    #    first_event=row['first_event_date_start'],
+                                    #   last_event=row['last_event_date_end'],
+                                    first_name=row['first_name'],
                                     last_name=row['last_name'], email=row['email'], ticket_name=row['ticket_name'],
                                     barcode=row['barcode'], order_status=row['order_status'],
                                     order_invalidated=row['order_invalidated'],
