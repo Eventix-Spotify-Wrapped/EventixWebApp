@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 import pdb
+import random
 from .StatsCalculate import get_events_name_list
 # Create your views here.
 
@@ -42,7 +43,13 @@ def Index(request):
 
 
 def Event(request, guid):
-    return render(request, "dashboard/event.html", {"Name": guid})
+    cards = ["1", "2", "3", "4", "5", "6", "7"]
+    data = []
+    for _ in range(7):
+        index = random.randrange(len(cards))
+        data.append(cards[index])
+        cards.pop(index)
+    return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
 
 
 # ALL STARTS FROM HERE
