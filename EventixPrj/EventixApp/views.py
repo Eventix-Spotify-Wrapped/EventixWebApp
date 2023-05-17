@@ -12,8 +12,12 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
+<<<<<<< HEAD
 
 
+=======
+import pdb
+>>>>>>> d99b24c (moved and renamed)
 # Create your views here.
 
 
@@ -62,7 +66,7 @@ def Event(request, guid):
     return render(request, "dashboard/event.html", {"Name": guid})
 
 
-## ALL STARTS FROM HERE
+# ALL STARTS FROM HERE
 def LoginPage(request):
     if request.user.is_authenticated:
         return redirect("/index")
@@ -109,15 +113,15 @@ def CreateAccount(request):
     return HttpResponse(user)
 
 
-## END LOGIN
+# END LOGIN
 
-## CSV GENERATION
+# CSV GENERATION
 def GenerateCSV(request):
     MockMaker.GenerateMockData()
     return HttpResponse(False)
 
 
-## END CSV
+# END CSV
 
 
 def Statistics(request):
@@ -134,6 +138,7 @@ def GetOrganizers(request):
 
 
 def Stef(request):
+<<<<<<< HEAD
     list_of_objects = create_list_of_objects(
         "C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv")
     most_popular_city_event1 = calculate_city_percentage(list_of_objects, 'Data preview 2016')
@@ -158,6 +163,16 @@ def Stef(request):
                'most_popular_city_event1': most_popular_city_event1,
                'most_popular_city_event2': most_popular_city_event2}
     return render(request, 'my_template.html', context)
+=======
+    bruh = CSV_Reader.create_transactions_from_csv(
+        "mock.csv"
+    )
+    raise Exception()
+
+    return HttpResponse(
+
+    )
+>>>>>>> d99b24c (moved and renamed)
 
 
 def Create(request):

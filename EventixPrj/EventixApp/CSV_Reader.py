@@ -2,6 +2,7 @@ import pandas as pd
 from .models import Transaction
 import os
 import django
+import pathlib
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EventixPrj.settings")
 django.setup()
@@ -9,6 +10,8 @@ django.setup()
 
 class CSV_Reader:
     def create_transactions_from_csv(csv_file_path):
+        csv_file_path = str(pathlib.Path(
+            __file__).parent.resolve())+'/'+csv_file_path
         df_tickets = pd.read_csv(csv_file_path,
                                  encoding='latin1', low_memory=False)
         transactions = []
@@ -58,11 +61,13 @@ class CSV_Reader:
                                     order_ticket_wrong1=row['order_ticket_wrong1'],
                                     order_ticket_metadata_email=row['order_ticket_metadata_email'],
                                     order_ticket_metadata_street=row['order_ticket_metadata_street'],
-                                    order_ticket_metadata_street_number=row['order_ticket_metadata_street_number'],
+                                    order_ticket_metadata_street_number=row[
+                                        'order_ticket_metadata_street_number'],
                                     order_ticket_metadata_street_number_additional=row[
                                         'order_ticket_metadata_street_number_additional'],
                                     order_ticket_metadata_postal=row['order_ticket_metadata_postal'],
-                                    order_ticket_metadata_date_of_birth=row['order_ticket_metadata_date_of_birth'],
+                                    order_ticket_metadata_date_of_birth=row[
+                                        'order_ticket_metadata_date_of_birth'],
                                     order_ticket_metadata_state=row['order_ticket_metadata_state'],
                                     order_ticket_metadata_city=row['order_ticket_metadata_city'],
                                     order_ticket_metadata_gender=row['order_ticket_metadata_gender'],
@@ -91,8 +96,14 @@ class CSV_Reader:
                                     geolocation_latitude=row['geolocation_latitude'],
                                     geolocation_longitude=row['geolocation_longitude'],
                                     ticket_pdf_link=row['ticket_pdf_link'])
+<<<<<<< HEAD
             # transaction = Transaction(**transaction_data)
             # transactions.append(transaction)
             transactions.append(transaction_data)
+=======
+           # transaction = Transaction(**transaction_data)
+            transactions.append(transaction_data)
+            # transactions.append(transaction_data)
+>>>>>>> d99b24c (moved and renamed)
         #  transactions.append(transaction)
         return transactions
