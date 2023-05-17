@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
-
+import pdb
 # Create your views here.
 
 
@@ -60,7 +60,7 @@ def Event(request, guid):
     return render(request, "dashboard/event.html", {"Name": guid})
 
 
-## ALL STARTS FROM HERE
+# ALL STARTS FROM HERE
 def LoginPage(request):
     if request.user.is_authenticated:
         return redirect("/index")
@@ -107,15 +107,15 @@ def CreateAccount(request):
     return HttpResponse(user)
 
 
-## END LOGIN
+# END LOGIN
 
-## CSV GENERATION
+# CSV GENERATION
 def GenerateCSV(request):
     MockMaker.GenerateMockData()
     return HttpResponse(False)
 
 
-## END CSV
+# END CSV
 
 
 def Statistics(request):
@@ -132,10 +132,13 @@ def GetOrganizers(request):
 
 
 def Stef(request):
+    bruh = CSV_Reader.create_transactions_from_csv(
+        "mock.csv"
+    )
+    raise Exception()
+
     return HttpResponse(
-        CSV_Reader.create_transactions_from_csv(
-            "C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv"
-        )
+
     )
 
 
