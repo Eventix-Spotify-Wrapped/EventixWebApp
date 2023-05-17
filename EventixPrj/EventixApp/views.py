@@ -7,9 +7,11 @@ from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
+from .StatsCalculate import create_list_of_objects, calculate_total_revenue_event, calculate_average_ticket_price, calculate_showup_percentage,calculate_transactions_by_payment_method, calculate_gender_percentage, calculate_average_age, calculate_city_percentage
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -123,11 +125,30 @@ def GetOrganizers(request):
 
 
 def Stef(request):
-    return HttpResponse(
-        CSV_Reader.create_transactions_from_csv(
-            "C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv"
-        )
-    )
+    list_of_objects = create_list_of_objects(
+        "C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv")
+    most_popular_city_event1 = calculate_city_percentage(list_of_objects, 'Data preview 2016')
+    most_popular_city_event2 = calculate_city_percentage(list_of_objects, 'Data preview 2017')
+    showup_percentage_event1 = calculate_showup_percentage(list_of_objects, 'Data preview 2016')
+    showup_percentage_event2 = calculate_showup_percentage(list_of_objects, 'Data preview 2017')
+    average_age_event1 = calculate_average_age(list_of_objects, 'Data preview 2016')
+    average_age_event2 = calculate_average_age(list_of_objects, 'Data preview 2017')
+    gender_event1 = calculate_gender_percentage(list_of_objects, 'Data preview 2016')
+    gender_event2 = calculate_gender_percentage(list_of_objects, 'Data preview 2017')
+    total_revenue_event1 = calculate_total_revenue_event(list_of_objects, 'Data preview 2016')
+    average_ticket_price_event1 = calculate_average_ticket_price(list_of_objects, 'Data preview 2016')
+    total_revenue_event2 = calculate_total_revenue_event(list_of_objects, 'Data preview 2017')
+    average_ticket_price_event2 = calculate_average_ticket_price(list_of_objects, 'Data preview 2017')
+    context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
+               'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
+               'gender_event1_male': gender_event1[0], 'gender_event1_female': gender_event1[1],
+               'gender_event2_male': gender_event2[0],
+               'gender_event2_female': gender_event2[1], 'average_age_event1': average_age_event1,
+               'average_age_event2': average_age_event2, 'showup_percentage_event1': showup_percentage_event1,
+               'showup_percentage_event2': showup_percentage_event2,
+               'most_popular_city_event1': most_popular_city_event1,
+               'most_popular_city_event2': most_popular_city_event2}
+    return render(request, 'my_template.html', context)
 
 
 def Create(request):
@@ -177,7 +198,6 @@ def Finalize(request):
             }
         }
     )
-
 
 # on Create call, an eventix wrapped preview is created with cards based on trends found in ticket sales. said preview is saved in a database
 # until it is finalized and sent out

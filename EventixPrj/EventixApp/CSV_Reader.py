@@ -91,8 +91,8 @@ class CSV_Reader:
                                     geolocation_latitude=row['geolocation_latitude'],
                                     geolocation_longitude=row['geolocation_longitude'],
                                     ticket_pdf_link=row['ticket_pdf_link'])
-            transaction = Transaction(**transaction_data)
-            transactions.append(transaction)
-            # transactions.append(transaction_data)
+            # transaction = Transaction(**transaction_data)
+            # transactions.append(transaction)
+            transactions.append(transaction_data)
         #  transactions.append(transaction)
         return transactions
