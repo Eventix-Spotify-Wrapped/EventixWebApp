@@ -52,7 +52,7 @@ def Event(request, guid):
         "summary-slides/animated-ticket-amount.html"
     ]
     data = []
-    for _ in range(7):
+    for _ in range(4):
         index = random.randrange(len(cards))
         data.append(cards[index])
         cards.pop(index)
