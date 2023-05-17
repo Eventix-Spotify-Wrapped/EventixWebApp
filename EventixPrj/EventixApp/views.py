@@ -11,6 +11,7 @@ from .StatsCalculate import create_list_of_objects, calculate_total_revenue_even
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
+from .mock_maker_3000 import MockMaker
 
 
 # Create your views here.
@@ -21,9 +22,9 @@ def panel(request):
     return HttpResponse(template.render())
 
 
-def Sprint2Demo(request):
+def Summary(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
-    return render(request, "demo/Sprint2.html", {"context": context})
+    return render(request, "summary.html", {"context": context})
 
 
 def Index(request):
@@ -109,6 +110,14 @@ def CreateAccount(request):
 
 
 ## END LOGIN
+
+## CSV GENERATION
+def GenerateCSV(request):
+    MockMaker.GenerateMockData()
+    return HttpResponse(False)
+
+
+## END CSV
 
 
 def Statistics(request):
