@@ -16,6 +16,7 @@ import random
 from .StatsCalculate import get_events_name_list
 # Create your views here.
 
+
 def panel(request):
     template = loader.get_template("dev/panel.html")
     return HttpResponse(template.render())
@@ -24,6 +25,7 @@ def panel(request):
 def Sprint2Demo(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
     return render(request, "demo/Sprint2.html", {"context": context})
+
 
 def Index(request):
     if not request.user.is_authenticated:
@@ -39,6 +41,7 @@ def Index(request):
         },
     )
 
+
 def Event(request, guid):
     cards = ["1", "2", "3", "4", "5", "6", "7"]
     data = []
@@ -48,7 +51,13 @@ def Event(request, guid):
         cards.pop(index)
     return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
 
-## ALL STARTS FROM HERE
+
+def Slideshow():
+    return render()
+
+# ALL STARTS FROM HERE
+
+
 def LoginPage(request):
     if request.user.is_authenticated:
         return redirect("/index")
@@ -57,6 +66,7 @@ def LoginPage(request):
 
 def SignUp(request):
     return HttpResponse(True)
+
 
 @csrf_exempt
 def SignIn(request):

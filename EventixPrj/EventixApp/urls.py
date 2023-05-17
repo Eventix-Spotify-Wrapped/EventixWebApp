@@ -17,5 +17,6 @@ urlpatterns = [
     path("statistics/", views.Statistics),
     path("settings/", views.Settings),
     path("generateCSV/", views.GenerateCSV),
-    path("stef/", views.Stef)
+    path("stef/", views.Stef),
+    path("slideshow/", views.Slideshow)
 ]
