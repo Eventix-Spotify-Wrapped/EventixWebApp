@@ -1,3 +1,4 @@
+import views as views
 from django.urls import path
 from . import views
 
@@ -16,9 +17,6 @@ urlpatterns = [
     path("login/createaccount/", views.CreateAccount),
     path("statistics/", views.Statistics),
     path("settings/", views.Settings),
-<<<<<<< HEAD
     path("stef/", views.Stef),
-=======
     path("generateCSV/", views.GenerateCSV),
->>>>>>> 1930013f7f69d8a237249680b7d22194d7d052d8
 ]
