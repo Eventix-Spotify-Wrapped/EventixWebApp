@@ -14,7 +14,6 @@ from .mock_maker_3000 import MockMaker
 
 # Create your views here.
 
-
 def panel(request):
     template = loader.get_template("dev/panel.html")
     return HttpResponse(template.render())
@@ -23,7 +22,6 @@ def panel(request):
 def Summary(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
     return render(request, "summary.html", {"context": context})
-
 
 def Index(request):
     if not request.user.is_authenticated:
@@ -55,10 +53,8 @@ def Index(request):
         },
     )
 
-
 def Event(request, guid):
     return render(request, "dashboard/event.html", {"Name": guid})
-
 
 ## ALL STARTS FROM HERE
 def LoginPage(request):
@@ -69,7 +65,6 @@ def LoginPage(request):
 
 def SignUp(request):
     return HttpResponse(True)
-
 
 @csrf_exempt
 def SignIn(request):

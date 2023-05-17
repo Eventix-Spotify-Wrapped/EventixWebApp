@@ -25,6 +25,7 @@ const slideColors = [
 let app = document.getElementById("app");
 let slides = document.getElementsByClassName("slide");
 let coins = [document.getElementsByClassName("coin")[0]];
+let findTheTruth = document.getElementById("find-the-truth");
 
 // Add all coins to array
 for (let i = 0; i < (amountOfSlide - 1); i++) coins.push( app.appendChild(coins[0].cloneNode(true)));
@@ -86,3 +87,16 @@ document.getElementById("machine").addEventListener("click", () => {
         });
     }, 1);
 }, {once : true});
+
+findTheTruth.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let button = findTheTruth.getElementsByClassName("btn")[0];
+    button.style.transition = "translate .3s ease-in-out";
+    button.style.translate = "36rem 0";
+    findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
+
+    
+    for (let i = 0; i < findTheTruth.getElementsByClassName("statements")[0].children.length; i++) findTheTruth.getElementsByClassName("statements")[0].children[i].classList.add("statement--error")
+    findTheTruth.getElementsByClassName("statements")[0].children[1].classList.add("statement--check")
+});
