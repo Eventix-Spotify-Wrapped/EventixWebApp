@@ -33,8 +33,8 @@ After all the requirements are installed we just need to run the server that sta
 
 Now you will see the startup screen of django in your webbrowser. Instead of this page navigate to the event summary (or dashboard) by adding one of those lines to the url:
 
-* /         (to go to the summary)
-* /index    (to go to the dashboard)
+* /panel
+* /sprint2demo
 
 Now that django is installed we also need to install node.js because we use a package named "Laravel-Mix" which compiles all sass and javascript files to minified versions that can be read by internet browsers. Note that you need to be at the root of the directory with the terminal again.
 
