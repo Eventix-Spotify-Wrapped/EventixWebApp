@@ -12,7 +12,10 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 import pdb
+import random
+from .StatsCalculate import get_events_name_list
 # Create your views here.
+
 
 def panel(request):
     template = loader.get_template("dev/panel.html")
@@ -23,6 +26,7 @@ def Summary(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
     return render(request, "summary.html", {"context": context})
 
+
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
@@ -31,32 +35,29 @@ def Index(request):
         request,
         "dashboard/index.html",
         {
-            "events": [
-                "Wish Outdoor",
-                "Verknipt",
-                "Paaspop",
-                "Pinkpop",
-                "Pukkelpop",
-                "Thuishaven",
-                "Tomorrowland",
-                "Flugel 25 Jaar",
-                "LakeDance",
-                "Dreamvillage",
-                "Malice in Wonderland",
-                "Jungle festival",
-                "Kletskoek",
-                "Defqon.1",
-                "Royal dutch",
-                "Supersized kingsday",
-                "NOX",
-            ]
+            "events":
+                get_events_name_list()
+
         },
     )
 
-def Event(request, guid):
-    return render(request, "dashboard/event.html", {"Name": guid})
 
-## ALL STARTS FROM HERE
+def Event(request, guid):
+    cards = ["1", "2", "3", "4", "5", "6", "7"]
+    data = []
+    for _ in range(7):
+        index = random.randrange(len(cards))
+        data.append(cards[index])
+        cards.pop(index)
+    return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
+
+
+def Slideshow():
+    return render()
+
+# ALL STARTS FROM HERE
+
+
 def LoginPage(request):
     if request.user.is_authenticated:
         return redirect("/index")
@@ -65,6 +66,7 @@ def LoginPage(request):
 
 def SignUp(request):
     return HttpResponse(True)
+
 
 @csrf_exempt
 def SignIn(request):
@@ -127,9 +129,7 @@ def GetOrganizers(request):
 
 
 def Stef(request):
-    bruh = CSV_Reader.create_transactions_from_csv(
-        "mock.csv"
-    )
+    bruh = get_events_name_list()
     raise Exception()
 
     return HttpResponse(

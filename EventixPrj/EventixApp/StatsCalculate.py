@@ -1,6 +1,6 @@
 import pandas as pd
 import csv
-
+from .CSV_Reader import CSV_Reader
 
 
 def load_csv_data(filename):
@@ -14,8 +14,10 @@ def load_csv_data(filename):
 
 
 def calculate_total_revenue(transactions):
-    total_revenue = sum(transaction.ticket_value for transaction in transactions)
+    total_revenue = sum(
+        transaction.ticket_value for transaction in transactions)
     return total_revenue
+
 
 def calculate_average_ticket_price(transactions):
     ticket_values = [transaction.ticket_value for transaction in transactions]
@@ -32,3 +34,13 @@ def calculate_transactions_by_payment_method(transactions):
         else:
             payment_methods[payment_method] = 1
     return payment_methods
+
+
+def get_events_name_list():
+    list = CSV_Reader.create_transactions_from_csv(
+        "mock.csv"
+    )
+    data = []
+    for element in list:
+        data.append(element["event_name"])
+    return data
