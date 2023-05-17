@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 import pdb
+import random
+from .StatsCalculate import get_events_name_list
 # Create your views here.
 
 
@@ -33,31 +35,21 @@ def Index(request):
         request,
         "dashboard/index.html",
         {
-            "events": [
-                "Wish Outdoor",
-                "Verknipt",
-                "Paaspop",
-                "Pinkpop",
-                "Pukkelpop",
-                "Thuishaven",
-                "Tomorrowland",
-                "Flugel 25 Jaar",
-                "LakeDance",
-                "Dreamvillage",
-                "Malice in Wonderland",
-                "Jungle festival",
-                "Kletskoek",
-                "Defqon.1",
-                "Royal dutch",
-                "Supersized kingsday",
-                "NOX",
-            ]
+            "events":
+                get_events_name_list()
+
         },
     )
 
 
 def Event(request, guid):
-    return render(request, "dashboard/event.html", {"Name": guid})
+    cards = ["1", "2", "3", "4", "5", "6", "7"]
+    data = []
+    for _ in range(7):
+        index = random.randrange(len(cards))
+        data.append(cards[index])
+        cards.pop(index)
+    return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
 
 
 # ALL STARTS FROM HERE
@@ -132,9 +124,7 @@ def GetOrganizers(request):
 
 
 def Stef(request):
-    bruh = CSV_Reader.create_transactions_from_csv(
-        "mock.csv"
-    )
+    bruh = get_events_name_list()
     raise Exception()
 
     return HttpResponse(
