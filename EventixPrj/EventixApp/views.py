@@ -22,7 +22,7 @@ def panel(request):
 
 def Summary(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
-    return render(request, "demo/Sprint2.html", {"context": context})
+    return render(request, "summary.html", {"context": context})
 
 
 def Index(request):
