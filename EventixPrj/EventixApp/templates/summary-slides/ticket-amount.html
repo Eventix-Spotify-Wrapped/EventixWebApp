@@ -1,5 +1,7 @@
+{% load static %}
+
 <div class="slide">
-    <div class="white-back"></div>
+    <div class="white-back white-back--ticket"></div>
 
     <div>
         <p style="display: flex; flex-direction: column;" class="title">
@@ -8,6 +10,6 @@
             <span class="grotesk--fine">tickets</span>
         </p>
 
-        <img class="tickets" src="{{ static }}demo/img/tickets.png" alt="">
+        <img class="tickets" src="{% static 'demo/img/tickets.png' %}" alt="">
     </div>
 </div>

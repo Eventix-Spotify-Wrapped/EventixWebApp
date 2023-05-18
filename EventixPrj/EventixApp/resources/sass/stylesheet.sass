@@ -18,20 +18,88 @@
 
 .coin
     z-index: 3
-    top: 43rem
+    top: 40rem
+    display: none
     left: 15.5rem
     height: 5.25rem
     position: absolute
     transition: left 2s ease-in-out, top 2s ease-in-out
     filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2))
 
+.white-back
+    z-index: 0
+    top: 42rem
+    left: -3.5rem
+    width: 45rem
+    height: 100rem
+    rotate: -6deg
+    position: absolute
+    background-color: $color-white
+
+    &--prov
+        top: -26rem
+        height: 42rem
+
+    &--event
+        top: 23rem
+        height: 26rem
+
+    &--ticket
+        top: -8rem
+        height: 42rem
+
+.begin-illustration
+    position: relative
+    margin-left: 6.5rem
+    transition: margin-top .6s ease-in, margin-left 1.2s ease-in-out 
+
+    &--flex
+        width: 88rem
+        display: flex
+        margin-top: 4rem
+        margin-left: 5rem
+        margin-bottom: -29.1rem
+        flex-direction: row-reverse
+
+    &--start
+        margin-top: -13rem
+        margin-left: -50rem
+
+#plug
+    z-index: 1
+    height: 28rem
+    transition: translate .5s ease-in-out
+
+    .plug-stick
+        transition: opacity .5s ease-out
+
+    &.active
+        translate: 0 94px
+
+        .plug-stick
+            opacity: 0
+
+#socket
+    z-index: 0
+    height: 8rem
+
 #machine
-    z-index: 3
     width: 26rem
     margin: 0 auto
     display: block 
     cursor: pointer
+    margin-top: 8rem
     position: relative
+    margin-left: -1.5rem
+
+    .title
+        left: 50%
+        top: 13rem
+        z-index: 100
+        translate: -50% 0
+        line-height: 1.05
+        text-align: center
+        position: absolute
 
 #coin-machine
     margin-top: 2.5rem
@@ -71,20 +139,20 @@
     height: 76rem
     min-width: 36rem
     overflow: hidden
-    position: relative
     transition: margin-left 2s ease-in-out
 
     &:not(:first-child)
         padding: 3rem
+        position: relative
         padding-top: 10.5rem
+
+        *
+            z-index: 2
 
     &__wrapper
         display: flex
         background-color: $color-blue-medium
         transition: background-color .75s ease-in-out
-
-        *
-            z-index: 2
 
     &__backfigure
         left: 50%
@@ -95,13 +163,13 @@
         height: 14.5rem
         position: absolute
         translate: -50% 0%
-        // visibility: hidden
+        visibility: hidden
         background-color: $color-primary
-        // transition: background-color .75s ease-in-out
+        transition: background-color .75s ease-in-out
 
-        // &--visible
-        //     bottom: -2.5rem
-        //     animation: slideUp 2.5s .15s forwards
+        &--visible
+            bottom: -2.5rem
+            animation: slideUp 2.5s .15s forwards
 
 .netherlands
     top: 10rem
@@ -120,23 +188,6 @@
         left: 50%
         width: 26rem
         bottom: 10rem
-
-.white-back
-    top: -8rem
-    left: -4rem
-    z-index: 1
-    width: 42rem
-    height: 42rem
-    rotate: -6deg
-    position: absolute
-    background-color: $color-white
-
-    &--prov
-        top: -26rem
-
-    &--event
-        top: 23rem
-        height: 26rem
 
 .statement
     max-width: 90%

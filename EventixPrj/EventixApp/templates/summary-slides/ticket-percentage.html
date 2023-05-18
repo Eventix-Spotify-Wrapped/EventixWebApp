@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="slide">
     <div class="white-back white-back--event"></div>
 
@@ -11,5 +13,5 @@
         <p class="title"><span class="grotesk--dark">of it’s tickets</span></p>
     </div>
 
-    <img class="tickets tickets--stack" src="{{ static }}demo/img/tickets-stack.png" alt="">
+    <img class="tickets tickets--stack" src="{% static 'demo/img/tickets-stack.png' %}" alt="">
 </div>

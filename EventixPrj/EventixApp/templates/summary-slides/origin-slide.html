@@ -1,7 +1,9 @@
+{% load static %}
+
 <div class="slide">
     <div class="white-back white-back--prov"></div>
 
-    <img class="netherlands" src="{{ static }}demo/img/netherlands.png" alt="">
+    <img class="netherlands" src="{% static 'demo/img/netherlands.png' %}" alt="">
 
     <div style="margin-top: 17rem;">
         <span class="highlight grotesk--black">{{context.1}}%</span>
