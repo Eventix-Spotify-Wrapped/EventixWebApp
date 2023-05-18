@@ -43,17 +43,37 @@ def Index(request):
 
 
 def Event(request, guid):
-    cards = ["1", "2", "3", "4", "5", "6", "7"]
+    cards = [
+        "summary-slides/begin-slide.html",
+        "summary-slides/ticket-amount.html",
+        "summary-slides/origin-slide.html",
+        "summary-slides/ticket-percentage.html",
+        "summary-slides/find-the-truth.html",
+        "summary-slides/animated-ticket-amount.html"
+    ]
     data = []
-    for _ in range(7):
+    for _ in range(4):
         index = random.randrange(len(cards))
         data.append(cards[index])
         cards.pop(index)
     return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
 
 
-def Slideshow():
-    return render()
+def Slideshow(request):
+    cards = [
+
+        "summary-slides/ticket-amount.html",
+        "summary-slides/origin-slide.html",
+        "summary-slides/ticket-percentage.html",
+        "summary-slides/find-the-truth.html",
+        "summary-slides/animated-ticket-amount.html"
+    ]
+    data = ["summary-slides/begin-slide.html"]
+    for _ in range(3):
+        index = random.randrange(len(cards))
+        data.append(cards[index])
+        cards.pop(index)
+    return render(request, "summary.html", {"Cards": data})
 
 # ALL STARTS FROM HERE
 
