@@ -93,17 +93,17 @@ slides[0].addEventListener("click", () => {
             });
         }, 1);
     }, 2750);
-});
+}, {once : true});
 
-// findTheTruth.addEventListener("submit", (e) => {
-//     e.preventDefault();
+findTheTruth.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-//     let button = findTheTruth.getElementsByClassName("btn")[0];
-//     button.style.transition = "translate .3s ease-in-out";
-//     button.style.translate = "36rem 0";
-//     findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
+    let button = findTheTruth.getElementsByClassName("btn")[0];
+    button.style.transition = "translate .3s ease-in-out";
+    button.style.translate = "36rem 0";
+    findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
 
     
-//     for (let i = 0; i < findTheTruth.getElementsByClassName("statements")[0].children.length; i++) findTheTruth.getElementsByClassName("statements")[0].children[i].classList.add("statement--error")
-//     findTheTruth.getElementsByClassName("statements")[0].children[1].classList.add("statement--check")
-// });
+    for (let i = 0; i < findTheTruth.getElementsByClassName("statements")[0].children.length; i++) findTheTruth.getElementsByClassName("statements")[0].children[i].classList.add("statement--error")
+    findTheTruth.getElementsByClassName("statements")[0].children[1].classList.add("statement--check")
+});
