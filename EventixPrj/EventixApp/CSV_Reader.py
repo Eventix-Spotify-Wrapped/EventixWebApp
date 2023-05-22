@@ -97,6 +97,7 @@ class CSV_Reader:
                                     geolocation_longitude=row['geolocation_longitude'],
                                     ticket_pdf_link=row['ticket_pdf_link'])
 <<<<<<< HEAD
+<<<<<<< HEAD
             # transaction = Transaction(**transaction_data)
             # transactions.append(transaction)
             transactions.append(transaction_data)
@@ -105,5 +106,10 @@ class CSV_Reader:
             transactions.append(transaction_data)
             # transactions.append(transaction_data)
 >>>>>>> d99b24c (moved and renamed)
+=======
+           # transaction = Transaction(**transaction_data)
+            transactions.append(transaction_data)
+            # transactions.append(transaction_data)
+>>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
         #  transactions.append(transaction)
         return transactions

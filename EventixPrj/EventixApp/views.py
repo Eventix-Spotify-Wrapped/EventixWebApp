@@ -7,17 +7,20 @@ from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
-from .StatsCalculate import create_list_of_objects, calculate_total_revenue_event, calculate_average_ticket_price, calculate_showup_percentage,calculate_transactions_by_payment_method, calculate_gender_percentage, calculate_average_age, calculate_city_percentage
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
 =======
 import pdb
 >>>>>>> d99b24c (moved and renamed)
+=======
+import pdb
+>>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
 # Create your views here.
 
 
@@ -26,9 +29,9 @@ def panel(request):
     return HttpResponse(template.render())
 
 
-def Summary(request):
+def Sprint2Demo(request):
     context = ["20.025", "69", "TQ Campus", "Wish outdoor", "85"]
-    return render(request, "summary.html", {"context": context})
+    return render(request, "demo/Sprint2.html", {"context": context})
 
 
 def Index(request):
@@ -139,6 +142,7 @@ def GetOrganizers(request):
 
 def Stef(request):
 <<<<<<< HEAD
+<<<<<<< HEAD
     list_of_objects = create_list_of_objects(
         "C:/Users/tepap/Desktop/Eventix/EventixWebApp/ticketing_export_2023_03_24_11_27_16.csv")
     most_popular_city_event1 = calculate_city_percentage(list_of_objects, 'Data preview 2016')
@@ -164,6 +168,8 @@ def Stef(request):
                'most_popular_city_event2': most_popular_city_event2}
     return render(request, 'my_template.html', context)
 =======
+=======
+>>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
     bruh = CSV_Reader.create_transactions_from_csv(
         "mock.csv"
     )
@@ -172,7 +178,10 @@ def Stef(request):
     return HttpResponse(
 
     )
+<<<<<<< HEAD
 >>>>>>> d99b24c (moved and renamed)
+=======
+>>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
 
 
 def Create(request):
@@ -222,6 +231,7 @@ def Finalize(request):
             }
         }
     )
+
 
 # on Create call, an eventix wrapped preview is created with cards based on trends found in ticket sales. said preview is saved in a database
 # until it is finalized and sent out
