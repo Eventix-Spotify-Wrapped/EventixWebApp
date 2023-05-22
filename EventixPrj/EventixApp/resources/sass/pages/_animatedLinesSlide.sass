@@ -1,0 +1,43 @@
+.line
+    height: 5.2rem
+    position: relative
+
+    &s
+        margin: 2rem -3rem
+
+        &:nth-child(1)
+        background-color: #9B68F6
+
+        .title
+            animation-delay: .3s
+
+    &:nth-child(2)
+        background-color: #F0933C
+
+        .title
+            animation-delay: .6s
+
+    &:nth-child(3)
+        background-color: #F6F650
+
+        .title
+            animation-delay: .9s
+
+    &:nth-child(4)
+        background-color: #6CE449
+
+        .title
+            animation-delay: 1.2s
+
+    &:nth-child(5)
+        background-color: #EE7CB7
+
+        .title
+            animation-delay: 1.5s
+
+    .title
+        left: 3rem
+        color: $color-white
+        position: absolute
+        animation: lineSlide 7.5s infinite
+        transition: left .3s ease-out

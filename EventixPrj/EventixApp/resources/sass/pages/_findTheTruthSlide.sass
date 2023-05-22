@@ -1,0 +1,76 @@
+.statement
+    max-width: 90%
+    line-height: 1.5
+    position: relative
+    background-color: $color-white
+    padding: 2rem 4.5rem 2rem 3rem 
+
+    &--error
+        color: #FF006E
+
+    &--check
+        color: $color-white
+        background-color: #39d53d
+
+        .statement__input  + .statement__radio
+            background-color: #39d53d !important
+            
+            .statement__check
+                display: block
+    
+    &s
+        margin-top: 4rem
+        margin-left: -3rem
+
+    &__input
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        opacity: 0
+        cursor: pointer
+        position: absolute
+
+        &:checked + .statement__radio
+            background-color: $color-primary
+
+            .statement__check
+                display: block
+
+    &__radio
+        top: 50%
+        right: 0
+        width: 4.5rem
+        height: 4.5rem
+        display: flex
+        border-radius: 50%
+        position: absolute
+        translate: 50% -50%
+        align-items: center
+        justify-content: center
+        border: solid .4rem $color-white
+        background-color: $color-blue-medium
+
+    &__check
+        width: 2rem
+        display: none
+        height: 1.4rem
+        fill: $color-white
+
+    &__submit
+        display: block
+        margin: 0 auto
+        margin-top: 3rem
+
+    &:not(:last-child)
+        margin-bottom: 1.5rem
+
+.search-glass
+    left: 50%
+    z-index: -1
+    width: 20rem
+    bottom: -20rem
+    position: absolute
+    transform: translateX(-50%)
+    animation: search 4s infinite
+    transition: bottom 1s .25s ease-in-out, translate .3s ease-in-out

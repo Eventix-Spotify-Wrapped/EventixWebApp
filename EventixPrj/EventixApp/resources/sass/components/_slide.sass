@@ -1,0 +1,66 @@
+.slide
+    height: 76rem
+    min-width: 36rem
+    overflow: hidden
+    position: relative
+    transition: margin-left 2s ease-in-out
+
+    &:not(:first-child)
+        padding: 3rem
+        position: relative
+        padding-top: 10.5rem
+
+        *
+            z-index: 2
+
+    &__wrapper
+        display: flex
+
+    &__backfigure
+        left: 50%
+        z-index: 2
+        width: 40rem
+        rotate: -6deg
+        bottom: -2.5rem
+        height: 14.5rem
+        position: absolute
+        translate: -50% 0%
+        visibility: hidden
+        background-color: $color-primary
+        transition: background-color .75s ease-in-out
+
+        &--visible
+            bottom: -2.5rem
+            animation: slideUp 2.5s .15s forwards
+
+.white-back
+    z-index: 0
+    top: 46rem
+    left: -3.5rem
+    width: 45rem
+    height: 100rem
+    rotate: -6deg
+    position: absolute
+    background-color: $color-white
+
+    &--prov
+        top: -26rem
+        height: 42rem
+
+    &--event
+        top: 21.5rem
+        height: 26rem
+
+    &--ticket
+        top: -11rem
+        height: 42rem
+
+.coin
+    z-index: 3
+    top: 40rem
+    display: none
+    left: 15.5rem
+    height: 5.25rem
+    position: absolute
+    transition: left 2s ease-in-out, top 2s ease-in-out
+    filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2))
