@@ -11,7 +11,7 @@ django.setup()
 class CSV_Reader:
     def create_transactions_from_csv(csv_file_path):
         csv_file_path = str(pathlib.Path(
-            __file__).parent.resolve())+'/'+csv_file_path
+            __file__).parent.resolve()) + '/' + csv_file_path
         df_tickets = pd.read_csv(csv_file_path,
                                  encoding='latin1', low_memory=False)
         transactions = []
@@ -96,20 +96,9 @@ class CSV_Reader:
                                     geolocation_latitude=row['geolocation_latitude'],
                                     geolocation_longitude=row['geolocation_longitude'],
                                     ticket_pdf_link=row['ticket_pdf_link'])
-<<<<<<< HEAD
-<<<<<<< HEAD
+
             # transaction = Transaction(**transaction_data)
-            # transactions.append(transaction)
+
             transactions.append(transaction_data)
-=======
-           # transaction = Transaction(**transaction_data)
-            transactions.append(transaction_data)
-            # transactions.append(transaction_data)
->>>>>>> d99b24c (moved and renamed)
-=======
-           # transaction = Transaction(**transaction_data)
-            transactions.append(transaction_data)
-            # transactions.append(transaction_data)
->>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
-        #  transactions.append(transaction)
+
         return transactions

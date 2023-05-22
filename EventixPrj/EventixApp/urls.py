@@ -16,13 +16,6 @@ urlpatterns = [
     path("login/createaccount/", views.CreateAccount),
     path("statistics/", views.Statistics),
     path("settings/", views.Settings),
-<<<<<<< HEAD
-<<<<<<< HEAD
-    path("stef/", views.Stef),
-=======
->>>>>>> 78a248d (fix)
-=======
->>>>>>> 78a248da5a06d6f485f310a382bffcd0c6394470
     path("generateCSV/", views.GenerateCSV),
     path("stef/", views.Stef)
 ]
