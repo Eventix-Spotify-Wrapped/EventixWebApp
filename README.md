@@ -4,6 +4,7 @@
 
 Clone this repository locally.
 To be able to run the django project you first must install python: https://www.python.org/
+
 And after that you need to make sure you have the Node Package Manage installed: https://www.npmjs.com/
 
 Open the project in a code editor and navigate with the terminal to the folder named "EventixPrj"
