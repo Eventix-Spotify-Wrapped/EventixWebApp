@@ -31,14 +31,18 @@ def Summary(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
-
+    total_events = get_events_name_list()
+    completed_wraps = Wrap.objects.values_list('owner', flat=True)
+    for event in total_events:
+        for owner in completed_wraps:
+            if (owner in event):
+                total_events.remove(event)
     return render(
         request,
         "dashboard/index.html",
         {
             "events":
-                get_events_name_list()
-
+                total_events,
         },
     )
 
@@ -73,7 +77,6 @@ def SaveWrap(request):
 
 def Slideshow(request):
     cards = [
-
         "summary-slides/ticket-amount.html",
         "summary-slides/origin-slide.html",
         "summary-slides/ticket-percentage.html",
