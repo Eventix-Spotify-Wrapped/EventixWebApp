@@ -18,5 +18,6 @@ urlpatterns = [
     path("settings/", views.Settings),
     path("generateCSV/", views.GenerateCSV),
     path("stef/", views.Stef),
-    path("slideshow/", views.Slideshow)
+    path("slideshow/", views.Slideshow),
+    path("savewrap/", views.SaveWrap)
 ]
