@@ -3,10 +3,15 @@
 <div class="slide">
     <div class="white-back white-back--prov"></div>
 
-    <img class="netherlands" src="{% static 'demo/img/netherlands.png' %}" alt="">
+    <img id="countryIllustration" src="{% static 'demo/img/netherlands.png' %}" alt="">
 
     <div style="margin-top: 17rem;">
-        <span class="highlight grotesk--black">{{context.1}}%</span>
-        <p class="title"><span class="grotesk--dark">of your</span> <span class="grotesk--light">visitors</span> <span class="grotesk--black">were from</span> <span class="grotesk--fine">{{context.2}}</span></p>
+        <p class="title title--left">
+            <span class="highlight grotesk--black full">{{ event.visitorPercentage }}%</span>
+            <span class="grotesk--dark">of your</span>
+            <span class="grotesk--light">visitors</span>
+            <span class="grotesk--black">were from</span>
+            <span class="grotesk--fine" style="font-size: 3.4rem; padding-right: 0;">{{ event.countryMostVisitors }}</span>
+        </p>
     </div>
 </div>

@@ -5,13 +5,14 @@
     position: relative
     transition: margin-left 2s ease-in-out
 
+    &--col
+        display: flex
+        flex-direction: column
+
     &:not(:first-child)
         padding: 3rem
         position: relative
         padding-top: 10.5rem
-
-        *
-            z-index: 2
 
     &__wrapper
         display: flex
@@ -54,6 +55,14 @@
     &--ticket
         top: -11rem
         height: 42rem
+
+    &--logo-only, &--organised
+        top: initial
+        bottom: 84.5%
+        left: -6rem
+
+    &--organised
+        bottom: 55%
 
 .coin
     z-index: 3

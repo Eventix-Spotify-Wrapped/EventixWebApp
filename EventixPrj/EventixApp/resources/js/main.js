@@ -28,7 +28,7 @@ const slideColors = [
 let app = document.getElementById("app");
 let slides = document.getElementsByClassName("slide");
 let coins = [document.getElementsByClassName("coin")[0]];
-let findTheTruth = document.getElementById("find-the-truth");
+let findTheTruth = document.getElementById("find-the-truth-form");
 
 // Summary slide related variables
 let startSlide = slides[0];
@@ -46,11 +46,23 @@ findTheTruth.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let button = findTheTruth.getElementsByClassName("btn")[0];
+    let statements = findTheTruth.getElementsByClassName("statements")[0].children;
     button.style.translate = "36rem 0";
     findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
 
-    for (let i = 0; i < findTheTruth.getElementsByClassName("statements")[0].children.length; i++) findTheTruth.getElementsByClassName("statements")[0].children[i].classList.add("statement--error")
-    findTheTruth.getElementsByClassName("statements")[0].children[1].classList.add("statement--check")
+    for (let i = 0; i < statements.length; i++) statements[i].classList.add("statement--error")
+    statements[0].classList.add("statement--check");
+
+    document.getElementById("find-the-truth").addEventListener("click", () => {
+        for (let i = 0; i < statements.length; i++) if (!statements[i].classList.contains("statement--check")) statements[i].style.display = "none";
+        findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "-20rem";
+        setTimeout(() => {
+            findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active")
+            findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active")
+        }, 500);
+
+        setTimeout(() => document.getElementById("find-the-truth").addEventListener("click", changeSlide), 1000);
+    });
 });
 
 function startScreenAnimation () {
@@ -102,10 +114,10 @@ function initiateCoins () {
                 setTimeout(() => coin.style.transition = "left .75s ease-in-out, top 2s ease-in-out", 2000);
             }, 50 * i);
         }
-    }, 250);
 
-    // Change slide on click
-    app.addEventListener("click", changeSlide);
+        // Change slide on click
+        for (let i = 0; i < slides.length; i++) if (slides[i].id != "find-the-truth") slides[i].addEventListener("click", changeSlide);
+    }, 250);
 }
 
 function changeSlide () {

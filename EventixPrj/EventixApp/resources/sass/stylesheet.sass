@@ -11,6 +11,7 @@
 @import "pages/originSlide"
 @import "pages/findTheTruthSlide"
 @import "pages/animatedLinesSlide"
+@import "pages/eventsOrganisedSlide"
 
 .logo
     left: 50%
@@ -23,14 +24,17 @@
     translate: -50% 0
     pointer-events: none
 
-.tickets
-    left: 56%
-    bottom: 7rem
-    width: 38rem
-    translate: -50% 0
+#ticketIllustration, #ticketStack
     position: absolute
+    transform: translateX(-50%)
+    animation: hover 5s infinite
 
-    &--stack
-        left: 50%
-        width: 26rem
-        bottom: 10rem
+#ticketIllustration
+    left: 62.5%
+    bottom: 2rem
+    width: 50rem
+
+#ticketStack
+    left: 50%
+    width: 28rem
+    bottom: 10rem

@@ -19,15 +19,18 @@
                 display: block
     
     &s
+        z-index: 1
         margin-top: 4rem
         margin-left: -3rem
+        position: relative
 
     &__input
         top: 0
         left: 0
-        right: 0
         bottom: 0
         opacity: 0
+        z-index: 3
+        right: -2rem
         cursor: pointer
         position: absolute
 
@@ -74,3 +77,38 @@
     transform: translateX(-50%)
     animation: search 4s infinite
     transition: bottom 1s .25s ease-in-out, translate .3s ease-in-out
+
+.correction-box
+    top: 24rem
+    left: 110%
+    padding: 6rem 3rem
+    rotate: -6deg
+    width: 36rem
+    height: 40rem
+    z-index: 0
+    position: absolute
+    transition: left 1s ease-in
+    background-color: $color-white
+
+    &--active
+        left: 40%
+
+    p
+        max-width: 16rem
+        line-height: 1.6
+        font-size: 1.4rem
+        font-weight: 300
+
+    .btn
+        margin-top: 3rem
+        display: inline-block
+        text-decoration: none
+
+.celebrate
+    left: -18rem
+    height: 17rem
+    position: absolute
+    transition: left 1s ease-in
+
+    &--active
+        left: -5.5rem

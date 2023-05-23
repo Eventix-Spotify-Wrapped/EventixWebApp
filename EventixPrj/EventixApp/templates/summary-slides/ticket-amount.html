@@ -6,10 +6,10 @@
     <div>
         <p class="title title--col">
             <span class="grotesk--dark">You sold a total of</span>
-            <span class="grotesk--black">{{context.0}}</span>
+            <span class="grotesk--black" style="font-size: 5rem;">{{ event.ticketSaleAmount }}</span>
             <span class="grotesk--fine">tickets</span>
         </p>
 
-        <img class="tickets" src="{% static 'demo/img/tickets.png' %}" alt="">
+        <img id="ticketIllustration" src="{% static 'demo/img/tickets.png' %}" alt="">
     </div>
 </div>
