@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
+from EventixApp.models import Wrap
 import pdb
 import random
 from .StatsCalculate import get_events_name_list
@@ -57,6 +58,17 @@ def Event(request, guid):
         data.append(cards[index])
         cards.pop(index)
     return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
+
+
+def SaveWrap(request):
+    cards = request.GET.getlist("cards")
+    owner = request.GET.get("owner")
+    wrap = Wrap(
+        owner=owner,
+        cards=cards
+    )
+    wrap.save()
+    return HttpResponse(wrap)
 
 
 def Slideshow(request):
