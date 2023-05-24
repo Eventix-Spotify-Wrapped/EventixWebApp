@@ -98,23 +98,6 @@ def calculate_city_percentage(transactions, event_name):
         return None
 
 
-def calculate_average_ticket_price(transactions):
-    ticket_values = [transaction.ticket_value for transaction in transactions]
-    average_ticket_price = sum(ticket_values) / len(ticket_values)
-    return average_ticket_price
-
-
-def calculate_transactions_by_payment_method(transactions):
-    payment_methods = {}
-    for transaction in transactions:
-        payment_method = transaction.payment_method
-        if payment_method in payment_methods:
-            payment_methods[payment_method] += 1
-        else:
-            payment_methods[payment_method] = 1
-    return payment_methods
-
-
 def get_events_name_list():
     list = CSV_Reader.create_transactions_from_csv(
         "mock.csv"

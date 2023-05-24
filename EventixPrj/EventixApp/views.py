@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
-from .StatsCalculate import calculate_showup_percentage, calculate_total_revenue, calculate_total_revenue_event, \
+from .StatsCalculate import calculate_showup_percentage, calculate_total_revenue_event, calculate_total_revenue_event, \
     calculate_city_percentage, create_list_of_objects, calculate_average_age, calculate_gender_percentage, \
     calculate_average_ticket_price
 from django.contrib.auth import authenticate, logout, login
@@ -16,12 +16,10 @@ from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 from EventixApp.models import Wrap
 import pdb
-<<<<<<< HEAD
 
-=======
 import random
 from .StatsCalculate import get_events_name_list
->>>>>>> 23f6c54c14c6b5d4fb1b07685559cf00f37d9d39
+
 
 def panel(request):
     template = loader.get_template("dev/panel.html")
@@ -38,6 +36,7 @@ def Summary(request):
     }
     return render(request, "summary.html", {"event": event})
 
+
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
@@ -51,6 +50,7 @@ def Index(request):
 
         },
     )
+
 
 def Event(request, guid):
     cards = [
@@ -96,6 +96,7 @@ def Slideshow(request):
         cards.pop(index)
     return render(request, "summary.html", {"Cards": data})
 
+
 # ALL STARTS FROM HERE
 
 def LoginPage(request):
@@ -106,6 +107,7 @@ def LoginPage(request):
 
 def SignUp(request):
     return HttpResponse(True)
+
 
 @csrf_exempt
 def SignIn(request):
@@ -123,11 +125,13 @@ def SignOut(request):
     logout(request)
     return redirect("/login/")
 
+
 def ChangePassword(request):
     user = User.objects.get(username=request.POST.get("username"))
     user.set_password(request.POST.get("password"))
     user.save()
     return HttpResponse(True)
+
 
 def CreateAccount(request):
     user = User.objects.create_user(
@@ -140,12 +144,14 @@ def CreateAccount(request):
 
     return HttpResponse(user)
 
+
 # END LOGIN
 
 # CSV GENERATION
 def GenerateCSV(request):
     MockMaker.GenerateMockData()
     return HttpResponse(False)
+
 
 # END CSV
 
@@ -156,12 +162,13 @@ def Statistics(request):
 def Settings(request):
     return HttpResponse("Download RAM")
 
+
 # populates the dashboard with a list of organizers waiting for their Eventix Wrapped
 def GetOrganizers(request):
     return JsonResponse(APIMockService.GetOrganizersWithNoWrap(12))
 
+
 def Stef(request):
-<<<<<<< HEAD
     list_of_objects = create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
     most_popular_city_event1 = calculate_city_percentage(list_of_objects, 'Data preview 2016')
@@ -186,10 +193,6 @@ def Stef(request):
                'most_popular_city_event1': most_popular_city_event1,
                'most_popular_city_event2': most_popular_city_event2}
     return render(request, 'my_template.html', context)
-=======
-    bruh = get_events_name_list()
-    raise Exception()
->>>>>>> 23f6c54c14c6b5d4fb1b07685559cf00f37d9d39
 
 
 def Create(request):
@@ -215,6 +218,7 @@ def Create(request):
             }
         }
     )
+
 
 def Finalize(request):
     # args: tbd. ; finalizes a wrap for an account; returns a finalized and playable Eventix Wrapped;
