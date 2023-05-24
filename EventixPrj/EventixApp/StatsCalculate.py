@@ -44,3 +44,14 @@ def get_events_name_list():
     for element in list:
         data.append(element["event_name"])
     return data
+
+
+def get_events_name_guid_keypair():
+    list = CSV_Reader.create_transactions_from_csv(
+        "mock.csv"
+    )
+    data = []
+    for element in list:
+        data.append({"Name": element["event_name"],
+                    "Guid": element["account_id"]})
+    return data

@@ -33,16 +33,26 @@ def Index(request):
         return redirect("/login/")
     total_events = get_events_name_list()
     completed_wraps = Wrap.objects.values_list('owner', flat=True)
+    data = []
     for event in total_events:
         for owner in completed_wraps:
             if (owner in event):
-                total_events.remove(event)
+                data.append({"Event": event, "Wrapped": True})
+
+    for event in total_events:
+        alreadyAdded = False
+        for dat in data:
+            if (dat["Event"] == event):
+                alreadyAdded = True
+    if (not alreadyAdded):
+        data.insert(0, {"Event": event, "Wrapped": False})
+
     return render(
         request,
         "dashboard/index.html",
         {
             "events":
-                total_events,
+                data,
         },
     )
 
@@ -56,12 +66,13 @@ def Event(request, guid):
         "summary-slides/find-the-truth.html",
         "summary-slides/animated-ticket-amount.html"
     ]
+    name = "asd"
     data = []
     for _ in range(4):
         index = random.randrange(len(cards))
         data.append(cards[index])
         cards.pop(index)
-    return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
+    return render(request, "dashboard/event.html", {"Name": guid, "Guid": guid, "Cards": data})
 
 
 def SaveWrap(request):

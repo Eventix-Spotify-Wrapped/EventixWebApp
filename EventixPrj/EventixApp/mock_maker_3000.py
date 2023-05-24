@@ -11,6 +11,7 @@ class MockMaker:
         # Define the names of the columns in the output CSV file
         column_names = [
             "order_id",
+            "account_id",
             "shop_name",
             "event_name",
             "event_category",
@@ -115,6 +116,7 @@ class MockMaker:
             writer.writeheader()
             for i in range(num_rows):
                 order_id = fake.uuid4()
+                account_id = fake.uuid4()
                 shop_name = fake.company()
                 event_name = fake.company() + " " + fake.word()
                 event_category = fake.word()
@@ -241,7 +243,8 @@ class MockMaker:
                 latitude = fake.latitude()
                 longitude = fake.longitude()
                 ticket_pdf_link = fake.url()
-                row = [order_id, shop_name, event_name, event_category, first_event, street, street_number,
+
+                row = [order_id, account_id, shop_name, event_name, event_category, first_event, street, street_number,
                        street_number_additional, postal, dob, state, city, gender, province, company, country,
                        covid_no_symptoms, age, wrong2, phone, fullname, covid_one_household, keep_me_informed,
                        diet, street_name, street_number, locality, postal_code, sub_locality, admin_level_1,
