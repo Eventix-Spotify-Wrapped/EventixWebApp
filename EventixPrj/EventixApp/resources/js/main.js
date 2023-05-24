@@ -1,3 +1,5 @@
+import { CountUp } from 'countup.js';
+
 // Data variables
 let startFromSlide = 0;
 let slideIndex = startFromSlide;
@@ -38,7 +40,7 @@ const amountOfSlides = slides.length;
 if (startFromSlide === 0) startSlide.addEventListener("click", startScreenAnimation, {once : true});
 else {
     initiateCoins();
-    startSlide.style.marginLeft = ((slideIndex) * -36) + "rem";
+    startSlide.style.marginLeft = (slideIndex * -36) + "rem";
 }
 
 // When submitting the find the truth component
@@ -125,6 +127,7 @@ function changeSlide () {
 
     coins[slideIndex - startFromSlide].style.left = -100 + "vw";
     startSlide.style.marginLeft = ((slideIndex + 1) * -36) + "rem";
+    if (slideIndex + 1 == 3) new CountUp(document.getElementById("percentageCountUp"), 95, { duration: 3.0 }).start();
     document.body.style.backgroundColor = slideColor.background;
     document.getElementsByClassName("slide__backfigure")[0].style.backgroundColor = slideColor.main;
 

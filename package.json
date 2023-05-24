@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Eventix-Spotify-Wrapped/EventixWebApp#readme",
   "dependencies": {
+    "countup.js": "^2.6.2",
     "laravel-mix": "^6.0.49"
   },
   "devDependencies": {
