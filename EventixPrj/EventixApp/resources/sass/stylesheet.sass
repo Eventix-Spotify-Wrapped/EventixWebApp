@@ -4,193 +4,37 @@
 @import "defaults/utilities"
 @import "defaults/animations"
 
+@import "components/slide"
 @import "components/button"
 
+@import "pages/startSlide"
+@import "pages/originSlide"
+@import "pages/findTheTruthSlide"
+@import "pages/animatedLinesSlide"
+@import "pages/eventsOrganisedSlide"
+
 .logo
+    left: 50%
     z-index: 3
+    top: 3.5rem
     width: 16rem
     margin: 0 auto
     display: block
     position: absolute
+    translate: -50% 0
+    pointer-events: none
+
+#ticketIllustration, #ticketStack
+    position: absolute
+    transform: translateX(-50%)
+    animation: hover 5s infinite
+
+#ticketIllustration
+    left: 62.5%
+    bottom: 2rem
+    width: 50rem
+
+#ticketStack
     left: 50%
-    translate: -50% 0
-    top: 3.5rem
-
-.coin
-    z-index: 1
-    top: 43rem
-    left: 15.5rem
-    height: 5.25rem
-    position: absolute
-    transition: left 2s ease-in-out, top 2s ease-in-out
-    filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2))
-
-#machine
-    width: 26rem
-    margin: 0 auto
-    display: block 
-    cursor: pointer
-    position: relative
-
-#coin-machine
-    margin-top: 2.5rem
-    translate: .5rem 0
-    
-#coin-machine-front
-    top: 4rem
-    left: 1.7rem
-    width: 22rem
-    z-index: 97
-    position: absolute
-    translate: .5rem 0
-
-#handle-holder
-    top: 50%
-    z-index: 2
-    right: -.7rem
-    height: 5.5rem
-    position: absolute
-    translate: 0 -1rem
-
-.lever
-    top: 50%
-    right: 0
-    z-index: 1
-    height: 10rem
-    position: absolute
-    translate: 45% -9rem
-    transform-origin: center bottom
-    animation-delay: 3s 
-    animation: clickableLever 2s .5s infinite
-    
-    &--active
-        animation: activeLever 1.25s forwards
-
-.slide
-    height: 76rem
-    min-width: 36rem
-    overflow: hidden
-    position: relative
-    transition: margin-left 2s ease-in-out
-
-    &:not(:first-child)
-        padding: 3rem
-        padding-top: 10.5rem
-
-    &__wrapper
-        display: flex
-        background-color: $color-blue-medium
-        transition: background-color .75s ease-in-out
-
-        *
-            z-index: 2
-
-    &__backfigure
-        z-index: 0
-        left: 50%
-        width: 40rem
-        rotate: -6deg
-        bottom: -2.5rem
-        height: 14.5rem
-        position: absolute
-        translate: -50% 0%
-        // visibility: hidden
-        background-color: $color-primary
-        // transition: background-color .75s ease-in-out
-
-        // &--visible
-        //     bottom: -2.5rem
-        //     animation: slideUp 2.5s .15s forwards
-
-.netherlands
-    top: 10rem
-    right: -10%
-    height: 26rem
-    position: absolute
-
-.tickets
-    left: 56%
-    bottom: 7rem
-    width: 38rem
-    translate: -50% 0
-    position: absolute
-
-    &--stack
-        left: 50%
-        width: 26rem
-        bottom: 10rem
-
-.white-back
-    top: -8rem
-    left: -4rem
-    z-index: 1
-    width: 42rem
-    height: 42rem
-    rotate: -6deg
-    position: absolute
-    background-color: $color-white
-
-    &--prov
-        top: -26rem
-
-    &--event
-        top: 23rem
-        height: 26rem
-
-.statement
-    max-width: 90%
-    line-height: 1.5
-    position: relative
-    background-color: $color-white
-    padding: 2rem 4.5rem 2rem 3rem 
-    
-    &s
-        margin-top: 4rem
-        margin-left: -3rem
-
-    &__input
-        top: 0
-        left: 0
-        right: 0
-        bottom: 0
-        opacity: 0
-        cursor: pointer
-        position: absolute
-
-        &:checked + .statement__radio
-            background-color: $color-primary
-
-            .statement__check
-                display: block
-
-    &__radio
-        top: 50%
-        right: 0
-        width: 4.5rem
-        height: 4.5rem
-        display: flex
-        border-radius: 50%
-        position: absolute
-        translate: 50% -50%
-        align-items: center
-        justify-content: center
-        border: solid .4rem $color-white
-        background-color: $color-blue-medium
-
-    &__check
-        width: 2rem
-        display: none
-        height: 1.4rem
-        fill: $color-white
-
-    &__submit
-        display: block
-        margin: 0 auto
-        margin-top: 3rem
-
-    &:not(:last-child)
-        margin-bottom: 1.5rem
-
-.search-glass
-    z-index: -1
-    position: absolute
+    width: 28rem
+    bottom: 10rem
