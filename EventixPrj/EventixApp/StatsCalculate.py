@@ -1,11 +1,7 @@
 import pandas as pd
 import csv
-<<<<<<< HEAD
 import math
 from collections import Counter
-
-=======
->>>>>>> 23f6c54c14c6b5d4fb1b07685559cf00f37d9d39
 from .CSV_Reader import CSV_Reader
 
 
@@ -22,11 +18,6 @@ def load_csv_data(filename):
 def create_list_of_objects(csv_file):
     transactions = CSV_Reader.create_transactions_from_csv(csv_file)
     return transactions
-
-
-def calculate_total_revenue(transactions):
-<<<<<<< HEAD
-    total_revenue = sum(transaction.ticket_value for transaction in transactions)
 
 
 def calculate_total_revenue_event(transactions, event_name):
@@ -105,10 +96,6 @@ def calculate_city_percentage(transactions, event_name):
         return most_common_city[0][0]
     else:
         return None
-=======
-    total_revenue = sum(
-        transaction.ticket_value for transaction in transactions)
-    return total_revenue
 
 
 def calculate_average_ticket_price(transactions):
@@ -136,4 +123,3 @@ def get_events_name_list():
     for element in list:
         data.append(element["event_name"])
     return data
->>>>>>> 23f6c54c14c6b5d4fb1b07685559cf00f37d9d39
