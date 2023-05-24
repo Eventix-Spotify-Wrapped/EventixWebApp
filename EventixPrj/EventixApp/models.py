@@ -135,7 +135,7 @@ class Post(models.Model):
 
 class Wrap(models.Model):
     id = models.AutoField(primary_key=True)
-    owner = models.CharField(max_length=250)
+    owner_account_id = models.CharField(max_length=250)
     cards = ArrayField(models.CharField(max_length=250))
 
 

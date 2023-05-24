@@ -18,7 +18,8 @@ from EventixApp.models import Wrap
 import pdb
 
 import random
-from .StatsCalculate import get_events_name_list
+from .StatsCalculate import get_events_name_list, get_events_name_guid_keypair
+# Create your views here.
 
 
 def panel(request):
@@ -40,19 +41,35 @@ def Summary(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
+    total_events_nameguid_keypair = get_events_name_guid_keypair()
+    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
+    data = []
+    for ng_kp in total_events_nameguid_keypair:
+        alreadyAdded = False
+        for dat in data:
+            if (dat["Guid"] == ng_kp["Guid"]):
+                alreadyAdded = True
+        if (not alreadyAdded):
+            for owner in completed_wraps:
+                if (owner in ng_kp["Guid"]):
+                    data.append(
+                        {"Event": ng_kp["Name"], "Wrapped": True, "Guid": ng_kp["Guid"]})
+                    alreadyAdded = True
+            if (not alreadyAdded):
+                data.insert(
+                    0, {"Event": ng_kp["Name"], "Wrapped": False, "Guid": ng_kp["Guid"]})
 
     return render(
         request,
         "dashboard/index.html",
         {
             "events":
-                get_events_name_list()
-
+                data,
         },
     )
 
 
-def Event(request, guid):
+def Event(request, event_name, guid):
     cards = [
         "summary-slides/begin-slide.html",
         "summary-slides/ticket-amount.html",
@@ -61,28 +78,57 @@ def Event(request, guid):
         "summary-slides/find-the-truth.html",
         "summary-slides/animated-ticket-amount.html"
     ]
+    name = event_name
     data = []
+    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
+    preselected_cards = []
+    overwrite = False
+    for owner in completed_wraps:
+        if (owner in guid):
+            preselected_cards = Wrap.objects.all().values(
+                "cards").get(owner_account_id=guid)["cards"]
+    if (len(preselected_cards) > 0):
+        overwrite = True
     for _ in range(4):
+        if (len(preselected_cards) > 0):
+            data.append(
+                {"Name": preselected_cards[0], "Toggled": True})
+            for card in cards:
+                if (card in preselected_cards[0]):
+                    cards.remove(card)
+            preselected_cards.pop(0)
+            continue
         index = random.randrange(len(cards))
-        data.append(cards[index])
+        data.append({"Name": cards[index], "Toggled": False})
         cards.pop(index)
-    return render(request, "dashboard/event.html", {"Name": guid, "Cards": data})
+  #  raise MyException('msg here')
+
+    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+class MyException(Exception):
+    pass
 
 
 def SaveWrap(request):
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
-    wrap = Wrap(
-        owner=owner,
-        cards=cards
-    )
-    wrap.save()
-    return HttpResponse(wrap)
+    if (not Wrap.objects.filter(owner_account_id=owner).exists()):
+        wrap = Wrap(
+            owner_account_id=owner,
+            cards=cards
+        )
+        wrap.save()
+    else:
+        wrap = Wrap.objects.get(owner_account_id=owner)
+        wrap.cards = cards
+        wrap.save()
+
+    return HttpResponse(print(wrap))
 
 
 def Slideshow(request):
     cards = [
-
         "summary-slides/ticket-amount.html",
         "summary-slides/origin-slide.html",
         "summary-slides/ticket-percentage.html",
@@ -92,8 +138,9 @@ def Slideshow(request):
     data = ["summary-slides/begin-slide.html"]
     for _ in range(3):
         index = random.randrange(len(cards))
-        data.append(cards[index])
+        data.append({"Card": cards[index], "Toggled": False})
         cards.pop(index)
+
     return render(request, "summary.html", {"Cards": data})
 
 
@@ -171,18 +218,30 @@ def GetOrganizers(request):
 def Stef(request):
     list_of_objects = create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
-    most_popular_city_event1 = calculate_city_percentage(list_of_objects, 'Data preview 2016')
-    most_popular_city_event2 = calculate_city_percentage(list_of_objects, 'Data preview 2017')
-    showup_percentage_event1 = calculate_showup_percentage(list_of_objects, 'Data preview 2016')
-    showup_percentage_event2 = calculate_showup_percentage(list_of_objects, 'Data preview 2017')
-    average_age_event1 = calculate_average_age(list_of_objects, 'Data preview 2016')
-    average_age_event2 = calculate_average_age(list_of_objects, 'Data preview 2017')
-    gender_event1 = calculate_gender_percentage(list_of_objects, 'Data preview 2016')
-    gender_event2 = calculate_gender_percentage(list_of_objects, 'Data preview 2017')
-    total_revenue_event1 = calculate_total_revenue_event(list_of_objects, 'Data preview 2016')
-    average_ticket_price_event1 = calculate_average_ticket_price(list_of_objects, 'Data preview 2016')
-    total_revenue_event2 = calculate_total_revenue_event(list_of_objects, 'Data preview 2017')
-    average_ticket_price_event2 = calculate_average_ticket_price(list_of_objects, 'Data preview 2017')
+    most_popular_city_event1 = calculate_city_percentage(
+        list_of_objects, 'Data preview 2016')
+    most_popular_city_event2 = calculate_city_percentage(
+        list_of_objects, 'Data preview 2017')
+    showup_percentage_event1 = calculate_showup_percentage(
+        list_of_objects, 'Data preview 2016')
+    showup_percentage_event2 = calculate_showup_percentage(
+        list_of_objects, 'Data preview 2017')
+    average_age_event1 = calculate_average_age(
+        list_of_objects, 'Data preview 2016')
+    average_age_event2 = calculate_average_age(
+        list_of_objects, 'Data preview 2017')
+    gender_event1 = calculate_gender_percentage(
+        list_of_objects, 'Data preview 2016')
+    gender_event2 = calculate_gender_percentage(
+        list_of_objects, 'Data preview 2017')
+    total_revenue_event1 = calculate_total_revenue_event(
+        list_of_objects, 'Data preview 2016')
+    average_ticket_price_event1 = calculate_average_ticket_price(
+        list_of_objects, 'Data preview 2016')
+    total_revenue_event2 = calculate_total_revenue_event(
+        list_of_objects, 'Data preview 2017')
+    average_ticket_price_event2 = calculate_average_ticket_price(
+        list_of_objects, 'Data preview 2017')
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
                'gender_event1_male': gender_event1[0], 'gender_event1_female': gender_event1[1],
