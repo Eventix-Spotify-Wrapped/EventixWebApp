@@ -109,16 +109,20 @@ class MockMaker:
 
         # Create a list of dictionaries to hold the generated data
         data = []
-
+        account_ids = [fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(
+        ), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(),]
+        event_names = [fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(
+        ), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(),]
         # Generate fake data and write to a CSV file
         with open('fake_data.csv', 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=column_names)
             writer.writeheader()
             for i in range(num_rows):
+                random_index = random.randint(0, len(account_ids)-1)
                 order_id = fake.uuid4()
-                account_id = fake.uuid4()
+                account_id = account_ids[random_index]
                 shop_name = fake.company()
-                event_name = fake.company() + " " + fake.word()
+                event_name = event_names[random_index]
                 event_category = fake.word()
                 first_event = fake.date_time_between(
                     start_date='-1y', end_date='now')

@@ -14,7 +14,7 @@ from .mock_maker_3000 import MockMaker
 from EventixApp.models import Wrap
 import pdb
 import random
-from .StatsCalculate import get_events_name_list
+from .StatsCalculate import get_events_name_list, get_events_name_guid_keypair
 # Create your views here.
 
 
@@ -31,21 +31,23 @@ def Summary(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
-    total_events = get_events_name_list()
-    completed_wraps = Wrap.objects.values_list('owner', flat=True)
+    total_events_nameguid_keypair = get_events_name_guid_keypair()
+    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
-    for event in total_events:
-        for owner in completed_wraps:
-            if (owner in event):
-                data.append({"Event": event, "Wrapped": True})
-
-    for event in total_events:
+    for ng_kp in total_events_nameguid_keypair:
         alreadyAdded = False
         for dat in data:
-            if (dat["Event"] == event):
+            if (dat["Guid"] == ng_kp["Guid"]):
                 alreadyAdded = True
-    if (not alreadyAdded):
-        data.insert(0, {"Event": event, "Wrapped": False})
+        if (not alreadyAdded):
+            for owner in completed_wraps:
+                if (owner in ng_kp["Guid"]):
+                    data.append(
+                        {"Event": ng_kp["Name"], "Wrapped": True, "Guid": ng_kp["Guid"]})
+                    alreadyAdded = True
+            if (not alreadyAdded):
+                data.insert(
+                    0, {"Event": ng_kp["Name"], "Wrapped": False, "Guid": ng_kp["Guid"]})
 
     return render(
         request,
@@ -57,7 +59,7 @@ def Index(request):
     )
 
 
-def Event(request, guid):
+def Event(request, event_name, guid):
     cards = [
         "summary-slides/begin-slide.html",
         "summary-slides/ticket-amount.html",
@@ -66,24 +68,53 @@ def Event(request, guid):
         "summary-slides/find-the-truth.html",
         "summary-slides/animated-ticket-amount.html"
     ]
-    name = "asd"
+    name = event_name
     data = []
+    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
+    preselected_cards = []
+    overwrite = False
+    for owner in completed_wraps:
+        if (owner in guid):
+            preselected_cards = Wrap.objects.all().values(
+                "cards").get(owner_account_id=guid)["cards"]
+    if (len(preselected_cards) > 0):
+        overwrite = True
     for _ in range(4):
+        if (len(preselected_cards) > 0):
+            data.append(
+                {"Name": preselected_cards[0], "Toggled": True})
+            for card in cards:
+                if (card in preselected_cards[0]):
+                    cards.remove(card)
+            preselected_cards.pop(0)
+            continue
         index = random.randrange(len(cards))
-        data.append(cards[index])
+        data.append({"Name": cards[index], "Toggled": False})
         cards.pop(index)
-    return render(request, "dashboard/event.html", {"Name": guid, "Guid": guid, "Cards": data})
+  #  raise MyException('msg here')
+
+    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+class MyException(Exception):
+    pass
 
 
 def SaveWrap(request):
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
-    wrap = Wrap(
-        owner=owner,
-        cards=cards
-    )
-    wrap.save()
-    return HttpResponse(wrap)
+    if (not Wrap.objects.filter(owner_account_id=owner).exists()):
+        wrap = Wrap(
+            owner_account_id=owner,
+            cards=cards
+        )
+        wrap.save()
+    else:
+        wrap = Wrap.objects.get(owner_account_id=owner)
+        wrap.cards = cards
+        wrap.save()
+
+    return HttpResponse(print(wrap))
 
 
 def Slideshow(request):
@@ -97,8 +128,9 @@ def Slideshow(request):
     data = ["summary-slides/begin-slide.html"]
     for _ in range(3):
         index = random.randrange(len(cards))
-        data.append(cards[index])
+        data.append({"Card": cards[index], "Toggled": False})
         cards.pop(index)
+
     return render(request, "summary.html", {"Cards": data})
 
 # ALL STARTS FROM HERE
