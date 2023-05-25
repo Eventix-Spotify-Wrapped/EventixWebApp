@@ -11,12 +11,13 @@ django.setup()
 class CSV_Reader:
     def create_transactions_from_csv(csv_file_path):
         csv_file_path = str(pathlib.Path(
-            __file__).parent.resolve())+'/'+csv_file_path
+            __file__).parent.resolve()) + '/' + csv_file_path
         df_tickets = pd.read_csv(csv_file_path,
                                  encoding='latin1', low_memory=False)
         transactions = []
         for _, row in df_tickets.iterrows():
-            transaction_data = dict(order_id=row['order_id'], shop_name=row['shop_name'], event_name=row['event_name'],
+            transaction_data = dict(account_id=row['account_id'], order_id=row['order_id'], shop_name=row['shop_name'],
+                                    event_name=row['event_name'],
                                     #   event_category=row['event_subcategories'],
                                     #    first_event=row['first_event_date_start'],
                                     #   last_event=row['last_event_date_end'],
@@ -99,6 +100,5 @@ class CSV_Reader:
                                     ticket_pdf_link=row['ticket_pdf_link'])
            # transaction = Transaction(**transaction_data)
             transactions.append(transaction_data)
-            # transactions.append(transaction_data)
-        #  transactions.append(transaction)
+
         return transactions

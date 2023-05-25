@@ -6,7 +6,7 @@ urlpatterns = [
     path("", views.Summary, name="Panel"),
     path("create/", views.Create),
     path("finalize/", views.Finalize),
-    path("event/<guid>/", views.Event),
+    path("event/<guid>/<event_name>/", views.Event),
     path("index/", views.Index),
     path("login/", views.LoginPage),
     path("login/signup", views.SignUp),

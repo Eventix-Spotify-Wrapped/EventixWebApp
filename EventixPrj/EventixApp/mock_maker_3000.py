@@ -11,6 +11,7 @@ class MockMaker:
         # Define the names of the columns in the output CSV file
         column_names = [
             "order_id",
+            "account_id",
             "shop_name",
             "event_name",
             "event_category",
@@ -108,15 +109,20 @@ class MockMaker:
 
         # Create a list of dictionaries to hold the generated data
         data = []
-
+        account_ids = [fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(
+        ), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(),]
+        event_names = [fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(
+        ), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(),]
         # Generate fake data and write to a CSV file
         with open('fake_data.csv', 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=column_names)
             writer.writeheader()
             for i in range(num_rows):
+                random_index = random.randint(0, len(account_ids)-1)
                 order_id = fake.uuid4()
+                account_id = account_ids[random_index]
                 shop_name = fake.company()
-                event_name = fake.company() + " " + fake.word()
+                event_name = event_names[random_index]
                 event_category = fake.word()
                 first_event = fake.date_time_between(
                     start_date='-1y', end_date='now')
@@ -241,7 +247,8 @@ class MockMaker:
                 latitude = fake.latitude()
                 longitude = fake.longitude()
                 ticket_pdf_link = fake.url()
-                row = [order_id, shop_name, event_name, event_category, first_event, street, street_number,
+
+                row = [order_id, account_id, shop_name, event_name, event_category, first_event, street, street_number,
                        street_number_additional, postal, dob, state, city, gender, province, company, country,
                        covid_no_symptoms, age, wrong2, phone, fullname, covid_one_household, keep_me_informed,
                        diet, street_name, street_number, locality, postal_code, sub_locality, admin_level_1,
