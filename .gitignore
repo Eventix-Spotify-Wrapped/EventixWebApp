@@ -1,6 +1,6 @@
 # Automatic generated JS & CSS code
-EventixPrj/EventixApp/static/js/*
-EventixPrj/EventixApp/static/css/*
+EventixPrj/EventixApp/static/js/*.js
+EventixPrj/EventixApp/static/css/*.css
 
 # User-specific stuff
 .idea/**/workspace.xml
