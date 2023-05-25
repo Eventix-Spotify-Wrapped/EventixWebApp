@@ -27,7 +27,9 @@ def Summary(request):
         "ticketSaleAmount": 20025,
         "visitorPercentage": 85,
         "ticketSalePercentage": 92,
-        "countryMostVisitors": "The Netherlands"
+        "countryMostVisitors": "The Netherlands",
+        "cityMostVisitors": "Eindhoven",
+        "provinceMostVisitors": "Noord-Brabant"
     }
     return render(request, "summary.html", {"event": event})
 

@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="slide">
+<div class="slide" id="ticket-sale-percentage">
     <div class="white-back white-back--event"></div>
 
     <div class="title">
@@ -9,7 +9,7 @@
 
     <div class="title title--col" style="margin-top: 10rem;">
         <p><span class="grotesk--black">This</span> <span class="grotesk--medium">event</span> <span class="grotesk--medium">sold</span></p>
-        <span class="highlight grotesk--black"><span id="percentageCountUp">{{ event.visitorPercentage }}</span> %</span>
+        <span class="highlight grotesk--black"><span id="ticketPercentageCountUp" style="padding-right: 0;">{{ event.visitorPercentage }}</span> %</span>
         <p><span class="grotesk--light">of it's tickets</span></p>
     </div>
 

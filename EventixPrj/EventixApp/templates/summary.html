@@ -8,15 +8,16 @@
         <svg class="coin" viewBox="0 0 51.96 59.56"><path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
 
         <div class="slide__wrapper">
-            {% include "summary-slides/begin-slide.html" %}
+            {% include "summary-slides/start-animation.html" %}
             {% include "summary-slides/events-organised.html" %}
-            {% include "summary-slides/animated-ticket-amount.html" %}
-            {% include "summary-slides/ticket-percentage.html" %}
+            {% include "summary-slides/animated-ticket-sale-amount.html" %}
+            {% include "summary-slides/ticket-sale-percentage.html" %}
             {% comment %} {% include "summary-slides/ticket-amount.html" %} {% endcomment %}
-            {% include "summary-slides/origin-slide.html" %}
+            {% include "summary-slides/visitor-origins.html" %}
             {% include "summary-slides/find-the-truth.html" %}
+            {% include "summary-slides/end-overview.html" %}
 
-            <div class="slide__backfigure"></div>
+            <div id="slide-backfigure" class="slide__backfigure"></div>
         </div>
     </div>
 {% endblock %}
