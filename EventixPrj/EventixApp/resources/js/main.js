@@ -29,6 +29,7 @@ async function main (slideColors) {
     if (startFromSlide === 0) startSlide.addEventListener("click", startScreenAnimation, {once : true});
     else {
         initiateCoins();
+        if (!coinNavigation) startSlide.style.transition = "none";
         startSlide.style.marginLeft = slideIndex * -36 + "rem";
     }
 
@@ -153,6 +154,14 @@ async function main (slideColors) {
         startSlide.style.marginLeft = (slideIndex * -36) + "rem";
 
         switch (slides[slideIndex].id) {
+            case "date-most-ticket-sales":
+                setTimeout(() => {
+                    // Start the calander animation
+                    document.getElementById("calander-illustration").classList.add("calander--normal");
+                    setTimeout(() => document.getElementsByClassName("date")[0].classList.add("date--show"), 1000);
+                }, 1750);
+            break;
+
             case "ticket-sale-percentage":
                 // Initiate the countup animation on the ticket percentage slide
                 new CountUp(document.getElementById("ticketPercentageCountUp"), 95, { duration: 3 }).start();
