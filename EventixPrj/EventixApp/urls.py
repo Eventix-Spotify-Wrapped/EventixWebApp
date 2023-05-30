@@ -19,5 +19,6 @@ urlpatterns = [
     path("generateCSV/", views.GenerateCSV),
     path("stef/", views.Stef),
     path("slideshow/", views.Slideshow),
-    path("savewrap/", views.SaveWrap)
+    path("savewrap/", views.SaveWrap),
+    path("eventixredirect/", views.EventixRedirect)
 ]

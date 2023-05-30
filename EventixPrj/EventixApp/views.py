@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 from EventixApp.models import Wrap
 import pdb
-
+from oauthlib.oauth2 import WebApplicationClient
 import random
 from .StatsCalculate import get_events_name_list, get_events_name_guid_keypair
 # Create your views here.
@@ -38,6 +38,21 @@ def Summary(request):
         "provinceMostVisitors": "Noord-Brabant"
     }
     return render(request, "summary.html", {"event": event})
+
+
+def EventixRedirect(request):
+    client_id = 'xxxxx'
+    client = WebApplicationClient(client_id)
+
+    authorization_url = 'https://api.authorization-server.com/authorize'
+
+    url = client.prepare_request_uri(
+        authorization_url,
+        redirect_uri='https://your-web-app.com/redirect',
+        scope=['read:user'],
+        state='D8VAo311AAl_49LAtM51HA'
+    )
+    return HttpResponse(True)
 
 
 def Index(request):
