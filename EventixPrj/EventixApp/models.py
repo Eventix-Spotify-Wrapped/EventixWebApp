@@ -123,26 +123,16 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
 
-# class Wrap(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     # account manager
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-#                              on_delete=models.CASCADE)
-#     # event organizer
-#     organizer = models.ForeignKey(Organizer, on_delete=models.CASCADE)
-#     owner = models.CharField(models.CharField(max_length=250))
-#     cards = ArrayField(models.CharField(max_length=250))
-
 class Wrap(models.Model):
     id = models.AutoField(primary_key=True)
     owner_account_id = models.CharField(max_length=250)
-    cards = ArrayField(models.CharField(max_length=250))
 
 
 class Card(models.Model):
     id = models.AutoField(primary_key=True)
-   # wrap = models.ForeignKey(Wrap, on_delete=models.CASCADE)
-    context = models.JSONField(default=list)
+    context = ArrayField(models.CharField(max_length=250))
+    name = models.CharField(max_length=250, default=None)
+    wrap = models.ForeignKey(Wrap, default=None, on_delete=models.CASCADE)
 
 
 # Transaction #
