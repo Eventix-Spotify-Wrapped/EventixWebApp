@@ -80,6 +80,20 @@ def Event(request, event_name, guid):
         "summary-slides/find-the-truth.html",
         "summary-slides/animated-ticket-amount.html"
     ]
+    list_of_objects = create_list_of_objects(
+        "ticketing_export_2023_03_24_11_27_16.csv")
+    most_popular_city_event = calculate_city_percentage(    
+        list_of_objects, event_name)
+    showup_percentage_event = calculate_showup_percentage(
+        list_of_objects, event_name)
+    average_age_event = calculate_average_age(
+        list_of_objects, event_name)
+    gender_event = calculate_gender_percentage(
+        list_of_objects, event_name)
+    total_revenue_event = calculate_total_revenue_event(
+        list_of_objects, event_name)
+    average_ticket_price_event = calculate_average_ticket_price(
+        list_of_objects, event_name)
     name = event_name
     data = []
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
