@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
-from EventixApp.models import Wrap
+from EventixApp.models import Wrap, Card
 import pdb
 
 import random
@@ -82,13 +82,14 @@ def Event(request, event_name, guid):
     ]
     name = event_name
     data = []
-    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
+    completed_wraps_account_ids = Wrap.objects.values_list(
+        'owner_account_id', flat=True)
     preselected_cards = []
     overwrite = False
-    for owner in completed_wraps:
+    for owner in completed_wraps_account_ids:
         if (owner in guid):
-            preselected_cards = Wrap.objects.all().values(
-                "cards").get(owner_account_id=guid)["cards"]
+            preselected_cards = list(Card.objects.all().values("name").filter(
+                wrap=Wrap.objects.get(owner_account_id=guid)).values())
     if (len(preselected_cards) > 0):
         overwrite = True
     for _ in range(4):
@@ -116,17 +117,29 @@ def SaveWrap(request):
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
-        wrap = Wrap(
+        w = Wrap(
             owner_account_id=owner,
-            cards=cards
         )
-        wrap.save()
+        w.save()
+        for card in cards:
+            c = Card(
+                wrap=w,
+                name=card,
+                context=["hey", "sup"]
+            )
+            c.save()
     else:
-        wrap = Wrap.objects.get(owner_account_id=owner)
-        wrap.cards = cards
-        wrap.save()
-
-    return HttpResponse(print(wrap))
+        w = Wrap.objects.get(owner_account_id=owner)
+        w.save()
+        Card.objects.filter(wrap=w).delete()
+        for card in cards:
+            c = Card(
+                wrap=w,
+                name=card,
+                context=["hey", "sup"]
+            )
+            c.save()
+    return HttpResponse(print(w))
 
 
 def Slideshow(request):
