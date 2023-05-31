@@ -10,7 +10,7 @@ fetch('/static/js/slideColors.json').then(
 
 async function main (slideColors) {
     // Data variables
-    let startFromSlide = 1;
+    let startFromSlide = 0;
     const coinNavigation = true;
     let slideIndex = startFromSlide;
 
