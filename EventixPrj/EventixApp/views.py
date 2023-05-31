@@ -32,6 +32,7 @@ def Summary(request):
     event = {
         "totalRevenue": total_revenue_event,
         "name": "Wish Outdoor",
+        "eventsOrganised": 4,
         "visitorPercentage": 85,
         "totalOfVisitors": 58472,
         "ticketSaleAmount": 20025,
