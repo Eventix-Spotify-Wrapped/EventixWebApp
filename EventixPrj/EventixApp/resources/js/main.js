@@ -53,7 +53,7 @@ async function main (slideColors) {
         findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
 
         // Give error classes to all statements
-        for (let i = 0; i < statements.length; i++) statements[i].classList.add("statement--error")
+        for (let i = 0; i < statements.length; i++) statements[i].classList.add("statement--error");
 
         // Give the right statement the right class (hardcoded for now)
         statements[0].classList.add("statement--check");
@@ -61,16 +61,23 @@ async function main (slideColors) {
         // Eventlistener to show the slide with validation of the statemnt
         document.getElementById("find-the-truth").addEventListener("click", () => {
 
+            let chosenStatement;
+            for (let o = 0; o < document.getElementsByClassName("statement__input").length; o++) {
+                if (document.getElementsByClassName("statement__input")[o].checked) chosenStatement = document.getElementsByClassName("statement__input")[o];
+                else document.getElementsByClassName("statement__input")[o].parentElement.style.display = "none";
+            };
+
             // Hide all answers that are not the right one or clarification
-            for (let i = 0; i < statements.length; i++) if (!statements[i].classList.contains("statement--check")) statements[i].style.display = "none";
+            // for (let i = 0; i < statements.length; i++) if (!statements[i].classList.contains("statement--check")) statements[i].style.display = "none";
             
             // Hide the search glass illustration
             findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "-20rem";
 
             // Show the correctionbox with the celebratory illustration
             setTimeout(() => {
-                findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active")
-                findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active")
+                findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active");
+                if (chosenStatement.parentElement.classList.contains("statement--check")) findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active");
+                else findTheTruth.getElementsByClassName("wrong-illustration")[0].classList.add("wrong-illustration--active");
             }, 500);
 
             // Go the next slide when clicking on the current slide
