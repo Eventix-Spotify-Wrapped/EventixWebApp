@@ -1,0 +1,19 @@
+{% load static %}
+
+<div class="slide" id="visitor-origins">
+    <div class="white-back white-back--prov"></div>
+
+    <img id="countryIllustration" src="{% static 'demo/img/netherlands.png' %}" alt="">
+
+    <div style="margin-top: 17rem;">
+        <p class="title title--left">
+            <span class="highlight grotesk--black full">
+                <span id="visitorOriginsPercentageCountUp" style="padding-right: 0;">{{ event.visitorPercentage }}</span> %
+            </span>
+            <span class="grotesk--dark">of your</span>
+            <span class="grotesk--light">visitors</span>
+            <span class="grotesk--black">were from</span>
+            <span class="grotesk--fine" style="font-size: 3.4rem; padding-right: 0;">{{ event.countryMostVisitors }}</span>
+        </p>
+    </div>
+</div>

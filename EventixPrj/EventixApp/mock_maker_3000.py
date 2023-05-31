@@ -6,11 +6,12 @@ import random
 class MockMaker:
     def GenerateMockData():
         # Define the number of rows to generate
-        num_rows = 10
+        num_rows = 10000
 
         # Define the names of the columns in the output CSV file
         column_names = [
             "order_id",
+            "account_id",
             "shop_name",
             "event_name",
             "event_category",
@@ -103,113 +104,25 @@ class MockMaker:
         ]
 
         # Customize the names of the columns
-        fields = [
-            "Order Id",
-            "Shop Name",
-            "Event Name",
-            "Event Category",
-            "First Event",
-            "Last Event",
-            "First Name",
-            "Last Name",
-            "Email",
-            "Ticket Name",
-            "Barcode",
-            "Order Status",
-            "Order Invalidated",
-            "Order Invalidated At",
-            "Ticket Invalidated",
-            "Ticket Invalidated At",
-            "Created At",
-            "Paid Currency",
-            "Order Value",
-            "Order Fees",
-            "Transaction Fees",
-            "Ticket Value",
-            "Ticket Fees",
-            "Optionals Value",
-            "Refunded Amount",
-            "Payment Method",
-            "Coupons",
-            "Device",
-            "Tracker",
-            "Tracker Name",
-            "Seat",
-            "Is Scanned",
-            "First Scanned At",
-            "Order Metadata First Name",
-            "Order Metadata Last Name",
-            "Order Metadata Wrong1",
-            "Order Metadata Wrong2",
-            "Order Metadata Wrong3",
-            "Order Metadata Wrong4",
-            "Order Metadata Wrong5",
-            "Order Metadata Wrong6",
-            "Order Metadata Wrong7",
-            "Order Metadata Wrong8",
-            "Order Metadata City",
-            "Order Metadata Gender",
-            "Order Metadata Province",
-            "Order Metadata Company",
-            "Order Metadata Country",
-            "Order Metadata Covid No Symptoms",
-            "Order Metadata Age",
-            "Order Metadata Wrong9",
-            "Order Metadata Wrong10",
-            "Order Metadata Wrong11",
-            "Order Metadata Wrong12",
-            "Order Metadata Wrong13",
-            "Order Metadata Wrong14",
-            "Order Ticket Metadata First Name",
-            "Order Ticket Metadata Last Name",
-            "Order Ticket Wrong1",
-            "Order Ticket Metadata Email",
-            "Order Ticket Metadata Street",
-            "Order Ticket Metadata Street Number",
-            "Order Ticket Metadata Street Number Additional",
-            "Order Ticket Metadata Postal",
-            "Order Ticket Metadata Date Of Birth",
-            "Order Ticket Metadata State",
-            "Order Ticket Metadata City",
-            "Order Ticket Metadata Gender",
-            "Order Ticket Metadata Province",
-            "Order Ticket Metadata Company",
-            "Order Ticket Metadata Country",
-            "Order Ticket Metadata Covid No Symptoms",
-            "Order Ticket Metadata Age",
-            "Order Ticket Wrong2",
-            "Order Ticket Metadata Phone",
-            "Order Ticket Metadata Fullname",
-            "Order Ticket Metadata Covid One Household",
-            "Order Ticket Metadata Keep Me Informed",
-            "Order Ticket Metadata Diet",
-            "Geolocation Street Name",
-            "Geolocation Street Number",
-            "Geolocation Locality",
-            "Geolocation Postal Code",
-            "Geolocation Sub Locality",
-            "Geolocation Admin Level 1",
-            "Geolocation Admin Level 2",
-            "Geolocation Country Code",
-            "Geolocation Latitude",
-            "Geolocation Longitude",
-            "Ticket Pdf Link",
-        ]
-
         # Initialize the Faker library
         fake = Faker()
 
         # Create a list of dictionaries to hold the generated data
         data = []
-
+        account_ids = [fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(
+        ), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(),]
+        event_names = [fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(
+        ), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(),]
         # Generate fake data and write to a CSV file
         with open('fake_data.csv', 'w', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=fields)
+            writer = csv.DictWriter(csvfile, fieldnames=column_names)
             writer.writeheader()
             for i in range(num_rows):
+                random_index = random.randint(0, len(account_ids)-1)
                 order_id = fake.uuid4()
+                account_id = account_ids[random_index]
                 shop_name = fake.company()
-                event_name = fake.company() + " " + fake.word()
+                event_name = event_names[random_index]
                 event_category = fake.word()
                 first_event = fake.date_time_between(
                     start_date='-1y', end_date='now')
@@ -334,10 +247,11 @@ class MockMaker:
                 latitude = fake.latitude()
                 longitude = fake.longitude()
                 ticket_pdf_link = fake.url()
-                row = [order_id, shop_name, event_name, event_category, first_event, street, street_number,
+
+                row = [order_id, account_id, shop_name, event_name, event_category, first_event, street, street_number,
                        street_number_additional, postal, dob, state, city, gender, province, company, country,
                        covid_no_symptoms, age, wrong2, phone, fullname, covid_one_household, keep_me_informed,
                        diet, street_name, street_number, locality, postal_code, sub_locality, admin_level_1,
                        admin_level_2, country_code, latitude, longitude, ticket_pdf_link]
 
-                writer.writerow(dict(zip(fields, row)))
+                writer.writerow(dict(zip(column_names, row)))
