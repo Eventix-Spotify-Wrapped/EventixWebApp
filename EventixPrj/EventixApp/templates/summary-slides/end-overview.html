@@ -12,7 +12,39 @@
     
     <div class="end-visitors">
         <span>Total of visitors</span>
-        <img class="numbers" src="{% static 'demo/img/visitor-amount-numbers.svg' %}" alt="">
+        {% comment %} <img class="numbers" src="{% static 'demo/img/visitor-amount-numbers.svg' %}" alt=""> {% endcomment %}
+        <div class="numbers"></div>
+        <div id="numberOfVisitorsTotal">{{ event.totalOfVisitors }}</div>
+
+        <script>
+            const numberOfVisitors = document.getElementById("numberOfVisitorsTotal").innerHTML;
+            let numbersWrapper = document.getElementsByClassName("numbers")[0];
+    
+            for (let i = 0; i < numberOfVisitors.length; i++) {
+                const char = numberOfVisitors.charAt(i);
+                let translateLeft;
+                let charIllustrationImageUrl;
+    
+                switch (char) {
+                    case "1": charIllustrationImageUrl = '{% static "demo/img/numbers/one.svg" %}'; translateLeft = 1; break;
+                    case "2": charIllustrationImageUrl = '{% static "demo/img/numbers/two.svg" %}'; translateLeft = 2; break;
+                    case "3": charIllustrationImageUrl = '{% static "demo/img/numbers/three.svg" %}'; translateLeft = 2; break;
+                    case "4": charIllustrationImageUrl = '{% static "demo/img/numbers/four.svg" %}'; translateLeft = 1.1; break;
+                    case "5": charIllustrationImageUrl = '{% static "demo/img/numbers/five.svg" %}'; translateLeft = 2; break;
+                    case "6": charIllustrationImageUrl = '{% static "demo/img/numbers/six.svg" %}'; translateLeft = 1.5; break;
+                    case "7": charIllustrationImageUrl = '{% static "demo/img/numbers/seven.svg" %}'; translateLeft = 3; break;
+                    case "8": charIllustrationImageUrl = '{% static "demo/img/numbers/eight.svg" %}'; translateLeft = 1; break;
+                    case "9": charIllustrationImageUrl = '{% static "demo/img/numbers/nine.svg" %}'; translateLeft = 1; break;
+                    default: charIllustrationImageUrl = '{% static "demo/img/numbers/zero.svg" %}'; translateLeft = 0; break;
+                }
+
+                var image = document.createElement("img")
+                image.src = charIllustrationImageUrl;
+                image.style.marginLeft = (translateLeft * -1) + "rem";
+                image.style.zIndex = (numberOfVisitors.length - i)
+                numbersWrapper.appendChild(image);
+            }
+        </script>
     </div>
 
     <div class="end-information">

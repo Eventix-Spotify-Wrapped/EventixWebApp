@@ -32,15 +32,15 @@ def Summary(request):
     event = {
         "totalRevenue": total_revenue_event,
         "name": "Wish Outdoor",
-        "ticketSaleAmount": 20025,
         "visitorPercentage": 85,
+        "totalOfVisitors": 58472,
+        "ticketSaleAmount": 20025,
         "ticketSalePercentage": 92,
-        "countryMostVisitors": "The Netherlands",
         "cityMostVisitors": "Eindhoven",
-        "provinceMostVisitors": "Noord-Brabant"
+        "provinceMostVisitors": "Noord-Brabant",
+        "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
-
 
 def Index(request):
     if not request.user.is_authenticated:
