@@ -61,19 +61,17 @@ async function main (slideColors) {
         // Eventlistener to show the slide with validation of the statemnt
         document.getElementById("find-the-truth").addEventListener("click", () => {
 
+            // Get the chosen statements and hide all the ones that were not chosen
             let chosenStatement;
             for (let o = 0; o < document.getElementsByClassName("statement__input").length; o++) {
                 if (document.getElementsByClassName("statement__input")[o].checked) chosenStatement = document.getElementsByClassName("statement__input")[o];
                 else document.getElementsByClassName("statement__input")[o].parentElement.style.display = "none";
             };
-
-            // Hide all answers that are not the right one or clarification
-            // for (let i = 0; i < statements.length; i++) if (!statements[i].classList.contains("statement--check")) statements[i].style.display = "none";
             
             // Hide the search glass illustration
             findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "-20rem";
 
-            // Show the correctionbox with the celebratory illustration
+            // Show the correctionbox with the celebratory (wrong indicating) illustration
             setTimeout(() => {
                 findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active");
                 if (chosenStatement.parentElement.classList.contains("statement--check")) findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active");
@@ -166,6 +164,7 @@ async function main (slideColors) {
 
         switch (slides[slideIndex].id) {
             case "average-age-visitors":
+                // Start the animation with the upsliding visitor cards
                 setTimeout(() => document.getElementsByClassName("visitor-cards")[0].classList.add("visitor-cards--show"), 1600);
             break;
 
