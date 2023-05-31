@@ -128,11 +128,17 @@ class Wrap(models.Model):
     owner_account_id = models.CharField(max_length=250)
 
 
-class Card(models.Model):
+class CardTemplate(models.Model):
     id = models.AutoField(primary_key=True)
+    thumbnail_path = models.CharField(max_length=250)
+    html_path = models.CharField(max_length=250)
+
+
+class Card(models.Model):
     context = ArrayField(models.CharField(max_length=250))
-    name = models.CharField(max_length=250, default=None)
     wrap = models.ForeignKey(Wrap, default=None, on_delete=models.CASCADE)
+    thumbnail_path = models.CharField(max_length=250)
+    html_path = models.CharField(max_length=250)
 
 
 # Transaction #
@@ -237,6 +243,7 @@ class Card(models.Model):
 #     def __init__(self, *args, **kwargs):
 #             # accept any additional attributes as keyword arguments
 #             super().__init__(*args, **kwargs)
+
 
 class Transaction:
     def __init__(self, order_id, shop_name, event_name, event_category, first_event, last_event, first_name, last_name,

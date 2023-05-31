@@ -58,7 +58,7 @@
                 {%if Cards %}
                     {%for card in Cards%}
                     <div class="screen">
-                        <img class="screen__preview" src="{% static 'slide-previews' + card.previewImage + '.png' %}" alt="">
+                        <img class="screen__preview" src="{% static card.imagePreview %}" alt="">
 
                         <div class="screen__info">
                             <h3 class="h3">
@@ -68,7 +68,7 @@
                             <div class="lightswitch__wrapper">
                                 <span>Don't show</span>
                                 <label class="lightswitch">                        
-                                <input class="lightswitch__input" id="bruh" name="cards" value={{card.Name}} {%if card.Toggled%} checked {%endif%} type="checkbox">
+                                <input class="lightswitch__input" id="bruh" name="cards" value="{{card.id}}" {%if card.Toggled%} checked {%endif%} type="checkbox">
                                     <div class="lightswitch__back"></div>
                                     <span class="lightswitch__slider"></span>
                                 </label>
