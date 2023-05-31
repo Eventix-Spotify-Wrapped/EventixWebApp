@@ -43,6 +43,7 @@ def Summary(request):
     }
     return render(request, "summary.html", {"event": event})
 
+
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
@@ -100,7 +101,6 @@ def Event(request, event_name, guid):
         if (owner in guid):
             preselected_cards = list(Card.objects.all().values("html_path").filter(
                 wrap=Wrap.objects.get(owner_account_id=guid)).values())
-
     if (len(preselected_cards) > 0):
         overwrite = True
   #  raise MyException()
@@ -112,7 +112,7 @@ def Event(request, event_name, guid):
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
                  "Toggled": True, })
             for card in cards:
-                if (card in preselected_cards[0]):
+                if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
             preselected_cards.pop(0)
             continue
