@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
-from EventixApp.models import Wrap, Card
+from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
@@ -42,6 +42,7 @@ def Summary(request):
         "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
+
 
 def Index(request):
     if not request.user.is_authenticated:
@@ -75,42 +76,21 @@ def Index(request):
 
 
 def Event(request, event_name, guid):
-    cards = [
-        "summary-slides/start-animation.html",
-        "summary-slides/events-organised.html",
-        "summary-slides/average-age-visitors.html",
-        "summary-slides/animated-ticket-sale-amount.html",
-        "summary-slides/date-most-ticket-sales.html",
-        "summary-slides/ticket-sale-percentage.html",
-        "summary-slides/visitor-origins.html",
-        "summary-slides/find-the-truth.html",
-        "summary-slides/end-overview.html"
-    ]
-    # cards = [
-    #     "start-animation",
-    #     "events-organised",
-    #     "average-age-visitors",
-    #     "animated-ticket-sale-amount",
-    #     "date-most-ticket-sales",
-    #     "ticket-sale-percentage",
-    #     "visitor-origins",
-    #     "find-the-truth",
-    #     "end-overview"
-    # ]
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "mock.csv")
-    most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
-        list_of_objects, event_name)
-    showup_percentage_event = StatsCalculator.StatsCalculate.calculate_showup_percentage(
-        list_of_objects, event_name)
-    average_age_event = StatsCalculator.StatsCalculate.calculate_average_age(
-        list_of_objects, event_name)
-    gender_event = StatsCalculator.StatsCalculate.calculate_gender_percentage(
-        list_of_objects, event_name)
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, event_name)
-    average_ticket_price_event = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
-        list_of_objects, event_name)
+    cards = list(CardTemplate.objects.values_list())
+    # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+    #    "mock.csv")
+    # most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
+    #    list_of_objects, event_name)
+    # showup_percentage_event = StatsCalculator.StatsCalculate.calculate_showup_percentage(
+    #    list_of_objects, event_name)
+    # average_age_event = StatsCalculator.StatsCalculate.calculate_average_age(
+    #    list_of_objects, event_name)
+    # gender_event = StatsCalculator.StatsCalculate.calculate_gender_percentage(
+    #    list_of_objects, event_name)
+    # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
+    #    list_of_objects, event_name)
+    # average_ticket_price_event = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
+    #    list_of_objects, event_name)
     name = event_name
     data = []
     completed_wraps_account_ids = Wrap.objects.values_list(
@@ -119,31 +99,29 @@ def Event(request, event_name, guid):
     overwrite = False
     for owner in completed_wraps_account_ids:
         if (owner in guid):
-            preselected_cards = list(Card.objects.all().values("name").filter(
+            preselected_cards = list(Card.objects.all().values("html_path").filter(
                 wrap=Wrap.objects.get(owner_account_id=guid)).values())
     if (len(preselected_cards) > 0):
         overwrite = True
-
-    for card in cards:
+  #  raise MyException()
+    for _ in range(len(cards)):
         if (len(preselected_cards) > 0):
             data.append(
-                {
-                    "Name": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title(),
-                    "Toggled": True,
-                    "imagePreview": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title()
-                }
-            )
+                {"id": preselected_cards[0]["html_path"],
+                    "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                 "imagePreview": preselected_cards[0]["thumbnail_path"],
+                 "Toggled": True, })
             for card in cards:
-                if (card in preselected_cards[0]):
+                if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
             preselected_cards.pop(0)
             continue
         index = random.randrange(len(cards))
-        data.append({
-                "Name": cards[index].split('/')[1].split('.')[0].replace('-', ' ').title(),
-                "Toggled": False
-            }
-        )
+        data.append({"id": cards[index][2],
+                     "Name": cards[index][2].split(
+            '/')[1].split('.')[0].replace('-', ' ').title(),
+            "imagePreview": cards[index][1],
+            "Toggled": False})
         cards.pop(index)
   #  raise MyException('msg here')
 
@@ -165,6 +143,7 @@ class MyException(Exception):
 def SaveWrap(request):
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
             owner_account_id=owner,
@@ -173,7 +152,9 @@ def SaveWrap(request):
         for card in cards:
             c = Card(
                 wrap=w,
-                name=card,
+                html_path=card,
+                thumbnail_path=CardTemplate.objects.all().values(
+                    "thumbnail_path").get(html_path=card)["thumbnail_path"],
                 context=["hey", "sup"]
             )
             c.save()
@@ -184,7 +165,9 @@ def SaveWrap(request):
         for card in cards:
             c = Card(
                 wrap=w,
-                name=card,
+                html_path=card,
+                thumbnail_path=CardTemplate.objects.all().values(
+                    "thumbnail_path").get(html_path=card)["thumbnail_path"],
                 context=["hey", "sup"]
             )
             c.save()
