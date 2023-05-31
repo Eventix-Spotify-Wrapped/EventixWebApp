@@ -10,7 +10,25 @@
         <span class="grotesk--medium">of</span>
     </div>
 
-    <img id="eventsHeldNumber" src="{% static 'demo/img/numbers/four.svg' %}" alt="">
+    <img id="events-organised-illustration" src="{% static 'demo/img/numbers/zero.svg' %}" alt="">
+
+    <script>
+        const eventsOrganised = "{{ event.eventsOrganised }}";
+        let numberIllustration = document.getElementById("events-organised-illustration");
+
+        switch (eventsOrganised) {
+            case "1": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/one.svg' %}"); break;
+            case "2": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/two.svg' %}"); break;
+            case "3": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/three.svg' %}"); break;
+            case "4": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/four.svg' %}"); break;
+            case "5": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/five.svg' %}"); break;
+            case "6": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/six.svg' %}"); break;
+            case "7": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/seven.svg' %}"); break;
+            case "8": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/eight.svg' %}"); break;
+            case "9": numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/nine.svg' %}"); break;
+            default: numberIllustration.setAttribute("src", "{% static 'demo/img/numbers/zero.svg' %}"); break;
+        }
+    </script>
 
     <div class="title title">
         <span class="grotesk--medium full" style="margin-bottom: 0;">Events this</span>

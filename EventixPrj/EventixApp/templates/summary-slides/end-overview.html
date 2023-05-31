@@ -14,10 +14,9 @@
         <span>Total of visitors</span>
         {% comment %} <img class="numbers" src="{% static 'demo/img/visitor-amount-numbers.svg' %}" alt=""> {% endcomment %}
         <div class="numbers"></div>
-        <div id="numberOfVisitorsTotal">{{ event.totalOfVisitors }}</div>
 
         <script>
-            const numberOfVisitors = document.getElementById("numberOfVisitorsTotal").innerHTML;
+            const numberOfVisitors = "{{ event.totalOfVisitors }}";
             let numbersWrapper = document.getElementsByClassName("numbers")[0];
     
             for (let i = 0; i < numberOfVisitors.length; i++) {
