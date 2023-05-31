@@ -37,6 +37,7 @@ def Summary(request):
         "totalOfVisitors": 58472,
         "ticketSaleAmount": 20025,
         "ticketSalePercentage": 92,
+        "averageAgeOfVisitors": 23,
         "cityMostVisitors": "Eindhoven",
         "provinceMostVisitors": "Noord-Brabant",
         "countryMostVisitors": "The Netherlands"
