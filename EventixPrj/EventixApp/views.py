@@ -70,13 +70,27 @@ def Index(request):
 
 def Event(request, event_name, guid):
     cards = [
-        "summary-slides/begin-slide.html",
-        "summary-slides/ticket-amount.html",
-        "summary-slides/origin-slide.html",
-        "summary-slides/ticket-percentage.html",
+        "summary-slides/start-animation.html",
+        "summary-slides/events-organised.html",
+        "summary-slides/average-age-visitors.html",
+        "summary-slides/animated-ticket-sale-amount.html",
+        "summary-slides/date-most-ticket-sales.html",
+        "summary-slides/ticket-sale-percentage.html",
+        "summary-slides/visitor-origins.html",
         "summary-slides/find-the-truth.html",
-        "summary-slides/animated-ticket-amount.html"
+        "summary-slides/end-overview.html"
     ]
+    # cards = [
+    #     "start-animation",
+    #     "events-organised",
+    #     "average-age-visitors",
+    #     "animated-ticket-sale-amount",
+    #     "date-most-ticket-sales",
+    #     "ticket-sale-percentage",
+    #     "visitor-origins",
+    #     "find-the-truth",
+    #     "end-overview"
+    # ]
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "mock.csv")
     most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
@@ -103,18 +117,27 @@ def Event(request, event_name, guid):
                 wrap=Wrap.objects.get(owner_account_id=guid)).values())
     if (len(preselected_cards) > 0):
         overwrite = True
-    for _ in range(4):
+
+    for card in cards:
         if (len(preselected_cards) > 0):
             data.append(
-                {"Name": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title(), "Toggled": True, })
+                {
+                    "Name": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                    "Toggled": True,
+                    "imagePreview": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title()
+                }
+            )
             for card in cards:
                 if (card in preselected_cards[0]):
                     cards.remove(card)
             preselected_cards.pop(0)
             continue
         index = random.randrange(len(cards))
-        data.append({"Name": cards[index].split(
-            '/')[1].split('.')[0].replace('-', ' ').title(), "Toggled": False})
+        data.append({
+                "Name": cards[index].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                "Toggled": False
+            }
+        )
         cards.pop(index)
   #  raise MyException('msg here')
 

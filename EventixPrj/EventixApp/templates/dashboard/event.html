@@ -56,27 +56,28 @@
             <form action="/savewrap">
             <div class="screens">
                 {%if Cards %}
-                {%for card in Cards%}
-                <div class="screen">
-                    <img class="screen__preview" src="{% static 'dashboard/img/summary-screens/design-0.jpg' %}" alt="">
-                    <div class="screen__info">
-                        <h3 class="h3">
-                            {{card.Name}}
-                        </h3>
-                        <p>{{card.Text}}</p>
-                        <div class="lightswitch__wrapper">
-                            <span>Don't show</span>
-                            <label class="lightswitch">                        
-                            <input class="lightswitch__input" id="bruh" name="cards" value={{card.Name}} {%if card.Toggled%} checked {%endif%} type="checkbox">
-                                <div class="lightswitch__back"></div>
-                                <span class="lightswitch__slider"></span>
-                            </label>
-                        <input type="hidden" name="owner" value={{Guid}}></input>
-                            <span>Show in summary</span>
+                    {%for card in Cards%}
+                    <div class="screen">
+                        <img class="screen__preview" src="{% static 'slide-previews' + card.previewImage + '.png' %}" alt="">
+
+                        <div class="screen__info">
+                            <h3 class="h3">
+                                {{card.Name}}
+                            </h3>
+                            <p>{{card.Text}}</p>
+                            <div class="lightswitch__wrapper">
+                                <span>Don't show</span>
+                                <label class="lightswitch">                        
+                                <input class="lightswitch__input" id="bruh" name="cards" value={{card.Name}} {%if card.Toggled%} checked {%endif%} type="checkbox">
+                                    <div class="lightswitch__back"></div>
+                                    <span class="lightswitch__slider"></span>
+                                </label>
+                            <input type="hidden" name="owner" value={{Guid}}></input>
+                                <span>Show in summary</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
                 {% endif %}
                 <div>
                     <button type="submit">{%if Overwrite%}Overwrite{%else%} Save{%endif%}</button>
