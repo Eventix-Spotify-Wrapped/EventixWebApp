@@ -1,0 +1,291 @@
+@font-face {
+  font-weight: 800;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-WideBlack.otf") format("opentype");
+}
+
+@font-face {
+  font-weight: 700;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-CompactDark.otf") format("opentype");
+}
+
+@font-face {
+  font-weight: 200;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-NarrowLight.otf") format("opentype");
+}
+
+@font-face {
+  font-weight: 300;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-SpatialFine.otf") format("opentype");
+}
+
+@font-face {
+  font-weight: 400;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-Medium.otf") format("opentype");
+}
+
+h1,
+.h1 {
+  padding: 4rem 3rem 3rem;
+  line-height: 1.3;
+  font-size: 3.4rem;
+  text-align: center;
+  padding-top: 11rem;
+}
+
+.grotesk--black {
+  font-weight: 800;
+}
+
+.grotesk--dark {
+  font-weight: 700;
+}
+
+.grotesk--light {
+  font-weight: 200;
+}
+
+.grotesk--fine {
+  font-weight: 300;
+}
+
+.grotesk--medium {
+  font-weight: 400;
+}
+
+.highlight {
+  font-size: 6rem;
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.3;
+  align-items: baseline;
+  font-size: 3.8rem;
+}
+
+.title span:not(:last-child) {
+  padding-right: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  box-sizing: border-box;
+  font-family: "Right Grotesk", sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+#app {
+  width: 36rem;
+  height: 76rem;
+  overflow: hidden;
+  position: relative;
+  background-color: #BDE3FC;
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -20rem;
+    visibility: visible;
+  }
+
+  100% {
+    bottom: -2.5rem;
+    visibility: visible;
+  }
+}
+
+@keyframes clickableLever {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  50% {
+    transform: rotateX(20deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+@keyframes activeLever {
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+.logo {
+  z-index: 3;
+  width: 16rem;
+  margin: 0 auto;
+  display: block;
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  top: 3.5rem;
+}
+
+.coin {
+  z-index: 1;
+  top: 43rem;
+  left: 15.5rem;
+  height: 5.25rem;
+  position: absolute;
+  transition: left 2s ease-in-out, top 2s ease-in-out;
+  filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2));
+}
+
+#machine {
+  width: 26rem;
+  margin: 0 auto;
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+#coin-machine {
+  margin-top: 2.5rem;
+  translate: 0.5rem 0;
+}
+
+#coin-machine-front {
+  top: 4rem;
+  left: 1.7rem;
+  width: 22rem;
+  z-index: 97;
+  position: absolute;
+  translate: 0.5rem 0;
+}
+
+#handle-holder {
+  top: 50%;
+  z-index: 2;
+  right: -0.7rem;
+  height: 5.5rem;
+  position: absolute;
+  translate: 0 -1rem;
+}
+
+.lever {
+  top: 50%;
+  right: 0;
+  z-index: 1;
+  height: 10rem;
+  position: absolute;
+  translate: 45% -9rem;
+  transform-origin: center bottom;
+  animation-delay: 3s;
+  animation: clickableLever 2s 0.5s infinite;
+}
+
+.lever--active {
+  animation: activeLever 1.25s forwards;
+}
+
+.slide {
+  height: 76rem;
+  min-width: 36rem;
+  max-width: 36rem;
+  overflow: hidden;
+  position: relative;
+  transition: margin-left 2s ease-in-out;
+}
+
+.slide:not(:first-child) {
+  padding: 3rem;
+  padding-top: 12rem;
+}
+
+.slide__wrapper {
+  display: flex;
+  background-color: #BDE3FC;
+  transition: background-color 0.75s ease-in-out;
+}
+
+.slide__wrapper * {
+  z-index: 2;
+}
+
+.slide__backfigure {
+  z-index: 0;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  visibility: hidden;
+  background-color: #2B67F5;
+  transition: background-color 0.75s ease-in-out;
+}
+
+.slide__backfigure--visible {
+  bottom: -2.5rem;
+  animation: slideUp 2.5s 0.15s forwards;
+}
+
+.netherlands {
+  top: 10rem;
+  right: -10%;
+  height: 26rem;
+  position: absolute;
+}
+
+.tickets {
+  left: 56%;
+  bottom: 7rem;
+  width: 38rem;
+  translate: -50% 0;
+  position: absolute;
+}
+
+.tickets--stack {
+  left: 50%;
+  width: 26rem;
+  bottom: 10rem;
+}
+
+.white-back {
+  top: -8rem;
+  left: -4rem;
+  z-index: 1;
+  width: 42rem;
+  height: 42rem;
+  rotate: -6deg;
+  position: absolute;
+  background-color: #ffffff;
+}
+
+.white-back--prov {
+  top: -26rem;
+}
+
+.white-back--event {
+  top: 23rem;
+  height: 26rem;
+}

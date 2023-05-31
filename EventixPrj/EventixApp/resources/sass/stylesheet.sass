@@ -1,0 +1,43 @@
+@import "defaults/typography"
+@import "defaults/variables"
+@import "defaults/base"
+@import "defaults/utilities"
+@import "defaults/animations"
+
+@import "components/slide"
+@import "components/button"
+
+@import "pages/start-slide"
+@import "pages/animated-lines"
+@import "pages/find-the-truth"
+@import "pages/visitor-origins"
+@import "pages/events-organised"
+@import "pages/average-visitors-age"
+@import "pages/date-most-ticket-sales"
+@import "pages/end-overview"
+
+.logo
+    left: 50%
+    z-index: 3
+    top: 3.5rem
+    width: 16rem
+    margin: 0 auto
+    display: block
+    position: absolute
+    translate: -50% 0
+    pointer-events: none
+
+#ticketIllustration, #ticketStack
+    position: absolute
+    transform: translateX(-50%)
+    animation: hover 5s infinite
+
+#ticketIllustration
+    left: 62.5%
+    bottom: 2rem
+    width: 50rem
+
+#ticketStack
+    left: 50%
+    width: 28rem
+    bottom: 10rem

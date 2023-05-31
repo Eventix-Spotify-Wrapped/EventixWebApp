@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <input type="file" id="uploadfile" accept=".csv" />
+    <input type="file" id="uploadfile" accept=".csv" />5
     <button id="uploadconfirm">Upload File</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -24,7 +24,7 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: function (results) {
-                    fetch('http://127.0.0.1:8000/receiveJSON', {
+                    fetch('https://7777bc65-134a-4453-b507-69f029169430.mock.pstmn.io/receiveJSON', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
