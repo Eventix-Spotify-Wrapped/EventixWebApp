@@ -3,8 +3,6 @@ from . import views
 
 urlpatterns = [
     path("panel/", views.panel, name="Panel"),
-    path("sprint2demo/", views.Sprint2Demo, name="Panel"),
-    path("xrDemo/", views.xrDemo),
     path("eventNumbers/", views.eventNumbers),
     path("ticketsTotal/", views.ticketsTotal),
     path("peakSaleDay/", views.peakSaleDay),
