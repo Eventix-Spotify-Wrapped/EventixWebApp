@@ -128,16 +128,6 @@ body {
   border: solid 2px #ffffff;
 }
 
-@keyframes slideUp {
-  0% {
-    bottom: -20rem;
-    visibility: visible;
-  }
-  100% {
-    bottom: -2.5rem;
-    visibility: visible;
-  }
-}
 @keyframes clickableLever {
   0% {
     transform: rotateX(0deg);
@@ -196,6 +186,36 @@ body {
     translate: 0rem 1rem;
   }
 }
+@keyframes rotateStar {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes numberShake {
+  0% {
+    rotate: -4deg;
+  }
+  25% {
+    rotate: -10deg;
+  }
+  75% {
+    rotate: 2deg;
+  }
+  100% {
+    rotate: -4deg;
+  }
+}
+@keyframes dutch {
+  0% {
+    right: -24rem;
+  }
+  100% {
+    right: -1rem;
+  }
+}
 .slide {
   height: 76rem;
   min-width: 36rem;
@@ -220,17 +240,15 @@ body {
   z-index: 2;
   width: 40rem;
   rotate: -6deg;
-  bottom: -2.5rem;
+  bottom: -20rem;
   height: 14.5rem;
   position: absolute;
   translate: -50% 0%;
-  visibility: hidden;
   background-color: #2C68F6;
-  transition: background-color 0.75s ease-in-out;
+  transition: background-color 0.75s ease-in-out, bottom 2.65s ease-in-out;
 }
 .slide__backfigure--visible {
   bottom: -2.5rem;
-  animation: slideUp 2.5s 0.15s forwards;
 }
 
 .white-back {
@@ -262,6 +280,10 @@ body {
 }
 .white-back--organised {
   bottom: 55%;
+}
+.white-back--end {
+  top: -61rem;
+  left: -6rem;
 }
 
 .coin {
@@ -383,11 +405,49 @@ body {
   animation: activeLever 1.25s forwards;
 }
 
-#countryIllustration {
-  top: 10rem;
-  right: -12.5%;
-  height: 26rem;
+.line {
+  height: 5.2rem;
+  position: relative;
+}
+.lines {
+  margin: 2rem -3rem;
+}
+.line:nth-child(1) {
+  background-color: #9B68F6;
+}
+.line:nth-child(1) .title {
+  animation-delay: 0.3s;
+}
+.line:nth-child(2) {
+  background-color: #F0933C;
+}
+.line:nth-child(2) .title {
+  animation-delay: 0.6s;
+}
+.line:nth-child(3) {
+  background-color: #F6F650;
+}
+.line:nth-child(3) .title {
+  animation-delay: 0.9s;
+}
+.line:nth-child(4) {
+  background-color: #6CE449;
+}
+.line:nth-child(4) .title {
+  animation-delay: 1.2s;
+}
+.line:nth-child(5) {
+  background-color: #EE7CB7;
+}
+.line:nth-child(5) .title {
+  animation-delay: 1.5s;
+}
+.line .title {
+  left: 3rem;
+  color: #ffffff;
   position: absolute;
+  animation: lineSlide 7.5s infinite;
+  transition: left 0.3s ease-out;
 }
 
 .statement {
@@ -509,49 +569,11 @@ body {
   left: -5.5rem;
 }
 
-.line {
-  height: 5.2rem;
-  position: relative;
-}
-.lines {
-  margin: 2rem -3rem;
-}
-.line:nth-child(1) {
-  background-color: #9B68F6;
-}
-.line:nth-child(1) .title {
-  animation-delay: 0.3s;
-}
-.line:nth-child(2) {
-  background-color: #F0933C;
-}
-.line:nth-child(2) .title {
-  animation-delay: 0.6s;
-}
-.line:nth-child(3) {
-  background-color: #F6F650;
-}
-.line:nth-child(3) .title {
-  animation-delay: 0.9s;
-}
-.line:nth-child(4) {
-  background-color: #6CE449;
-}
-.line:nth-child(4) .title {
-  animation-delay: 1.2s;
-}
-.line:nth-child(5) {
-  background-color: #EE7CB7;
-}
-.line:nth-child(5) .title {
-  animation-delay: 1.5s;
-}
-.line .title {
-  left: 3rem;
-  color: #ffffff;
+#countryIllustration {
+  top: 10rem;
+  right: -12.5%;
+  height: 26rem;
   position: absolute;
-  animation: lineSlide 7.5s infinite;
-  transition: left 0.3s ease-out;
 }
 
 #eventsHeldNumber {
@@ -559,6 +581,166 @@ body {
   height: 17.5rem;
   margin-left: -6rem;
   animation: hover 5s infinite;
+}
+
+.calander {
+  width: 18rem;
+  z-index: 2;
+  position: relative;
+  transform: scale(5.5);
+  transform-origin: center 80%;
+  animation: hover 5s infinite;
+  transition: transform 1s ease-in;
+}
+.calander--normal {
+  transform: scale(1);
+}
+.calander__wrapper {
+  display: flex;
+  margin-top: 6.5rem;
+  position: relative;
+  justify-content: center;
+}
+.calander__ghost {
+  top: 50%;
+  z-index: 1;
+  width: 10rem;
+  opacity: 0.5;
+  translate: 0 -50%;
+  position: absolute;
+}
+.calander__ghost:first-of-type {
+  left: -5rem;
+  translate: 0 -30%;
+}
+.calander__ghost:last-of-type {
+  right: -5rem;
+}
+
+.date {
+  top: 61%;
+  left: 54%;
+  z-index: 3;
+  opacity: 0;
+  rotate: -6deg;
+  position: absolute;
+  transform: translate(calc(-50% + 0.75rem), -50%);
+  transition: opacity 1s ease-in-out;
+  animation: hover 5s infinite;
+}
+.date--show {
+  opacity: 1;
+}
+.date span:first-child {
+  font-size: 5rem;
+  margin-bottom: -1.5rem;
+}
+
+#end-overview {
+  padding-top: 3rem;
+}
+#end-overview .slide__backfigure {
+  top: -6.5rem;
+  bottom: initial;
+  position: relative;
+  padding: 3rem 3rem 2.5rem 4.75rem;
+}
+#end-overview .slide__backfigure .title {
+  height: 100%;
+  text-align: left;
+  max-width: 19rem;
+  align-items: flex-end;
+  word-break: break-word;
+  justify-content: flex-start;
+}
+#end-overview .slide__backfigure span {
+  padding-right: 0;
+  font-size: 3.2rem;
+  color: #ffffff;
+}
+#end-overview #end-overview-machine {
+  top: 3rem;
+  right: 3rem;
+  width: 9.5rem;
+  z-index: 2;
+  position: absolute;
+}
+#end-overview #end-slide-star {
+  left: 50%;
+  z-index: 3;
+  width: 19rem;
+  top: 16rem;
+  translate: -50% 0;
+  position: absolute;
+  animation: rotateStar 12.5s linear infinite;
+}
+#end-overview .end-visitors {
+  z-index: 3;
+  position: relative;
+  margin-top: 3.25rem;
+}
+#end-overview .end-visitors span {
+  top: -3.75rem;
+  rotate: -8deg;
+  font-size: 3.6rem;
+  font-weight: 700;
+  position: absolute;
+  font-family: "Right Grotesk";
+}
+#end-overview .end-visitors .numbers {
+  animation: numberShake 5s linear infinite;
+}
+#end-overview .end-information {
+  display: flex;
+  margin-top: 13rem;
+  flex-direction: column;
+}
+#end-overview .end-information__item {
+  max-width: 18rem;
+}
+#end-overview .end-information__item:first-child span:nth-child(2) {
+  color: #2C68F6;
+}
+#end-overview .end-information__item span {
+  display: block;
+}
+#end-overview .end-information__item span:nth-child(2) {
+  font-size: 2rem;
+  margin-top: 0.25rem;
+}
+#end-overview .end-information__item:not(:last-child) {
+  margin-bottom: 2rem;
+}
+#end-overview #end-country-illustration {
+  top: 42.5rem;
+  right: -1rem;
+  height: 21rem;
+  position: absolute;
+  animation: dutch 2s;
+}
+#end-overview .end-bottom {
+  bottom: 3rem;
+  display: flex;
+  position: absolute;
+  align-items: baseline;
+  width: calc(100% - 6rem);
+  justify-content: space-between;
+}
+#end-overview .end-bottom .end-logo {
+  display: block;
+  height: 3.25rem;
+}
+#end-overview .end-bottom .icons {
+  display: flex;
+}
+#end-overview .end-bottom .icons .icon {
+  height: 2.6rem;
+  display: block;
+  fill: #000000;
+}
+#end-overview .end-bottom .icons .icon:not(:last-child) {
+  font-weight: 700;
+  margin-right: 1.75rem;
 }
 
 .logo {
