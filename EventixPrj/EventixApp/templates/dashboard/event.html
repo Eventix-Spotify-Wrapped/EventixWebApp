@@ -65,10 +65,10 @@
                                 {{card.Name}}
                             </h3>
                             <p>{{card.Text}}</p>
-                            <div class="lightswitch__wrapper">
+                            <div  {%if card.Name == "Start Animation"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                                 <span>Don't show</span>
                                 <label class="lightswitch">                        
-                                <input class="lightswitch__input" id="bruh" name="cards" value="{{card.id}}" {%if card.Toggled%} checked {%endif%} type="checkbox">
+                                <input class="lightswitch__input" id="bruh" name="cards" value="{{card.id}}" {%if card.Toggled or 'Start Animation' in card.Name or 'End Overview' in card.Name%} checked {%endif%} type="checkbox">
                                     <div class="lightswitch__back"></div>
                                     <span class="lightswitch__slider"></span>
                                 </label>

@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("panel/", views.panel, name="Panel"),
     path("", views.Summary, name="Panel"),
+    path("summary2/<account_id>", views.Summary2),
     path("create/", views.Create),
     path("finalize/", views.Finalize),
     path("event/<guid>/<event_name>/", views.Event),
@@ -19,5 +20,5 @@ urlpatterns = [
     path("generateCSV/", views.GenerateCSV),
     path("stef/", views.Stef),
     path("slideshow/", views.Slideshow),
-    path("savewrap/", views.SaveWrap)
+    path("savewrap/", views.SaveWrap),
 ]
