@@ -1,0 +1,50 @@
+.calander 
+    width: 18rem
+    z-index: 2
+    position: relative
+    transform: scale(5.5)
+    transform-origin: center 80%
+    animation: hover 5s infinite
+    transition: transform 1s ease-in
+    
+    &--normal
+        transform: scale(1)
+    
+    &__wrapper
+        display: flex
+        margin-top: 6.5rem
+        position: relative
+        justify-content: center
+
+    &__ghost
+        top: 50%
+        z-index: 1
+        width: 10rem
+        opacity: 0.5
+        translate: 0 -50%
+        position: absolute
+
+        &:first-of-type
+            left: -5rem
+            translate: 0 -30%
+
+        &:last-of-type
+            right: -5rem
+
+.date
+    top: 61%
+    left: 54%
+    z-index: 3
+    opacity: 0
+    rotate: -6deg
+    position: absolute
+    transform: translate(calc(-50% + .75rem), -50%)
+    transition: opacity 1s ease-in-out
+    animation: hover 5s infinite
+    
+    &--show
+        opacity: 1
+
+    span:first-child
+        font-size: 5rem
+        margin-bottom: -1.5rem

@@ -2,11 +2,15 @@
 import { CountUp } from 'countup.js';
 
 // Get slideColors from the JSON
-fetch('/static/js/slideColors.json').then((response) => response.json()).then((json) => main(json));
+fetch('/static/js/slideColors.json').then(
+    (response) => response.json()
+).then(
+    (json) => main(json)
+);
 
 async function main (slideColors) {
     // Data variables
-    let startFromSlide = 0;
+    let startFromSlide = 1;
     const coinNavigation = true;
     let slideIndex = startFromSlide;
 
@@ -154,12 +158,16 @@ async function main (slideColors) {
         startSlide.style.marginLeft = (slideIndex * -36) + "rem";
 
         switch (slides[slideIndex].id) {
+            case "average-age-visitors":
+                setTimeout(() => document.getElementsByClassName("visitor-cards")[0].classList.add("visitor-cards--show"), 1600);
+            break;
+
             case "date-most-ticket-sales":
                 setTimeout(() => {
                     // Start the calander animation
                     document.getElementById("calander-illustration").classList.add("calander--normal");
                     setTimeout(() => document.getElementsByClassName("date")[0].classList.add("date--show"), 1000);
-                }, 1750);
+                }, 1600);
             break;
 
             case "ticket-sale-percentage":
@@ -182,11 +190,11 @@ async function main (slideColors) {
             break;
         }
 
+        // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
         centerCoins();
     }
 
     function centerCoins () {
-        // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
         coinLeftRemValue = (36 - (coins.length - slideIndex) * 4) / 2 - 0.4;
         for (let i = slideIndex; i < coins.length; i++) {
             coins[i].style.left = coinLeftRemValue + "rem";
