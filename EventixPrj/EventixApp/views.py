@@ -7,18 +7,15 @@ from django.http import JsonResponse
 from .TrendReader import TrendReader
 from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
-from .StatsCalculate import calculate_showup_percentage, calculate_total_revenue_event, calculate_total_revenue_event, \
-    calculate_city_percentage, create_list_of_objects, calculate_average_age, calculate_gender_percentage, \
-    calculate_average_ticket_price
+
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
 from EventixApp.models import Wrap, Card
 import pdb
-
 import random
-from .StatsCalculate import get_events_name_list, get_events_name_guid_keypair
+from . import StatsCalculator
 # Create your views here.
 
 
@@ -48,7 +45,7 @@ def Summary(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
-    total_events_nameguid_keypair = get_events_name_guid_keypair()
+    total_events_nameguid_keypair = StatsCalculator.StatsCalculate.get_events_name_guid_keypair()
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
     for ng_kp in total_events_nameguid_keypair:
@@ -78,26 +75,40 @@ def Index(request):
 
 def Event(request, event_name, guid):
     cards = [
-        "summary-slides/begin-slide.html",
-        "summary-slides/ticket-amount.html",
-        "summary-slides/origin-slide.html",
-        "summary-slides/ticket-percentage.html",
+        "summary-slides/start-animation.html",
+        "summary-slides/events-organised.html",
+        "summary-slides/average-age-visitors.html",
+        "summary-slides/animated-ticket-sale-amount.html",
+        "summary-slides/date-most-ticket-sales.html",
+        "summary-slides/ticket-sale-percentage.html",
+        "summary-slides/visitor-origins.html",
         "summary-slides/find-the-truth.html",
-        "summary-slides/animated-ticket-amount.html"
+        "summary-slides/end-overview.html"
     ]
-    list_of_objects = create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    most_popular_city_event = calculate_city_percentage(    
+    # cards = [
+    #     "start-animation",
+    #     "events-organised",
+    #     "average-age-visitors",
+    #     "animated-ticket-sale-amount",
+    #     "date-most-ticket-sales",
+    #     "ticket-sale-percentage",
+    #     "visitor-origins",
+    #     "find-the-truth",
+    #     "end-overview"
+    # ]
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "mock.csv")
+    most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
         list_of_objects, event_name)
-    showup_percentage_event = calculate_showup_percentage(
+    showup_percentage_event = StatsCalculator.StatsCalculate.calculate_showup_percentage(
         list_of_objects, event_name)
-    average_age_event = calculate_average_age(
+    average_age_event = StatsCalculator.StatsCalculate.calculate_average_age(
         list_of_objects, event_name)
-    gender_event = calculate_gender_percentage(
+    gender_event = StatsCalculator.StatsCalculate.calculate_gender_percentage(
         list_of_objects, event_name)
-    total_revenue_event = calculate_total_revenue_event(
+    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
         list_of_objects, event_name)
-    average_ticket_price_event = calculate_average_ticket_price(
+    average_ticket_price_event = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
         list_of_objects, event_name)
     name = event_name
     data = []
@@ -111,21 +122,39 @@ def Event(request, event_name, guid):
                 wrap=Wrap.objects.get(owner_account_id=guid)).values())
     if (len(preselected_cards) > 0):
         overwrite = True
-    for _ in range(4):
+
+    for card in cards:
         if (len(preselected_cards) > 0):
             data.append(
-                {"Name": preselected_cards[0], "Toggled": True})
+                {
+                    "Name": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                    "Toggled": True,
+                    "imagePreview": preselected_cards[0]["name"].split('/')[1].split('.')[0].replace('-', ' ').title()
+                }
+            )
             for card in cards:
                 if (card in preselected_cards[0]):
                     cards.remove(card)
             preselected_cards.pop(0)
             continue
         index = random.randrange(len(cards))
-        data.append({"Name": cards[index], "Toggled": False})
+        data.append({
+                "Name": cards[index].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                "Toggled": False
+            }
+        )
         cards.pop(index)
   #  raise MyException('msg here')
 
     return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+def CalculateInsightForCardName(cardname):
+    bruh = ["Template"]
+    return bruh[0]
+    funct = getattr(StatsCalculator.StatsCalculate, cardname)
+    result = funct()
+    return result
 
 
 class MyException(Exception):
@@ -250,31 +279,31 @@ def GetOrganizers(request):
 
 
 def Stef(request):
-    list_of_objects = create_list_of_objects(
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
-    most_popular_city_event1 = calculate_city_percentage(
+    most_popular_city_event1 = StatsCalculator.StatsCalculate.calculate_city_percentage(
         list_of_objects, 'Data preview 2016')
-    most_popular_city_event2 = calculate_city_percentage(
+    most_popular_city_event2 = StatsCalculator.StatsCalculate.calculate_city_percentage(
         list_of_objects, 'Data preview 2017')
-    showup_percentage_event1 = calculate_showup_percentage(
+    showup_percentage_event1 = StatsCalculator.StatsCalculate.calculate_showup_percentage(
         list_of_objects, 'Data preview 2016')
-    showup_percentage_event2 = calculate_showup_percentage(
+    showup_percentage_event2 = StatsCalculator.StatsCalculate.calculate_showup_percentage(
         list_of_objects, 'Data preview 2017')
-    average_age_event1 = calculate_average_age(
+    average_age_event1 = StatsCalculator.StatsCalculate.calculate_average_age(
         list_of_objects, 'Data preview 2016')
-    average_age_event2 = calculate_average_age(
+    average_age_event2 = StatsCalculator.StatsCalculate.calculate_average_age(
         list_of_objects, 'Data preview 2017')
-    gender_event1 = calculate_gender_percentage(
+    gender_event1 = StatsCalculator.StatsCalculate.calculate_gender_percentage(
         list_of_objects, 'Data preview 2016')
-    gender_event2 = calculate_gender_percentage(
+    gender_event2 = StatsCalculator.StatsCalculate.calculate_gender_percentage(
         list_of_objects, 'Data preview 2017')
-    total_revenue_event1 = calculate_total_revenue_event(
+    total_revenue_event1 = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
         list_of_objects, 'Data preview 2016')
-    average_ticket_price_event1 = calculate_average_ticket_price(
+    average_ticket_price_event1 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
         list_of_objects, 'Data preview 2016')
-    total_revenue_event2 = calculate_total_revenue_event(
+    total_revenue_event2 = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
         list_of_objects, 'Data preview 2017')
-    average_ticket_price_event2 = calculate_average_ticket_price(
+    average_ticket_price_event2 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
         list_of_objects, 'Data preview 2017')
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,

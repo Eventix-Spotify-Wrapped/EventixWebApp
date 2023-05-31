@@ -22,7 +22,7 @@ async function main (slideColors) {
     const amountOfSlides = slides.length;
 
     // Calculate the left value so the coins are centered when placed
-    let coinsWidth = (amountOfSlides - slideIndex) * 4;
+    let coinsWidth = (amountOfSlides - slideIndex - 1) * 4;
     let coinLeftRemValue = (36 - coinsWidth) / 2 - 0.4;
 
     // Determine from which slide to start and start the summary accordingly
@@ -103,7 +103,7 @@ async function main (slideColors) {
         // Add all coins to array
         if (coinNavigation) {
             coins[0].style.display = "block";
-            for (let i = 0; i < (amountOfSlides - slideIndex - 1); i++) {
+            for (let i = 0; i < (amountOfSlides - slideIndex - 2); i++) {
                 let coin = app.appendChild(coins[0].cloneNode(true));
                 coin.style.display = "block";
                 coins.push(coin);
@@ -182,6 +182,10 @@ async function main (slideColors) {
             break;
         }
 
+        centerCoins();
+    }
+
+    function centerCoins () {
         // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
         coinLeftRemValue = (36 - (coins.length - slideIndex) * 4) / 2 - 0.4;
         for (let i = slideIndex; i < coins.length; i++) {
