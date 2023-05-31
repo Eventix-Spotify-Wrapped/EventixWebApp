@@ -25,17 +25,23 @@ def panel(request):
 
 
 def Summary(request):
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "ticketing_export_2023_03_24_11_27_16.csv")
+    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
+        list_of_objects, "Data preview 2016")
     event = {
+        "totalRevenue": total_revenue_event,
         "name": "Wish Outdoor",
-        "ticketSaleAmount": 20025,
+        "eventsOrganised": 8,
         "visitorPercentage": 85,
+        "totalOfVisitors": 58472,
+        "ticketSaleAmount": 20025,
         "ticketSalePercentage": 92,
-        "countryMostVisitors": "The Netherlands",
         "cityMostVisitors": "Eindhoven",
-        "provinceMostVisitors": "Noord-Brabant"
+        "provinceMostVisitors": "Noord-Brabant",
+        "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
-
 
 def Index(request):
     if not request.user.is_authenticated:

@@ -2,7 +2,11 @@
 import { CountUp } from 'countup.js';
 
 // Get slideColors from the JSON
-fetch('/static/js/slideColors.json').then((response) => response.json()).then((json) => main(json));
+fetch('/static/js/slideColors.json').then(
+    (response) => response.json()
+).then(
+    (json) => main(json)
+);
 
 async function main (slideColors) {
     // Data variables
@@ -22,7 +26,7 @@ async function main (slideColors) {
     const amountOfSlides = slides.length;
 
     // Calculate the left value so the coins are centered when placed
-    let coinsWidth = (amountOfSlides - slideIndex) * 4;
+    let coinsWidth = (amountOfSlides - slideIndex - 1) * 4;
     let coinLeftRemValue = (36 - coinsWidth) / 2 - 0.4;
 
     // Determine from which slide to start and start the summary accordingly
@@ -49,7 +53,7 @@ async function main (slideColors) {
         findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "4.5rem";
 
         // Give error classes to all statements
-        for (let i = 0; i < statements.length; i++) statements[i].classList.add("statement--error")
+        for (let i = 0; i < statements.length; i++) statements[i].classList.add("statement--error");
 
         // Give the right statement the right class (hardcoded for now)
         statements[0].classList.add("statement--check");
@@ -57,16 +61,21 @@ async function main (slideColors) {
         // Eventlistener to show the slide with validation of the statemnt
         document.getElementById("find-the-truth").addEventListener("click", () => {
 
-            // Hide all answers that are not the right one or clarification
-            for (let i = 0; i < statements.length; i++) if (!statements[i].classList.contains("statement--check")) statements[i].style.display = "none";
+            // Get the chosen statements and hide all the ones that were not chosen
+            let chosenStatement;
+            for (let o = 0; o < document.getElementsByClassName("statement__input").length; o++) {
+                if (document.getElementsByClassName("statement__input")[o].checked) chosenStatement = document.getElementsByClassName("statement__input")[o];
+                else document.getElementsByClassName("statement__input")[o].parentElement.style.display = "none";
+            };
             
             // Hide the search glass illustration
             findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "-20rem";
 
-            // Show the correctionbox with the celebratory illustration
+            // Show the correctionbox with the celebratory (wrong indicating) illustration
             setTimeout(() => {
-                findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active")
-                findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active")
+                findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active");
+                if (chosenStatement.parentElement.classList.contains("statement--check")) findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active");
+                else findTheTruth.getElementsByClassName("wrong-illustration")[0].classList.add("wrong-illustration--active");
             }, 500);
 
             // Go the next slide when clicking on the current slide
@@ -103,7 +112,7 @@ async function main (slideColors) {
         // Add all coins to array
         if (coinNavigation) {
             coins[0].style.display = "block";
-            for (let i = 0; i < (amountOfSlides - slideIndex - 1); i++) {
+            for (let i = 0; i < (amountOfSlides - slideIndex - 2); i++) {
                 let coin = app.appendChild(coins[0].cloneNode(true));
                 coin.style.display = "block";
                 coins.push(coin);
@@ -154,12 +163,17 @@ async function main (slideColors) {
         startSlide.style.marginLeft = (slideIndex * -36) + "rem";
 
         switch (slides[slideIndex].id) {
+            case "average-age-visitors":
+                // Start the animation with the upsliding visitor cards
+                setTimeout(() => document.getElementsByClassName("visitor-cards")[0].classList.add("visitor-cards--show"), 1600);
+            break;
+
             case "date-most-ticket-sales":
                 setTimeout(() => {
                     // Start the calander animation
                     document.getElementById("calander-illustration").classList.add("calander--normal");
                     setTimeout(() => document.getElementsByClassName("date")[0].classList.add("date--show"), 1000);
-                }, 1750);
+                }, 1600);
             break;
 
             case "ticket-sale-percentage":
@@ -183,6 +197,10 @@ async function main (slideColors) {
         }
 
         // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
+        centerCoins();
+    }
+
+    function centerCoins () {
         coinLeftRemValue = (36 - (coins.length - slideIndex) * 4) / 2 - 0.4;
         for (let i = slideIndex; i < coins.length; i++) {
             coins[i].style.left = coinLeftRemValue + "rem";
