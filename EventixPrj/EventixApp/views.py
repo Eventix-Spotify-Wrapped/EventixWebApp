@@ -24,6 +24,33 @@ def panel(request):
     return HttpResponse(template.render())
 
 
+def Summary2(request, account_id):
+    if not Wrap.objects.filter(owner_account_id=account_id).exists():
+        return HttpResponse("Sorry, your wrap is not ready!")
+    wrap = Wrap.objects.get(owner_account_id=account_id)
+    cards = Card.objects.filter(wrap=wrap).values("html_path")
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "mock.csv")
+    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
+        list_of_objects, "Data preview 2016")
+    event = {
+        "totalRevenue": total_revenue_event,
+        "name": "Wish Outdoor",
+        "eventsOrganised": 8,
+        "visitorPercentage": 85,
+        "totalOfVisitors": 58472,
+        "ticketSaleAmount": 20025,
+        "ticketSalePercentage": 92,
+        "cityMostVisitors": "Eindhoven",
+        "provinceMostVisitors": "Noord-Brabant",
+        "countryMostVisitors": "The Netherlands"
+    }
+
+    slides = list(cards)
+
+    return render(request, "summary2.html", {"event": event, "slides": slides})
+
+
 def Summary(request):
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
@@ -77,7 +104,8 @@ def Index(request):
 
 
 def Event(request, event_name, guid):
-    cards = list(CardTemplate.objects.values_list())
+    cards = list(CardTemplate.objects.values_list().order_by("id"))
+
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
     # most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
@@ -117,7 +145,7 @@ def Event(request, event_name, guid):
                     cards.remove(card)
             preselected_cards.pop(0)
             continue
-        index = random.randrange(len(cards))
+        index = 0
         data.append({"id": cards[index][2],
                      "Name": cards[index][2].split(
             '/')[1].split('.')[0].replace('-', ' ').title(),
