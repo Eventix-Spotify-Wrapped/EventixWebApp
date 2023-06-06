@@ -1,0 +1,1046 @@
+@font-face {
+  font-weight: 800;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-WideBlack.otf") format("opentype");
+}
+@font-face {
+  font-weight: 700;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-CompactDark.otf") format("opentype");
+}
+@font-face {
+  font-weight: 200;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-NarrowLight.otf") format("opentype");
+}
+@font-face {
+  font-weight: 300;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-SpatialFine.otf") format("opentype");
+}
+@font-face {
+  font-weight: 400;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-Medium.otf") format("opentype");
+}
+@font-face {
+  font-weight: 500;
+  font-family: "Suisse";
+  src: url("../font/suisse/SuisseIntl-Medium.ttf") format("opentype");
+}
+@font-face {
+  font-weight: 210;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-Light.otf") format("opentype");
+}
+@font-face {
+  font-weight: 900;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-SpatialBlack.otf") format("opentype");
+}
+@font-face {
+  font-weight: 220;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-TallFine.otf") format("opentype");
+}
+@font-face {
+  font-weight: 410;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-TallRegular.otf") format("opentype");
+}
+@font-face {
+  font-weight: 420;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-TightMedium.otf") format("opentype");
+}
+@font-face {
+  font-weight: 600;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-WideMedium.otf") format("opentype");
+}
+@font-face {
+  font-weight: 810;
+  font-family: "Right Grotesk";
+  src: url("../font/right-grotesk/PPRightGrotesk-CompactBlack.otf") format("opentype");
+}
+.grotesk--wideBlack {
+  font-weight: 800;
+}
+.grotesk--compactDark {
+  font-weight: 700;
+}
+.grotesk--narrowLight {
+  font-weight: 200;
+}
+.grotesk--spatialFine {
+  font-weight: 300;
+}
+.grotesk--medium {
+  font-weight: 400;
+}
+.grotesk--light {
+  font-weight: 210;
+}
+.grotesk--spatialBlack {
+  font-weight: 900;
+}
+.grotesk--tallFine {
+  font-weight: 220;
+}
+.grotesk--tallRegular {
+  font-weight: 410;
+}
+.grotesk--tightMedium {
+  font-weight: 420;
+}
+.grotesk--wideMedium {
+  font-weight: 600;
+}
+.grotesk--compactBlack {
+  font-weight: 810;
+}
+
+.highlight {
+  font-size: 6rem;
+}
+
+.info {
+  z-index: 1;
+  display: block;
+  flex-wrap: wrap;
+  line-height: 1.3;
+  font-size: 6.5rem;
+  text-align: center;
+  margin: 1.5rem 1rem;
+  font-family: "Right Grotesk", sans-serif;
+  animation: show 1s;
+}
+.info span:not(:last-child) {
+  padding-right: 1rem;
+}
+.info--events {
+  z-index: 2;
+  position: absolute;
+  flex-wrap: wrap;
+  line-height: 1.3;
+  font-size: 6.5rem;
+  text-align: center;
+  top: 50%;
+  left: 26%;
+  animation: show 3s 2s;
+  animation-fill-mode: backwards;
+  font-family: "Right Grotesk", sans-serif;
+}
+
+.infoTT {
+  position: absolute;
+  z-index: 1;
+  flex-wrap: wrap;
+  line-height: 1.3;
+  font-size: 6.5rem;
+  text-align: left;
+  margin: 3rem 2rem;
+  font-family: "Right Grotesk", sans-serif;
+  animation: show 2s;
+  animation-fill-mode: backwards;
+}
+.infoTT--ticketsInT {
+  font-size: 5rem;
+  position: relative;
+  flex-wrap: wrap;
+  text-align: left;
+  top: 7rem;
+  animation: show 2s 1s;
+  animation-fill-mode: backwards;
+}
+
+.infoPS--date {
+  z-index: 1;
+  position: absolute;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  font-size: 8rem;
+  text-align: center;
+  bottom: 20%;
+  left: 8%;
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
+.infoPS--month {
+  z-index: 1;
+  position: absolute;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  font-size: 6.5rem;
+  text-align: center;
+  bottom: 20%;
+  left: 5%;
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoSU {
+  position: absolute;
+  z-index: 1;
+  flex-wrap: wrap;
+  line-height: 1.5;
+  font-size: 6rem;
+  text-align: right;
+  margin: 3rem 2rem;
+  bottom: 22%;
+  font-family: "Right Grotesk", sans-serif;
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoVI {
+  z-index: 1;
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scollingVI 10s infinite;
+  animation-fill-mode: backwards;
+  position: absolute;
+  top: 5%;
+  font-size: 8rem;
+  font-family: "Right Grotesk", sans-serif;
+}
+
+.infoVIM {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  margin: 3rem 2rem;
+  font-size: 5rem;
+  font-family: "Right Grotesk", sans-serif;
+  animation: rightEnter 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoVA {
+  z-index: 1;
+  position: relative;
+  font-family: "Right Grotesk", sans-serif;
+  top: 50%;
+  font-size: 3rem;
+  text-align: center;
+  animation: show 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoVA2 {
+  z-index: 1;
+  position: relative;
+  font-family: "Right Grotesk", sans-serif;
+  top: 5%;
+  font-size: 4.5rem;
+  text-align: center;
+  animation: show 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoCL {
+  position: absolute;
+  z-index: 1;
+  min-width: 100%;
+  flex-wrap: wrap;
+  line-height: 1.5;
+  font-size: 4rem;
+  text-align: right;
+  margin: 3rem 2rem;
+  left: -12%;
+  top: 16%;
+  font-family: "Right Grotesk", sans-serif;
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  font-size: 1.6rem;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  font-family: "Suisse", sans-serif;
+}
+
+#app {
+  width: 36rem;
+  height: 76rem;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff;
+}
+
+@keyframes scolling {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(calc(36rem - 200%));
+  }
+}
+@keyframes scollingVI {
+  0% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(calc(36rem - 120%));
+  }
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(1rem);
+  }
+}
+@keyframes leftEnter {
+  0% {
+    transform: translateX(-120%);
+  }
+  80% {
+    transform: translateX(5%);
+  }
+  85% {
+    transform: translateX(-5%);
+  }
+  90% {
+    transform: translateX(5%);
+  }
+  95% {
+    transform: translateX(-5%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes rightEnter {
+  0% {
+    transform: translateX(120%);
+  }
+  80% {
+    transform: translateX(-5%);
+  }
+  85% {
+    transform: translateX(5%);
+  }
+  90% {
+    transform: translateX(-5%);
+  }
+  95% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes scollingUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+@keyframes scollingUpCopy {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 100%;
+  }
+}
+@keyframes spining1 {
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+@keyframes spining2 {
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: -360deg;
+  }
+}
+@keyframes scollingDown {
+  0% {
+    transform: translateY(-15%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 100%;
+  }
+}
+.coin {
+  z-index: 2;
+  top: 68rem;
+  left: 15.5rem;
+  height: 5.25rem;
+  position: absolute;
+  transition: left 2s ease-in-out, top 2s ease-in-out;
+  filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.2));
+}
+
+.slide {
+  height: 76rem;
+  min-width: 36rem;
+  overflow: hidden;
+  position: relative;
+  transition: margin-left 2s ease-in-out;
+  background-color: #ffffff;
+}
+.slide__backfigureEventNumbers {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #FFD894;
+}
+.slide__backgroundEventNumbers {
+  z-index: 0;
+  left: 55%;
+  width: 45rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 50rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #FFEBC9;
+}
+.slide__backfigureTicketsTotal {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #FFD894;
+}
+.slide__backgroundTicketsTotal {
+  z-index: 0;
+  width: 60%;
+  height: 55%;
+  top: 0;
+  position: absolute;
+  translate: calc(36rem - 100%);
+  background-color: #FFEBC9;
+}
+.slide__backfigurePeakSale {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #F0D8FF;
+}
+.slide__backgroundPeakSaleD {
+  z-index: 0;
+  width: 25rem;
+  height: 25rem;
+  left: 10%;
+  top: 30%;
+  position: absolute;
+  background-color: #F7EBFF;
+  animation: leftEnter 2s 1s;
+  animation-fill-mode: backwards;
+}
+.slide__backgroundPeakSaleD2 {
+  z-index: 1;
+  width: 28rem;
+  height: auto;
+  left: 13%;
+  top: 25%;
+  position: absolute;
+  animation: rightEnter 2s 1s;
+  animation-fill-mode: backwards;
+}
+.slide__ticketsLike {
+  z-index: 1;
+  position: absolute;
+  right: 30%;
+  bottom: 35%;
+  animation: leftEnter 2s 1s backwards, bounce 2s ease-in-out 3s infinite alternate none;
+}
+.slide__backgroundPeakSaleM {
+  z-index: 0;
+  width: 25rem;
+  height: 25rem;
+  top: 23%;
+  translate: calc(36rem - 100%);
+  position: absolute;
+  background-color: #F7EBFF;
+  animation: rightEnter 2s 1s;
+  animation-fill-mode: backwards;
+}
+.slide__backgroundPeakSaleM2 {
+  z-index: 1;
+  width: 23rem;
+  height: auto;
+  left: 2%;
+  top: 35%;
+  position: absolute;
+  animation: leftEnter 2s 1s;
+  animation-fill-mode: backwards;
+}
+.slide__ticketsLike2 {
+  z-index: 1;
+  position: absolute;
+  left: 26%;
+  bottom: 40%;
+  animation: rightEnter 2s 1s backwards, bounce 2s ease-in-out 3s infinite alternate none;
+}
+.slide__backfigureShowUp {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #FFE4F4;
+}
+.slide__backgroundShowUp {
+  z-index: 0;
+  width: 85%;
+  height: 55%;
+  top: 20%;
+  position: absolute;
+  translate: calc(36rem - 100%);
+  background-color: #FFE4F4;
+  animation: rightEnter 1s;
+}
+.slide__backgroundCircle1 {
+  z-index: 0;
+  width: 20rem;
+  height: auto;
+  top: -10%;
+  left: -5%;
+  position: absolute;
+  animation: spining2 8s linear 1s infinite;
+  animation-fill-mode: backwards;
+}
+.slide__backgroundCircle2 {
+  z-index: 0;
+  width: 30rem;
+  height: auto;
+  top: 10%;
+  left: 40%;
+  position: absolute;
+  animation: spining1 10s linear 1s infinite;
+  animation-fill-mode: backwards;
+}
+.slide__backgroundCircle3 {
+  z-index: 0;
+  width: 35rem;
+  height: auto;
+  top: 60%;
+  left: -10%;
+  position: absolute;
+  animation: spining1 10s linear 1s infinite;
+  animation-fill-mode: backwards;
+}
+.slide__backfigureVisitorsInfo {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #FFCAE9;
+}
+.slide__backgroundVisitorsInfo {
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #FFE4F4;
+}
+.slide__earth {
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  animation: leftEnter 2s backwards, bounce 2s ease-in-out 2s infinite alternate none;
+}
+.slide__backgroundVisitorsInfo2 {
+  z-index: 0;
+  width: 100%;
+  height: 65%;
+  top: 25%;
+  position: absolute;
+  background-color: #FFE4F4;
+}
+.slide__map {
+  z-index: 1;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  animation: rightEnter 2s backwards, bounce 2s ease-in-out 3s infinite alternate none;
+}
+.slide__pinkBg {
+  z-index: 0;
+  width: 80%;
+  height: auto;
+  left: 10%;
+  top: 4%;
+  position: absolute;
+}
+.slide__cards {
+  z-index: 0;
+  width: 60%;
+  height: auto;
+  left: 20%;
+  top: 8%;
+  position: absolute;
+  animation: scollingDown 2s backwards, bounce 2s ease-in-out 2s infinite alternate none;
+}
+.slide__backfigureVisitorsAge {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #B3E5FF;
+}
+.slide__backgroundVisitorsAge {
+  z-index: 0;
+  width: 100%;
+  height: 50%;
+  top: 0;
+  position: absolute;
+  background-color: #D9F2FF;
+}
+.slide__backfigureCusL {
+  z-index: 1;
+  left: 50%;
+  width: 40rem;
+  rotate: -6deg;
+  bottom: -2.5rem;
+  height: 14.5rem;
+  position: absolute;
+  translate: -50% 0%;
+  background-color: #F0D8FF;
+}
+.slide__backgroundCusL {
+  z-index: 0;
+  width: 60%;
+  height: 50%;
+  top: 0;
+  position: absolute;
+  background-color: #F7EBFF;
+}
+
+.illuNo--eventsNumber {
+  z-index: 1;
+  position: absolute;
+  width: 60%;
+  left: 3rem;
+  animation: show 2s 1s, bounce 2s ease-in-out 3s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.illuNo--ticketTotal {
+  z-index: 1;
+  position: absolute;
+  top: 25%;
+  width: 30%;
+  left: 3rem;
+  display: flex;
+  animation: show 2s 1s, bounce 2s ease-in-out 3s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.illuNo--showUp {
+  z-index: 1;
+  position: absolute;
+  transform: translateX(-10%);
+  top: 20%;
+  animation: show 2s 1s, bounce 2s ease-in-out 3s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.illuNo--showUp--1 {
+  z-index: 1;
+  position: absolute;
+  transform: translate(-30%, 20%);
+}
+.illuNo--showUp--2 {
+  z-index: 0;
+  position: absolute;
+  transform: translate(40%, 10%);
+}
+.illuNo--showUp--pct {
+  z-index: -1;
+  position: absolute;
+  transform: translate(175%, 105%);
+}
+.illuNo--age {
+  z-index: 1;
+  position: absolute;
+  transform: translateX(-10%);
+  bottom: 45%;
+  left: 20%;
+  animation: show 2s 1s;
+  animation-fill-mode: backwards;
+}
+.illuNo--age--1 {
+  z-index: 1;
+  position: absolute;
+  transform: translate(-30%, 20%);
+}
+.illuNo--age--2 {
+  z-index: 0;
+  position: absolute;
+  transform: translate(40%, 10%);
+}
+.illuNo--CL {
+  z-index: 1;
+  position: absolute;
+  transform: translateX(-10%);
+  top: 8%;
+  animation: show 2s 1s, bounce 2s ease-in-out 3s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.illuNo--CL--1 {
+  z-index: 3;
+  position: absolute;
+  transform: translate(-30%, 20%);
+}
+.illuNo--CL--2 {
+  z-index: 2;
+  position: absolute;
+  transform: translate(40%, 10%);
+}
+.illuNo--CL--3 {
+  z-index: 1;
+  position: absolute;
+  transform: translate(110%, 2%);
+}
+
+.scollInfo {
+  font-family: "Right Grotesk", sans-serif;
+  font-weight: 410;
+  color: #FF8D19;
+  position: absolute;
+  z-index: 0;
+  font-size: 5rem;
+  width: 36rem;
+  bottom: 13%;
+}
+.scollInfo--scollFast {
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scolling 10s 3s infinite;
+  animation-fill-mode: backwards;
+}
+.scollInfo--scollNormal {
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scolling 14s 2s infinite;
+  animation-fill-mode: backwards;
+}
+.scollInfo--scollSlow {
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scolling 16s 1s infinite;
+  animation-fill-mode: backwards;
+}
+.scollInfo--scollPath {
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scolling 16s 1s infinite;
+  animation-fill-mode: backwards;
+  color: #FF006E;
+}
+
+.scollVA {
+  font-family: "Right Grotesk", sans-serif;
+  color: #D9F2FF;
+  background-color: #8BD4FA;
+  position: absolute;
+  z-index: 1;
+  font-size: 3.5rem;
+  min-width: 100%;
+  white-space: nowrap;
+  top: 47%;
+  animation: scollingVI 10s 3s infinite alternate backwards;
+}
+
+.scollCL {
+  font-family: "Right Grotesk", sans-serif;
+  position: absolute;
+  z-index: 1;
+  font-size: 3.5rem;
+  min-width: 100%;
+  white-space: nowrap;
+  bottom: 20%;
+}
+.scollCL--1 {
+  animation: scollingVI 6s 3s infinite alternate backwards;
+  color: #DD7FFF;
+  background-color: #FFFF5A;
+}
+.scollCL--2 {
+  animation: scollingVI 10s 3s infinite alternate backwards;
+  color: #FFFF5A;
+  background-color: #DD7FFF;
+}
+.scollCL--3 {
+  animation: scollingVI 13s 3s infinite alternate backwards;
+  color: #DD7FFF;
+  background-color: #FFFF5A;
+}
+
+.info--numbers {
+  z-index: 1;
+  position: relative;
+  padding: 0;
+  font-size: 20rem;
+  display: block;
+  flex-wrap: wrap;
+  text-align: center;
+  transform: skew(-16deg) rotate(-16deg);
+  color: #B3E5FF;
+  text-shadow: -1vmin -1vmin 0 #8BD4FA, -0.9vmin -0.9vmin 0 #8BD4FA, -0.8vmin -0.8vmin 0 #8BD4FA, -0.7vmin -0.7vmin 0 #8BD4FA, -0.6vmin -0.6vmin 0 #8BD4FA, -0.5vmin -0.5vmin 0 #8BD4FA, -0.4vmin -0.4vmin 0 #8BD4FA, -0.3vmin -0.3vmin 0 #8BD4FA, -0.2vmin -0.2vmin 0 #8BD4FA, -0.1vmin -0.1vmin 0 #8BD4FA;
+  animation: show 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoTT--numbers {
+  padding: 0;
+  font-size: 7rem;
+  display: block;
+  flex-wrap: wrap;
+  text-align: center;
+  transform: skew(-16deg) rotate(-16deg);
+  color: #B3E5FF;
+  text-shadow: -1vmin -1vmin 0 #8BD4FA, -0.9vmin -0.9vmin 0 #8BD4FA, -0.8vmin -0.8vmin 0 #8BD4FA, -0.7vmin -0.7vmin 0 #8BD4FA, -0.6vmin -0.6vmin 0 #8BD4FA, -0.5vmin -0.5vmin 0 #8BD4FA, -0.4vmin -0.4vmin 0 #8BD4FA, -0.3vmin -0.3vmin 0 #8BD4FA, -0.2vmin -0.2vmin 0 #8BD4FA, -0.1vmin -0.1vmin 0 #8BD4FA;
+  animation: show 2s;
+  animation-fill-mode: backwards;
+}
+
+.infoPS--year {
+  z-index: 0;
+  position: absolute;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  font-size: 6rem;
+  text-align: center;
+  bottom: 28%;
+  left: -50%;
+  color: #F0D8FF;
+  animation: scollingUp 4s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.infoPS--year2 {
+  z-index: 0;
+  position: absolute;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  font-size: 6rem;
+  text-align: center;
+  bottom: calc(28% - 6rem);
+  left: -25%;
+  color: #F0D8FF;
+  animation: scollingUp 4s infinite alternate;
+  animation-fill-mode: backwards;
+}
+.infoPS--year3 {
+  z-index: 0;
+  position: absolute;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  font-size: 6rem;
+  text-align: center;
+  bottom: calc(28% - 12rem);
+  left: -50%;
+  color: #F0D8FF;
+  animation: scollingUp 4s infinite alternate;
+  animation-fill-mode: backwards;
+}
+
+.circular {
+  margin: 0 auto;
+  width: 10em;
+  height: 10em;
+  font-family: "Right Grotesk", sans-serif;
+  font-weight: 410;
+  font-size: 3rem;
+  z-index: 0;
+  position: absolute;
+  left: 40%;
+  top: 10%;
+  transform-origin: center center;
+  animation: show 2s 1s, spining2 10s linear 1s infinite;
+  animation-fill-mode: backwards;
+}
+.circular path {
+  fill: none;
+}
+.circular svg {
+  display: block;
+  overflow: visible;
+}
+.circular text {
+  fill: #FF006E;
+}
+
+.circular2 {
+  margin: 0 auto;
+  width: 5em;
+  height: 5em;
+  font-family: "Right Grotesk", sans-serif;
+  font-weight: 410;
+  font-size: 3rem;
+  z-index: 0;
+  position: absolute;
+  left: -10%;
+  top: 80%;
+  transform-origin: center center;
+  animation: show 2s 1s, spining2 8s linear 2s infinite;
+  animation-fill-mode: backwards;
+}
+.circular2 path {
+  fill: none;
+}
+.circular2 svg {
+  display: block;
+  overflow: visible;
+}
+.circular2 text {
+  fill: #FF006E;
+}
+
+.infoLocations {
+  z-index: 1;
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: scollingVI 6s infinite alternate;
+  animation-fill-mode: backwards;
+  position: absolute;
+  top: 25%;
+  line-height: 1;
+  color: #FF006E;
+  font-size: 6rem;
+  font-family: "Right Grotesk", sans-serif;
+}
+
+.infoLocationsM {
+  z-index: 1;
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  margin: 3rem 2rem;
+  position: absolute;
+  top: 18%;
+  line-height: 1.3;
+  color: #FF006E;
+  font-size: 6rem;
+  font-family: "Right Grotesk", sans-serif;
+}
+.infoLocationsM__1 {
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
+.infoLocationsM__2 {
+  animation: show 2s 3s;
+  animation-fill-mode: backwards;
+}
+.infoLocationsM__3 {
+  animation: show 2s 4s;
+  animation-fill-mode: backwards;
+}
+
+.infoLocations2 {
+  z-index: 0;
+  display: inline-block;
+  min-width: 100%;
+  white-space: nowrap;
+  margin: 3rem 2rem;
+  animation: scollingUp 2s;
+  animation-fill-mode: backwards;
+  position: absolute;
+  top: 35%;
+  line-height: 1;
+  color: #FF006E;
+  font-size: 4rem;
+  font-family: "Right Grotesk", sans-serif;
+}
+
+.infoAges {
+  z-index: 1;
+  position: absolute;
+  font-family: "Right Grotesk", sans-serif;
+  font-size: 2.5rem;
+  margin: 3rem 2rem;
+  color: #0182E5;
+  top: 18%;
+  min-width: 100%;
+  white-space: nowrap;
+  animation: show 2s 1s;
+  animation-fill-mode: backwards;
+}
+
+.infoAges2 {
+  z-index: 1;
+  position: absolute;
+  font-family: "Right Grotesk", sans-serif;
+  font-size: 2.5rem;
+  text-align: right;
+  margin: 3rem 2rem;
+  color: #0182E5;
+  bottom: 2%;
+  animation: show 2s 2s;
+  animation-fill-mode: backwards;
+}
