@@ -30,7 +30,7 @@ def Summary2(request, account_id):
     wrap = Wrap.objects.get(owner_account_id=account_id)
     cards = Card.objects.filter(wrap=wrap).values("html_path")
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "mock.csv")
+        "ticketing_export_2023_03_24_11_27_16.csv")
     total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
         list_of_objects, "Data preview 2016")
     event = {
@@ -41,6 +41,7 @@ def Summary2(request, account_id):
         "totalOfVisitors": 58472,
         "ticketSaleAmount": 20025,
         "ticketSalePercentage": 92,
+        "averageAgeOfVisitors": 23,
         "cityMostVisitors": "Eindhoven",
         "provinceMostVisitors": "Noord-Brabant",
         "countryMostVisitors": "The Netherlands"
