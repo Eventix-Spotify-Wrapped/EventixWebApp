@@ -3,6 +3,17 @@ from . import views
 
 urlpatterns = [
     path("panel/", views.panel, name="Panel"),
+    path("eventNumbers/", views.eventNumbers),
+    path("ticketsTotal/", views.ticketsTotal),
+    path("peakSaleDay/", views.peakSaleDay),
+    path("peakSaleMonth/", views.peakSaleMonth),
+    path("showUp/", views.showUp),
+    path("visitorsInfo/", views.visitorsInfo),
+    path("visitorsInfoModified/", views.visitorsInfoModified),
+    path("visitorsInfo2/", views.visitorsInfo2),
+    path("visitorsAge/", views.visitorsAge),
+    path("visitorsAge2/", views.visitorsAge2),
+    path("customerLoyalty/", views.customerLoyalty),
     path("", views.Summary, name="Panel"),
     path("summary2/<account_id>", views.Summary2),
     path("create/", views.Create),

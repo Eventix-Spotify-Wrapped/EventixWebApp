@@ -1,0 +1,31 @@
+.event
+    display: flex
+    padding: 2rem 3rem
+    border-radius: 1rem
+    flex-direction: column
+    width: calc(100% / 2 - 1.5rem)
+    background-color: $color-blue-medium
+
+    &:hover
+        color: $color-white
+        background-color: $color-primary
+
+        .event__amount
+            color: $color-white
+
+    &s
+        display: flex
+        flex-wrap: wrap
+        margin-top: 3rem
+        margin-right: -1.5rem
+        margin-bottom: -1.5rem
+
+        .event
+            margin-bottom: 1.5rem
+
+            &:not(:last-child)
+                margin-right: 1.5rem
+
+    &__amount
+        color: #666
+        margin-top: .5rem
