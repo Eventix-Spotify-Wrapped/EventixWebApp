@@ -33,7 +33,6 @@ function _main() {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           centerCoins = function _centerCoins() {
-            // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
             coinLeftRemValue = (36 - (coins.length - slideIndex) * 4) / 2 - 0.4;
             for (var i = slideIndex; i < coins.length; i++) {
               coins[i].style.left = coinLeftRemValue + "rem";
@@ -61,6 +60,12 @@ function _main() {
             // Show the next slide using a negative margin
             startSlide.style.marginLeft = slideIndex * -36 + "rem";
             switch (slides[slideIndex].id) {
+              case "average-age-visitors":
+                // Start the animation with the upsliding visitor cards
+                setTimeout(function () {
+                  return document.getElementsByClassName("visitor-cards")[0].classList.add("visitor-cards--show");
+                }, 1600);
+                break;
               case "date-most-ticket-sales":
                 setTimeout(function () {
                   // Start the calander animation
@@ -68,7 +73,7 @@ function _main() {
                   setTimeout(function () {
                     return document.getElementsByClassName("date")[0].classList.add("date--show");
                   }, 1000);
-                }, 1750);
+                }, 1600);
                 break;
               case "ticket-sale-percentage":
                 // Initiate the countup animation on the ticket percentage slide
@@ -91,6 +96,8 @@ function _main() {
                 coins[coins.length - 1].style.top = 80 + "rem";
                 break;
             }
+
+            // Center the coins at the bottom of the slide again after the width is adjusted (one coin dissapeared)
             centerCoins();
           };
           initiateCoins = function _initiateCoins() {
@@ -107,29 +114,29 @@ function _main() {
               }
             }
             setTimeout(function () {
-              var _loop = function _loop(_i2) {
+              var _loop = function _loop(_i) {
                 setTimeout(function () {
-                  var coin = coins[_i2];
+                  var coin = coins[_i];
                   coin.style.top = 67 + "rem";
                   coin.style.left = coinLeftRemValue + "rem";
                   coinLeftRemValue += 4;
 
                   // Let every second coin slide down so they are paired
-                  if (_i2 % 2) coin.style.top = parseInt(coin.style.top.slice(0, -3)) + 1.25 + "rem";
+                  if (_i % 2) coin.style.top = parseInt(coin.style.top.slice(0, -3)) + 1.25 + "rem";
 
                   // Give the coins a different CSS transition (time)
                   setTimeout(function () {
                     return coin.style.transition = "left .75s ease-in-out, top 2s ease-in-out";
                   }, 2000);
-                }, 50 * _i2);
+                }, 50 * _i);
               };
               // Position every coin centered at the bottom of the screen
-              for (var _i2 = 0; _i2 < coins.length; _i2++) {
-                _loop(_i2);
+              for (var _i = 0; _i < coins.length; _i++) {
+                _loop(_i);
               }
 
               // Change slide on click
-              for (var _i3 = 0; _i3 < slides.length; _i3++) if (slides[_i3].id != "find-the-truth") slides[_i3].addEventListener("click", changeSlide);
+              for (var _i2 = 0; _i2 < slides.length; _i2++) if (slides[_i2].id != "find-the-truth") slides[_i2].addEventListener("click", changeSlide);
             }, 250);
           };
           startScreenAnimation = function _startScreenAnimation() {
@@ -197,16 +204,20 @@ function _main() {
 
             // Eventlistener to show the slide with validation of the statemnt
             document.getElementById("find-the-truth").addEventListener("click", function () {
-              // Hide all answers that are not the right one or clarification
-              for (var _i = 0; _i < statements.length; _i++) if (!statements[_i].classList.contains("statement--check")) statements[_i].style.display = "none";
+              // Get the chosen statements and hide all the ones that were not chosen
+              var chosenStatement;
+              for (var o = 0; o < document.getElementsByClassName("statement__input").length; o++) {
+                if (document.getElementsByClassName("statement__input")[o].checked) chosenStatement = document.getElementsByClassName("statement__input")[o];else document.getElementsByClassName("statement__input")[o].parentElement.style.display = "none";
+              }
+              ;
 
               // Hide the search glass illustration
               findTheTruth.getElementsByClassName("search-glass")[0].style.bottom = "-20rem";
 
-              // Show the correctionbox with the celebratory illustration
+              // Show the correctionbox with the celebratory (wrong indicating) illustration
               setTimeout(function () {
                 findTheTruth.getElementsByClassName("correction-box")[0].classList.add("correction-box--active");
-                findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active");
+                if (chosenStatement.parentElement.classList.contains("statement--check")) findTheTruth.getElementsByClassName("celebrate")[0].classList.add("celebrate--active");else findTheTruth.getElementsByClassName("wrong-illustration")[0].classList.add("wrong-illustration--active");
               }, 500);
 
               // Go the next slide when clicking on the current slide

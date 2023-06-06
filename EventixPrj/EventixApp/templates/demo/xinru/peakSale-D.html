@@ -22,47 +22,48 @@
         <link rel="stylesheet" href="{% static 'css/xrDemo.css' %}">
     </head>
     <body>
-        <div id="app">
-            <svg class="coin" viewBox="0 0 51.96 59.56"><path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
+        <a href="{% url 'peakSaleMonth' %}" style="text-decoration: none; color: black;">
+            <div id="app">
+                <svg class="coin" viewBox="0 0 51.96 59.56"><path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
 
-            <p class="info" >
-                <span class="grotesk--light" >Peak</span>
-                <span class="grotesk--medium" style="font-style: italic;">sale</span>
-                </br>
-                <span class="grotesk--spatialFine">day</span>
-                </br>
+                <p class="info" >
+                    <span class="grotesk--light" >Peak</span>
+                    <span class="grotesk--medium" style="font-style: italic;">sale</span>
+                    </br>
+                    <span class="grotesk--spatialFine">day</span>
+                    </br>
 
-                <span class="grotesk--wideBlack infoPS--date">May 08</span>
-    
-                <span class="grotesk--spatialBlack infoPS--year">2023 2023 2023</span>
-                <span class="grotesk--spatialBlack infoPS--year2">2023 2023 2023</span>
-                <span class="grotesk--spatialBlack infoPS--year3">2023 2023 2023</span>
-                
-                <!-- <span class="grotesk--spatialBlack infoPS--yearCopy">2023 2023 2023</span>
-                <span class="grotesk--spatialBlack infoPS--year2Copy">2023 2023 2023</span>
-                <span class="grotesk--spatialBlack infoPS--year3Copy">2023 2023 2023</span>
-                 -->
-            </p>
-
-            
-      
-            <img class="slide__backgroundPeakSaleD2" src="{% static 'demo/img/xinru/dotBg.svg' %}" alt="bg">
+                    <span class="grotesk--wideBlack infoPS--date">May 08</span>
         
-            <img class="slide__ticketsLike" src="{% static 'demo/img/xinru/ticketsLike.svg' %}" alt="bg">
-    
-            <div class="slide__backgroundPeakSaleD"></div>
-            <div class="slide__backfigurePeakSale"></div>
+                    <span class="grotesk--spatialBlack infoPS--year">2023 2023 2023</span>
+                    <span class="grotesk--spatialBlack infoPS--year2">2023 2023 2023</span>
+                    <span class="grotesk--spatialBlack infoPS--year3">2023 2023 2023</span>
+                    
+                    <!-- <span class="grotesk--spatialBlack infoPS--yearCopy">2023 2023 2023</span>
+                    <span class="grotesk--spatialBlack infoPS--year2Copy">2023 2023 2023</span>
+                    <span class="grotesk--spatialBlack infoPS--year3Copy">2023 2023 2023</span>
+                    -->
+                </p>
 
-            <div class="scollInfo">
-                <!-- <p class="scollInfo--scollFast">It looks like you would like to be fully prepared for each one. </p>
-                <p class="scollInfo--scollNormal">It looks like you would like to be fully prepared for each one. </p>
-                <p class="scollInfo--scollSlow">It looks like you would like to be fully prepared for each one. </p>
-
-                 -->
-            </div>
+                
+        
+                <img class="slide__backgroundPeakSaleD2" src="{% static 'demo/img/xinru/dotBg.svg' %}" alt="bg">
             
-        </div>
+                <img class="slide__ticketsLike" src="{% static 'demo/img/xinru/ticketsLike.svg' %}" alt="bg">
+        
+                <div class="slide__backgroundPeakSaleD"></div>
+                <div class="slide__backfigurePeakSale"></div>
 
+                <div class="scollInfo">
+                    <!-- <p class="scollInfo--scollFast">It looks like you would like to be fully prepared for each one. </p>
+                    <p class="scollInfo--scollNormal">It looks like you would like to be fully prepared for each one. </p>
+                    <p class="scollInfo--scollSlow">It looks like you would like to be fully prepared for each one. </p>
+
+                    -->
+                </div>
+                
+            </div>
+        </a>
         <script src="{% static 'js/xrDemo.js' %}"></script>
     </body>
 
