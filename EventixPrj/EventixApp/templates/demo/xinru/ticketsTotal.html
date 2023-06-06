@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta data -->
+    <meta charset="UTF-8">
+    <title>MEADOW | Total Tickets | Eventix Summary</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'demo/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'demo/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'demo/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'demo/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'demo/favicon/safari-pinned-tab.svg' %}" color="#bde3fc">
+    <meta name="msapplication-TileColor" content="#bde3fc">
+    <meta name="theme-color" content="#bde3fc">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/xrDemo.css' %}">
+</head>
+<body>
+    <div id="app">
+        <svg class="coin" viewBox="0 0 51.96 59.56"><path d="m6.45,10.15S7.37.5,15.18.5c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V10.15Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/><path d="m.5,13.36S1.42,3.71,9.23,3.71c12.62,3.12,18,5.31,25.49,7.12s10.79,7.58,10.79,14.01v26.41c0,3.23-4.13,7.81-11.25,7.81s-25.03-8.04-25.03-8.04c0,0-8.73-5.97-8.73-12.63V13.36Z" fill="#f89823" stroke="#231f20" stroke-miterlimit="10"/></svg>
+
+        <p class="infoTT" >
+            <span class="grotesk--compactBlack" >You sold</span>
+            </br>
+            <span class="grotesk--tightMedium" >over</span>
+            </br>
+            <span class="grotesk--wideBlack infoTT--numbers">20,000</span>
+            <span class="grotesk--compactBlack infoTT--ticketsInT">tickets</span>
+            <span class="grotesk--tallRegular infoTT--ticketsInT">in</span>
+            <span class="grotesk--spatialFine infoTT--ticketsInT" style="font-style: italic;">total</span>
+        </p>
+
+        <!-- <div class="illuNo--ticketTotal">
+            <img src="{% static 'demo/img/6.svg' %}" alt="Tickets Total1">
+            <img src="{% static 'demo/img/6.svg' %}" alt="Tickets Total2">
+            <img src="{% static 'demo/img/6.svg' %}" alt="Tickets Total3">
+        </div> -->
+  
+    
+        <div class="slide__backgroundTicketsTotal"></div>
+        <div class="slide__backfigureTicketsTotal"></div>
+
+        <div class="scollInfo">
+            <p class="scollInfo--scollFast">If you count one ticket per second, it will take about 6 hours. </p>
+            <p class="scollInfo--scollNormal">If you count one ticket per second, it will take about 6 hours. </p>
+            <p class="scollInfo--scollSlow">If you count one ticket per second, it will take about 6 hours. </p>
+
+            
+        </div>
+        
+    </div>
+
+    <script src="{% static 'js/xrDemo.js' %}"></script>
+</body>
+</html>

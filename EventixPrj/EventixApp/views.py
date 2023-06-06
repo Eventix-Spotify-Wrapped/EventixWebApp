@@ -72,6 +72,152 @@ def Summary(request):
     return render(request, "summary.html", {"event": event})
 
 
+def xrDemo(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/xrDemo.html", {"context": context})
+
+
+def eventNumbers(request):
+    # change the context during develop
+    context = [
+        "6" "It looks like you would like to be fully prepared for each one."]
+    return render(request, "demo/xinru/eventNumbers.html", {"context": context})
+
+
+def ticketsTotal(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/ticketsTotal.html", {"context": context})
+
+
+def peakSaleDay(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/peakSale-D.html", {"context": context})
+
+
+def peakSaleMonth(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/peakSale-M.html", {"context": context})
+
+
+def showUp(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/showUp.html", {"context": context})
+
+
+def visitorsInfo(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfo.html", {"context": context})
+
+
+def visitorsInfoModified(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfoModified.html", {"context": context})
+
+
+def visitorsInfo2(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfo2.html", {"context": context})
+
+
+def visitorsAge(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsAge.html", {"context": context})
+
+
+def visitorsAge2(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsAge2.html", {"context": context})
+
+
+def customerLoyalty(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/customerLoyalty.html", {"context": context})
+
+
+def xrDemo(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/xrDemo.html", {"context": context})
+
+
+def eventNumbers(request):
+    # change the context during develop
+    context = [
+        "6" "It looks like you would like to be fully prepared for each one."]
+    return render(request, "demo/xinru/eventNumbers.html", {"context": context})
+
+
+def ticketsTotal(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/ticketsTotal.html", {"context": context})
+
+
+def peakSaleDay(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/peakSale-D.html", {"context": context})
+
+
+def peakSaleMonth(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/peakSale-M.html", {"context": context})
+
+
+def showUp(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/showUp.html", {"context": context})
+
+
+def visitorsInfo(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfo.html", {"context": context})
+
+
+def visitorsInfoModified(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfoModified.html", {"context": context})
+
+
+def visitorsInfo2(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsInfo2.html", {"context": context})
+
+
+def visitorsAge(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsAge.html", {"context": context})
+
+
+def visitorsAge2(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/visitorsAge2.html", {"context": context})
+
+
+def customerLoyalty(request):
+    # change the context during develop
+    context = []
+    return render(request, "demo/xinru/customerLoyalty.html", {"context": context})
+
+
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
