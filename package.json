@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "python3 EventixPrj/manage.py runserver & npx mix watch"
+    "dev": "(python3 EventixPrj/manage.py runserver || python EventixPrj/manage.py runserver) & npx mix watch"
   },
   "repository": {
     "type": "git",
