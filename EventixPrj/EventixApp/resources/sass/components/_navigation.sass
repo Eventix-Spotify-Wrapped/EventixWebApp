@@ -1,0 +1,41 @@
+.nav
+    top: 0
+    width: 28rem
+    height: 100%
+    position: fixed
+    padding: 4rem 3rem
+    color: $color-white
+    background-color: $color-primary
+
+    &__logo
+        display: block
+        padding: 4rem 2rem
+        border-radius: 1rem
+        background-color: $color-white
+
+        svg
+            width: 14rem
+            display: block
+            margin: 0 auto
+
+    &__list
+        margin-top: 4rem
+        font-size: 1.8rem
+
+        svg
+            width: 2.2rem
+            display: block
+            fill: $color-white
+            margin-right: 1.25rem
+
+        &-item
+            a
+                display: flex
+                align-items: center
+                
+                span
+                    margin-top: .25rem
+
+
+            &:not(:last-child)
+                margin-bottom: 2.5rem 

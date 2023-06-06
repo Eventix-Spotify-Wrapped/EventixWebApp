@@ -8,7 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'dashboard/stylesheet.css' %}">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
 
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'dashboard/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'dashboard/favicon/favicon-32x32.png' %}">
@@ -56,7 +57,7 @@
 </nav>
 
     <div class="dashboard__content">
-        <div class="box dashboard__box">
+        <div class="box">
             {% block content %}{% endblock %}
         </div>
     </div>
