@@ -1,1 +1,2 @@
-web: python manage.py runserver 0.0.0.0:$PORT
+django: gunicorn path.to.wsgi:application --bind 127.0.0.1:$DJANGO_PORT
+node: node server.js
