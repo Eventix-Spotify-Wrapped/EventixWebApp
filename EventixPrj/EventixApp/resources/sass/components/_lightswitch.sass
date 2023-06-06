@@ -1,0 +1,48 @@
+.lightswitch
+    display: flex
+    margin: 0 1rem
+    cursor: pointer
+    position: relative
+
+    &__back
+        width: 5rem
+        height: 2.5rem
+        border-radius: 1rem
+        background-color: $color-white
+        transition: background-color .3s ease-in-out
+
+    &__slider
+        left: .5rem
+        top: 50%
+        width: 1.5rem
+        height: 1.5rem
+        border-radius: 50%
+        position: absolute
+        translate: 0 -50%
+        pointer-events: none
+        background-color: $color-primary
+        transition: background-color .3s ease-in-out, left .3s ease-in-out
+
+    &__input
+        opacity: 0
+        left: 0
+        top: 0
+        bottom: 0
+        right: 0
+        position: absolute
+
+        &:checked
+            & ~ .lightswitch__slider
+                left: 2.8rem
+                background-color: $color-white
+
+            & ~ .lightswitch__back
+                background-color: $color-primary
+
+    &__wrapper
+        display: flex
+        margin-top: 2rem
+        align-items: center
+
+        span
+            font-size: 1.4rem
