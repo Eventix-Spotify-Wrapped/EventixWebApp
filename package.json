@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "python3 EventixPrj/manage.py runserver & npx mix watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Eventix-Spotify-Wrapped/EventixWebApp.git"
   },
-  "author": "",
+  "author": "Ruben van de Ven",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Eventix-Spotify-Wrapped/EventixWebApp/issues"
