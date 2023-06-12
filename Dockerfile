@@ -1,8 +1,8 @@
 # Base image
 FROM python:3.9
 
-## Set work directory
-#WORKDIR /
+# Set work directory
+WORKDIR /app
 
 # Update system packages and install libpq for PostgreSQL connection
 RUN apt-get update && apt-get install -y libpq-dev
@@ -20,16 +20,16 @@ RUN pip install --upgrade psycopg2-binary
 RUN apt-get install -y nodejs npm
 
 # Install your Node.js dependencies
-COPY package.json .
-COPY package-lock.json .
+
+COPY . .
+#COPY package.json .
+#COPY package-lock.json .
+#COPY webpack.mix.js .
 RUN npm install
 
-# Build your front-end assets
-# SASS files are compiled into CSS here
+
 RUN npm run prod
 
-# Copy the rest of the application code
-COPY . .
 
 # Expose port (if needed)
 EXPOSE 8000
