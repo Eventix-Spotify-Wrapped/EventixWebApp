@@ -251,6 +251,8 @@ def Index(request):
 
 
 def Event(request, event_name, guid):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
     cards = list(CardTemplate.objects.values_list().order_by("id"))
 
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
@@ -317,6 +319,8 @@ class MyException(Exception):
 
 
 def SaveWrap(request):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
 
