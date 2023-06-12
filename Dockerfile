@@ -19,7 +19,6 @@ RUN pip install --upgrade psycopg2-binary
 # Copy the rest of the application code
 COPY . .
 
-
 # Expose port (if needed)
 EXPOSE 8000
 
