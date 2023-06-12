@@ -49,3 +49,11 @@ After that you need to run the comment below to start watching all files and sta
 ```
     npx mix watch
 ```
+
+Instead of using both the commands: ```npx mix watch``` & ```python3 manage.py runserver``` you can also run the command:
+
+```
+    npm run dev
+```
+
+This will execute both the commands in one terminal window. Do this each time you want to run the server/adjust the resource files.
