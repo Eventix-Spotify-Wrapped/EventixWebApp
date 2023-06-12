@@ -2,4 +2,5 @@ build:
   docker:
     web: EventixPrj/Dockerfile
 run:
-  web: gunicorn EventixPrj.wsgi --log-file -
+  web: gunicorn EventixPrj.wsgi:application --log-file -
+
