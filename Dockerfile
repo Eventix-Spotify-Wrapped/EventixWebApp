@@ -1,8 +1,8 @@
 # Base image
 FROM python:3.9
 
-# Set work directory
-WORKDIR /app
+## Set work directory
+#WORKDIR /
 
 # Update system packages and install libpq for PostgreSQL connection
 RUN apt-get update && apt-get install -y libpq-dev
