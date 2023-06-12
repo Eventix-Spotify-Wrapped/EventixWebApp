@@ -1,6 +1,6 @@
 build:
   docker:
-    web: EventixPrj/Dockerfile
+    web: Dockerfile
 run:
   web: gunicorn EventixPrj.wsgi:application --log-file -
-
+  worker: npx mix watch
