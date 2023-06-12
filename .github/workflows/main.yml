@@ -22,6 +22,7 @@ jobs:
         run: |
           cd EventixPrj
           pip install -r requirements.txt
+          pip install django-heroku
 
       - name: Run Django tests
         run: |
