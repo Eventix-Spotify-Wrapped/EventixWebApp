@@ -24,4 +24,5 @@ COPY . .
 EXPOSE 8000
 
 # Define the command to run the application
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD gunicorn EventixPrj.wsgi:application --bind 0.0.0.0:$PORT
+
