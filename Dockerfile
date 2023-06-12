@@ -7,7 +7,7 @@ WORKDIR /app
 # Update system packages and install libpq for PostgreSQL connection
 RUN apt-get update && apt-get install -y libpq-dev
 
-# Copy requirements file
+## Copy requirements file
 COPY requirements.txt .
 
 # Install dependencies
