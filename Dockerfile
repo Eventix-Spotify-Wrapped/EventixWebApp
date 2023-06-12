@@ -26,7 +26,7 @@ RUN npm install
 
 # Build your front-end assets
 # SASS files are compiled into CSS here
-RUN npm run sass
+RUN npm run prod
 
 # Copy the rest of the application code
 COPY . .
