@@ -109,3 +109,23 @@ class StatsCalculate:
             data.append({"Name": element["event_name"],
                         "Guid": element["account_id"]})
         return data
+
+    def get_organizer_events_guid():
+        list = CSV_Reader.create_transactions_from_csv(
+            "mock.csv"
+        )
+        checkedOrganizers = []
+        alreadyFound = []
+        data = []
+        for element in list:
+            if (element["shop_name"] not in checkedOrganizers):
+                selectedOrganizer = element["shop_name"]
+                obj = {"Organizer": selectedOrganizer,
+                       "Guid": element["account_id"], "Events": []}
+                for e in list:
+                    if (selectedOrganizer in e["shop_name"]):
+                        if (e["event_name"] not in obj["Events"]):
+                            obj["Events"].append(e["event_name"])
+                            data.append(obj)
+
+        return data
