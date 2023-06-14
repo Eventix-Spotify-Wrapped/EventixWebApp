@@ -379,3 +379,5 @@ package-lock.json
 mix-manifest.json
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python,vue,vuejs,intellij
+EventixPrj/fake_data.csv
+EventixPrj/EventixApp/mock.csv
