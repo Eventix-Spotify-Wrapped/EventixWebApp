@@ -73,6 +73,19 @@ def Summary(request):
     return render(request, "summary.html", {"event": event})
 
 
+def AddOrganizerPage(request):
+
+    return render(request, "demo/addOrganizer.html")
+
+
+def AddOrganizer(request):
+    obj = {"Organizer": request.GET.get("organizer"),
+           "Events": request.GET.getlist("events")}
+    MockMaker.GenerateMockDataSpecific(obj)
+
+    return HttpResponse(obj["Organizer"])
+
+
 def xrDemo(request):
     # change the context during develop
     context = []
@@ -222,10 +235,11 @@ def customerLoyalty(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
-    total_events_nameguid_keypair = StatsCalculator.StatsCalculate.get_events_name_guid_keypair()
+    total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
-    for ng_kp in total_events_nameguid_keypair:
+    # raise MyException()
+    for ng_kp in total_organizers_nameguid_keypair:
         alreadyAdded = False
         for dat in data:
             if (dat["Guid"] == ng_kp["Guid"]):
@@ -234,11 +248,11 @@ def Index(request):
             for owner in completed_wraps:
                 if (owner in ng_kp["Guid"]):
                     data.append(
-                        {"Event": ng_kp["Name"], "Wrapped": True, "Guid": ng_kp["Guid"]})
+                        {"Event": ng_kp["Organizer"], "Wrapped": True, "Guid": ng_kp["Guid"]})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
-                    0, {"Event": ng_kp["Name"], "Wrapped": False, "Guid": ng_kp["Guid"]})
+                    0, {"Event": ng_kp["Organizer"], "Wrapped": False, "Guid": ng_kp["Guid"]})
 
     return render(
         request,
