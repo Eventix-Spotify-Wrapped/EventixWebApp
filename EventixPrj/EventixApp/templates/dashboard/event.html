@@ -6,10 +6,17 @@
     <h1 class="h1">{{ Name }}</h1>
     <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
 
-    <hr class="divider">
+    <div class="events">
+        <p>This event-organiser held a total of 3 events:</p>
+
+        <div class="events__wrapper">
+            <span class="events__item">Blue lagoon festival</span>
+            <span class="events__item">Wish Outdoor</span>
+            <span class="events__item">Outdoor fissa XL!</span>
+        </div>
+    </div>
 
     <h2 class="h2">Summary screens</h2>
-
 
     <form action="/savewrap">
         <div class="screens">
@@ -37,7 +44,7 @@
                 {% endfor %}
             {% endif %}
             
-            <button type="submit">{%if Overwrite%}Overwrite{%else%} Save{%endif%}</button>
+            <button class="btn" type="submit">{%if Overwrite%}Overwrite{%else%} Save{%endif%}</button>
         </div>
     </form>
 {% endblock %}
