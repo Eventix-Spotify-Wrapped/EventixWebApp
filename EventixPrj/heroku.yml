@@ -2,5 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: gunicorn EventixPrj.wsgi:application --log-file -
-
+  web: echo $PYTHONPATH && gunicorn EventixPrj.EventixPrj.wsgi:application --log-file -
