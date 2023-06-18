@@ -1,2 +1,0 @@
-# class APIManager:
-#     def AuthentificateUser():
