@@ -15,7 +15,7 @@ from .mock_maker_3000 import MockMaker
 from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
-from . import StatsCalculate, StatsCalculator
+from . import StatsCalculator
 
 
 # Create your views here.
