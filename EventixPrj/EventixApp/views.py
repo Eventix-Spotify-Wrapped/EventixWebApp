@@ -5,10 +5,7 @@ from django.core.mail import send_mail
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .TrendReader import TrendReader
-from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
-
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
