@@ -19,7 +19,7 @@ You can create your own envoiremnt using the command:
 Once you created your own envoirment you need to install all the needed packages in this environment. To do this we will first activate this envoirment. We will do this with the following command:
 
 ```
-    source /env/bin/activate
+    source env/bin/activate
 ```
 
 Now we can install all packages that are needed. You can find the needed packages in the requirements.txt. We just say to the python pipeline to install all the packages in that file.
@@ -49,3 +49,11 @@ After that you need to run the comment below to start watching all files and sta
 ```
     npx mix watch
 ```
+
+Instead of using both the commands: ```npx mix watch``` & ```python3 manage.py runserver``` you can also run the command:
+
+```
+    npm run dev
+```
+
+This will execute both the commands in one terminal window. Do this each time you want to run the server/adjust the resource files.
