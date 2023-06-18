@@ -17,7 +17,9 @@ from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
-import qrcode
+import qrcode, StatsCalculator
+
+
 # Create your views here.
 
 
