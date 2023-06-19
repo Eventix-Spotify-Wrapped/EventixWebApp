@@ -235,7 +235,7 @@ def Index(request):
     total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
-    # raise MyException()
+
     for ng_kp in total_organizers_nameguid_keypair:
         alreadyAdded = False
         for dat in data:
@@ -245,11 +245,12 @@ def Index(request):
             for owner in completed_wraps:
                 if (owner in ng_kp["Guid"]):
                     data.append(
-                        {"Event": ng_kp["Organizer"], "Wrapped": True, "Guid": ng_kp["Guid"]})
+                        {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
-                    0, {"Event": ng_kp["Organizer"], "Wrapped": False, "Guid": ng_kp["Guid"]})
+                    0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+  #  raise MyException()
 
     return render(
         request,
@@ -261,10 +262,18 @@ def Index(request):
     )
 
 
-def Event(request, event_name, guid):
+def EditSummary(request, guid):
     if not request.user.is_authenticated:
         return redirect("/login/")
     cards = list(CardTemplate.objects.values_list().order_by("id"))
+    info = StatsCalculator.StatsCalculate.get_organizer_events_cards_guid_by_guid(
+        guid)
+    preselected_cards = []
+    overwrite = False
+    if ("Cards" in info.keys()):
+        preselected_cards = info["Cards"]
+    if (len(preselected_cards) > 0):
+        overwrite = True
 
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
@@ -280,19 +289,8 @@ def Event(request, event_name, guid):
     #    list_of_objects, event_name)
     # average_ticket_price_event = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
     #    list_of_objects, event_name)
-    name = event_name
     data = []
-    completed_wraps_account_ids = Wrap.objects.values_list(
-        'owner_account_id', flat=True)
-    preselected_cards = []
-    overwrite = False
-    for owner in completed_wraps_account_ids:
-        if (owner in guid):
-            preselected_cards = list(Card.objects.all().values("html_path").filter(
-                wrap=Wrap.objects.get(owner_account_id=guid)).values())
-    if (len(preselected_cards) > 0):
-        overwrite = True
-  #  raise MyException()
+
     for _ in range(len(cards)):
         if (len(preselected_cards) > 0):
             data.append(
@@ -312,9 +310,8 @@ def Event(request, event_name, guid):
             "imagePreview": cards[index][1],
             "Toggled": False})
         cards.pop(index)
-  #  raise MyException('msg here')
 
-    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+    return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
 
 
 def CalculateInsightForCardName(cardname):

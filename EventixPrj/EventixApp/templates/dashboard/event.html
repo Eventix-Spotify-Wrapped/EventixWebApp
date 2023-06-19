@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="h1">{{ Name }}</h1>
+    <h1 class="h1">{{ Organizer }}</h1>
 
     <div class="events">
-        <p>This event-organiser held a total of 3 events:</p>
+        <p>This event-organiser held a total of {{Events|length}} events:</p>
 
         <div class="events__wrapper">
-            <span class="events__item">Blue lagoon festival</span>
-            <span class="events__item">Wish Outdoor</span>
-            <span class="events__item">Outdoor fissa XL!</span>
+            {% for event in Events %}
+            <span class="events__item">{{event}}</span>
+            {%endfor%}
         </div>
     </div>
 
