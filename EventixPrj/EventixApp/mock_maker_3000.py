@@ -6,7 +6,7 @@ import random
 class MockMaker:
     def GenerateMockData():
         # Define the number of rows to generate
-        num_rows = 10000
+        num_rows = 500
 
         # Define the names of the columns in the output CSV file
         column_names = [
@@ -109,20 +109,35 @@ class MockMaker:
 
         # Create a list of dictionaries to hold the generated data
         data = []
-        account_ids = [fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(
-        ), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(), fake.uuid4(),]
-        event_names = [fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(
+        account_ids = [{"Id": fake.uuid4(), "Name": None,
+                        "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                 "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                          "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                                                                                   "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                                                                                                                                            "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                                                                                                                                                                                                     "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                                                                                                                                                                                                                                                              "MaxEvents": random.randint(2, 10), "EventCounter": 0}, {"Id": fake.uuid4(), "Name": None,
+                                                                                                                                                                                                                                                                                                                                                                                                                                       "MaxEvents": random.randint(2, 10), "EventCounter": 0}, ]
+        event_names = [fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(
         ), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(), fake.company(),]
         # Generate fake data and write to a CSV file
         with open('fake_data.csv', 'w', newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=column_names)
             writer.writeheader()
             for i in range(num_rows):
-                random_index = random.randint(0, len(account_ids)-1)
+                acc_index = random.randint(0, len(account_ids)-1)
+                random_index = random.randint(0, len(event_names)-1)
+                if (account_ids[acc_index]["EventCounter"] >= account_ids[acc_index]["MaxEvents"]):
+                    continue
+                event_name = fake.company() + " " + \
+                    random.choice(
+                        ["Party", "Gathering", "Meeting", "Concert", "Parade", "Show"])
+                account_ids[acc_index]["EventCounter"] += 1
                 order_id = fake.uuid4()
-                account_id = account_ids[random_index]
-                shop_name = fake.company()
-                event_name = event_names[random_index]
+                account_id = account_ids[acc_index]["Id"]
+                if (account_ids[acc_index]["Name"] is None):
+                    account_ids[acc_index]["Name"] = fake.company()
+                shop_name = account_ids[acc_index]["Name"]
                 event_category = fake.word()
                 first_event = fake.date_time_between(
                     start_date='-1y', end_date='now')

@@ -30,7 +30,8 @@ def Summary2(request, account_id):
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
         return HttpResponse("Sorry, your wrap is not ready!")
     wrap = Wrap.objects.get(owner_account_id=account_id)
-    cards = Card.objects.filter(wrap=wrap).values("html_path")
+    cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
+    context = list(Card.objects.filter(wrap=wrap).values("context"))
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
     total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
@@ -49,7 +50,12 @@ def Summary2(request, account_id):
         "countryMostVisitors": "The Netherlands"
     }
 
-    slides = list(cards)
+    # slides = list(cards)
+    slides = []
+    for card in cards:
+        slides.append(
+            {"html": card["html_path"], "context": context[cards.index(card)]["context"]})
+    # raise MyException()
 
     return render(request, "summary2.html", {"event": event, "slides": slides})
 
@@ -325,7 +331,7 @@ def EditSummary(request, guid):
                 {"id": preselected_cards[0]["html_path"],
                     "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
-                 "Toggled": True, })
+                 "Toggled": True, "Value": CalculateFunction(preselected_cards[0]["html_path"])})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -336,10 +342,37 @@ def EditSummary(request, guid):
                      "Name": cards[index][2].split(
             '/')[1].split('.')[0].replace('-', ' ').title(),
             "imagePreview": cards[index][1],
-            "Toggled": False})
+            "Toggled": False, "Value": CalculateFunction(cards[index][2])})
         cards.pop(index)
+        bruh = data
 
     return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+def CalculateFunction(html_path):
+    value = None
+    if ("animated-ticket-sale-amount.html" in html_path):
+        value = "Ticket sale"
+    elif ("average-age-visitors.html" in html_path):
+        value = "Age visitors"
+    elif ("date-most-ticket-sales.html" in html_path):
+        value = "Most ticket sales"
+    elif ("end-overview.html" in html_path):
+        value = "End overview"
+    elif ("events-organised.html" in html_path):
+        value = "Events organised"
+    elif ("find-the-truth.html" in html_path):
+        value = "Find the truth"
+    elif ("start-animation.html" in html_path):
+        value = "Start animation"
+    elif ("ticket-sale-amount.html" in html_path):
+        value = "Ticket sale amount"
+    elif ("ticket-sale-percentage.html" in html_path):
+        value = "Ticket sale percentage"
+    elif ("visitor-origins.html" in html_path):
+        value = "Visitor origins"
+
+    return value
 
 
 def CalculateInsightForCardName(cardname):
@@ -359,6 +392,14 @@ def SaveWrap(request):
         return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+    context = request.GET.getlist("context")
+
+    for card in cards:
+        if ("end-overview.html" in card):
+            c = context.pop(cards.index(card))
+            context.append(c)
+            cards.remove(card)
+            cards.append(card)
     host = request.get_host()
     url = f"https://{host}/summary2/{owner}"
 
@@ -374,7 +415,7 @@ def SaveWrap(request):
                 html_path=card,
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
+                context=context[cards.index(card)]
             )
             c.save()
     else:
@@ -387,7 +428,7 @@ def SaveWrap(request):
                 html_path=card,
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
+                context=context[cards.index(card)]
             )
             c.save()
     send_mail(

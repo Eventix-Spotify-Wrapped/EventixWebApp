@@ -135,7 +135,7 @@ class CardTemplate(models.Model):
 
 
 class Card(models.Model):
-    context = ArrayField(models.CharField(max_length=250))
+    context = models.CharField(max_length=2500)
     wrap = models.ForeignKey(Wrap, default=None, on_delete=models.CASCADE)
     thumbnail_path = models.CharField(max_length=250)
     html_path = models.CharField(max_length=250)

@@ -11,7 +11,7 @@
             {%if slides %}
                 {%for slide in slides %}
            
-                    {%include slide.html_path%}
+                    {%include slide.html with text=slide.context %}
 
                 {%endfor%}
             {%endif%}
