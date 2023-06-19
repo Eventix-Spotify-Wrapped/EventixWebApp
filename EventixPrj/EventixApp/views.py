@@ -27,12 +27,9 @@ def Summary2(request, account_id):
     wrap = Wrap.objects.get(owner_account_id=account_id)
     cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
     context = list(Card.objects.filter(wrap=wrap).values("context"))
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, "Data preview 2016")
+
     event = {
-        "totalRevenue": total_revenue_event,
+        "totalRevenue": 69,
         "name": "Wish Outdoor",
         "eventsOrganised": 8,
         "visitorPercentage": 85,
