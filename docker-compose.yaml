@@ -1,5 +1,9 @@
 version: '3'
 services:
+  my_service:
+    build:
+      context: EventixPrj
+      dockerfile: Dockerfile
   backend-eventix:
     image: s1t2e3f4an/django-app:0.0.1
     ports:

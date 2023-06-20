@@ -4,7 +4,7 @@ import os
 import django
 import pathlib
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EventixPrj.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "EventixPrj.EventixPrj.settings")
 django.setup()
 
 

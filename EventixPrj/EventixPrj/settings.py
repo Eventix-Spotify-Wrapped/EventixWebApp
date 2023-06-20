@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "EventixApp",
+    "EventixApp.apps.EventixAppConfig",
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ DATABASES = {
         "NAME": "neondb",
         "USER": "tepa.popescu",
         "PASSWORD": "EZ9IYnarR7Od",
-        "HOST": "ep-raspy-cloud-001075.eu-central-1.aws.neon.tech",
+        'HOST': 'ep-raspy-cloud-001075-pooler.eu-central-1.aws.neon.tech',
         "PORT": "5432",
         "OPTIONS": {
             "sslmode": "require",

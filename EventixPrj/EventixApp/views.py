@@ -13,6 +13,8 @@ from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
+
+
 # Create your views here.
 
 

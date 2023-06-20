@@ -1,11 +1,11 @@
 @font-face {
   font-family: RightGrotesk;
-  src: url(font/PPRightGrotesk-Medium.otf);
+  src: url(../font/right-grotesk/PPRightGrotesk-Medium.otf);
 }
 
 @font-face {
   font-family: Suisse;
-  src: url(font/SuisseIntl-Regular.ttf);
+  src: url(../font/suisse/SuisseIntl-Regular.ttf);
 }
 
   *

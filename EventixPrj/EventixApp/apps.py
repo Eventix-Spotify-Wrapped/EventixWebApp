@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class EventixappConfig(AppConfig):
+class EventixAppConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "EventixApp"
