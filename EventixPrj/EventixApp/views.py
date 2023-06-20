@@ -13,6 +13,8 @@ from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
+import requests
+import json
 
 
 # Create your views here.
@@ -24,6 +26,12 @@ def panel(request):
 
 
 def Summary2(request, account_id):
+    access_token = request.COOKIES.get('access_token', None)
+    if (access_token is None):
+        return redirect("/authorize/")
+    breah = GetEventixAccountId(request)
+    if (GetEventixAccountId(request) not in account_id):
+        return HttpResponse("Acess denied!")
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
         return HttpResponse("Sorry, your wrap is not ready!")
     wrap = Wrap.objects.get(owner_account_id=account_id)
@@ -73,6 +81,47 @@ def Summary(request):
         "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
+
+
+clientid = 'sDSLxeeH6DLauCBq5zg7OckUGDKOfDAGgrekjagh'
+clientsecret = "xZy5gRYk3fz9rhwuBvGJbB2sCT218Gjvr1HVK2mm"
+
+
+def Authorize(request):
+    url = "https://auth.openticket.tech/token/authorize?client_id=sDSLxeeH6DLauCBq5zg7OckUGDKOfDAGgrekjagh&redirect_uri=https%3A%2F%2F4087-145-93-112-225.ngrok-free.app%2Fcallback%2F&response_type=code&state=RANDOM_STRING"
+
+    return redirect(url)
+
+
+def GetEventixAccountId(request):
+    access_token = request.COOKIES.get('access_token', None)
+    if (access_token is None):
+        return redirect("/authorize/")
+    headers = {'Authorization': 'Bearer '+access_token}
+    req = requests.get("https://auth.openticket.tech/user/me", headers=headers)
+
+    return json.loads(req.text)["guid"]
+
+
+def Callback(request):
+    code = request.GET.get("code")
+    data = {
+        'grant_type': 'authorization_code',
+        "code": code,
+        "client_id": clientid,
+        "client_secret": clientsecret,
+        "redirect_uri": "https://4087-145-93-112-225.ngrok-free.app/callback/"
+    }
+
+    req = requests.post("https://auth.openticket.tech/token", data)
+    text = req.json()
+    token = None
+    if ("token_type" in text):
+        token = text["access_token"]
+    resp = HttpResponse(token)
+    resp.set_cookie('access_token', token)
+
+    return resp
 
 
 def AddOrganizerPage(request):
