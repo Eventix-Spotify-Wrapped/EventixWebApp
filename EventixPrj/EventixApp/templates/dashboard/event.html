@@ -3,12 +3,19 @@
 {% load static %}
 
 {% block content %}
-    <h1 class="h1">{{ Name }}</h1>
+    <h1 class="h1">{{ Organizer }}</h1>
 
-    <hr class="divider">
+    <div class="events">
+        <p>This event-organiser held a total of {{Events|length}} events:</p>
+
+        <div class="events__wrapper">
+            {% for event in Events %}
+            <span class="events__item">{{event}}</span>
+            {%endfor%}
+        </div>
+    </div>
 
     <h2 class="h2">Summary screens</h2>
-
 
     <form action="/savewrap">
         <div class="screens">
@@ -20,7 +27,8 @@
                         <div class="screen__info">
                             <h3 class="h3"> {{card.Name}} </h3>
                             <p>{{card.Text}}</p>
-                            <div  {%if card.Name == "Start Animation"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
+                            
+                            <div  {%if card.Name == "Start Animation" or card.Name == "End Overview"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                                 <span>Don't show</span>
                                 <label class="lightswitch">                        
                                 <input class="lightswitch__input" id="bruh" name="cards" value="{{card.id}}" {%if card.Toggled or 'Start Animation' in card.Name or 'End Overview' in card.Name%} checked {%endif%} type="checkbox">
@@ -28,14 +36,48 @@
                                     <span class="lightswitch__slider"></span>
                                 </label>
                                 <input type="hidden" name="owner" value={{Guid}}></input>
+                                {% comment %} <input type="hidden" name="context" value={{value}}></input> {% endcomment %}
+                                    <span class="temp-span" data-id="{{card.Value}}"></span>
                                 <span>Show in summary</span>
+                                <h3 class="h3">{{card.Value}}</h3>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             {% endif %}
             
-            <button type="submit">{%if Overwrite%}Overwrite{%else%} Save{%endif%}</button>
+            <button class="btn" type="submit">{%if Overwrite%}Overwrite{%else%} Save{%endif%}</button>
         </div>
     </form>
+
+    <script>
+        var inputs = document.getElementsByClassName("lightswitch__input");
+        for (let i = 0; i < inputs.length; i++) {
+            const id = inputs[i].parentElement.parentElement.getElementsByClassName("temp-span")[0].dataset.id;
+
+            if (inputs[i].checked) {
+                var newField = document.createElement('input');
+                newField.setAttribute('type','hidden');
+                newField.setAttribute('value', id);
+                newField.setAttribute('class', "delete");
+                newField.setAttribute('name', "context");
+                inputs[i].parentElement.parentElement.getElementsByClassName("temp-span")[0].parentElement.appendChild(newField);
+            }
+
+            inputs[i].addEventListener("input", (e) => {
+                var deleteElements = inputs[i].parentElement.parentElement.getElementsByClassName("temp-span")[0].parentElement.parentElement.getElementsByClassName("delete");
+
+                for (let index = 0; index < deleteElements.length; index++) deleteElements[index].remove();
+
+                if (e.target.checked === true) {
+                    var newField = document.createElement('input');
+                    newField.setAttribute('type','hidden');
+                    newField.setAttribute('value', id);
+                    newField.setAttribute('class', "delete");
+                    newField.setAttribute('name', "context");
+                    inputs[i].parentElement.parentElement.getElementsByClassName("temp-span")[0].parentElement.appendChild(newField);
+                }
+            });
+        }
+    </script>
 {% endblock %}

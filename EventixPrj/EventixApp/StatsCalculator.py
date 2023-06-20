@@ -3,6 +3,7 @@ import csv
 import math
 from collections import Counter
 from .CSV_Reader import CSV_Reader
+from EventixApp.models import Wrap, Card, CardTemplate
 
 
 class StatsCalculate:
@@ -100,6 +101,16 @@ class StatsCalculate:
             data.append(element["event_name"])
         return data
 
+    def get_events_name_list(guid):
+        list = CSV_Reader.create_transactions_from_csv(
+            "mock.csv"
+        )
+        data = []
+        for element in list:
+            if (element["account_id"] in guid):
+                data.append(element["event_name"])
+        return data
+
     def get_events_name_guid_keypair():
         list = CSV_Reader.create_transactions_from_csv(
             "mock.csv"
@@ -108,4 +119,71 @@ class StatsCalculate:
         for element in list:
             data.append({"Name": element["event_name"],
                         "Guid": element["account_id"]})
+        return data
+
+    def get_organizer_events_guid():
+        list = CSV_Reader.create_transactions_from_csv(
+            "mock.csv"
+        )
+        checkedOrganizers = []
+
+        data = []
+        for element in list:
+            if (element["account_id"] not in checkedOrganizers):
+                checkedOrganizers.append(element['account_id'])
+                selectedOrganizer = element["shop_name"]
+                obj = {"Organizer": selectedOrganizer,
+                       "Guid": element["account_id"], "Events": []}
+                for e in list:
+                    if (selectedOrganizer in e["shop_name"]):
+                        if (e["event_name"] not in obj["Events"]):
+                            obj["Events"].append(e["event_name"])
+                data.append(obj)
+
+        return data
+
+    def get_organizer_name_by_guid(guid):
+        list = CSV_Reader.create_transactions_from_csv(
+            "mock.csv"
+        )
+
+        data = []
+        for element in list:
+            if (element["account_id"] in guid):
+                data = element["shop_name"]
+
+        return data
+
+    def get_organizer_events_guid_by_guid(guid):
+        list = CSV_Reader.create_transactions_from_csv(
+            "mock.csv"
+        )
+        checkedOrganizers = []
+
+        data = []
+        for element in list:
+            if (element["account_id"] in guid):
+                if (element["account_id"] not in checkedOrganizers):
+                    checkedOrganizers.append(element['account_id'])
+                    selectedOrganizer = element["shop_name"]
+                    obj = {"Organizer": selectedOrganizer,
+                           "Guid": element["account_id"], "Events": []}
+                    for e in list:
+                        if (selectedOrganizer in e["shop_name"]):
+                            if (e["event_name"] not in obj["Events"]):
+                                obj["Events"].append(e["event_name"])
+                    data = obj
+
+        return data
+
+    def get_organizer_events_cards_guid_by_guid(guid):
+        data = StatsCalculate.get_organizer_events_guid_by_guid(guid)
+
+        completed_wraps_account_ids = Wrap.objects.values_list(
+            'owner_account_id', flat=True)
+        for owner in completed_wraps_account_ids:
+            if (owner in guid):
+                data["Cards"] = list(Card.objects.all().values("html_path").filter(
+                    wrap=Wrap.objects.get(owner_account_id=guid)).values())
+
         return data

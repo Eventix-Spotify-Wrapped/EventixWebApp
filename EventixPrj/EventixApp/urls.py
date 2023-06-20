@@ -10,7 +10,8 @@ urlpatterns = [
     path("peakSaleMonth/", views.peakSaleMonth, name="peakSaleMonth"),
     path("showUp/", views.showUp, name="showUp"),
     path("visitorsInfo/", views.visitorsInfo, name="visitorsInfo"),
-    path("visitorsInfoModified/", views.visitorsInfoModified, name="visitorsInfoModified"),
+    path("visitorsInfoModified/", views.visitorsInfoModified,
+         name="visitorsInfoModified"),
     path("visitorsInfo2/", views.visitorsInfo2, name="visitorsInfo2"),
     path("visitorsAge/", views.visitorsAge, name="visitorsAge"),
     path("visitorsAge2/", views.visitorsAge2, name="visitorsAge2"),
@@ -19,7 +20,7 @@ urlpatterns = [
     path("summary2/<account_id>", views.Summary2),
     path("create/", views.Create),
     path("finalize/", views.Finalize),
-    path("event/<guid>/<event_name>/", views.Event),
+    path("editsummary/<guid>", views.EditSummary),
     path("index/", views.Index),
     path("login/", views.LoginPage),
     path("login/signup", views.SignUp),
@@ -33,4 +34,6 @@ urlpatterns = [
     path("stef/", views.Stef),
     path("slideshow/", views.Slideshow),
     path("savewrap/", views.SaveWrap),
+    path("addorganizerpage/", views.AddOrganizerPage),
+    path("addorganizer/", views.AddOrganizer)
 ]

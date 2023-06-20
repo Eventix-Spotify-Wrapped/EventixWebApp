@@ -4,10 +4,7 @@ from django.template import loader
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .TrendReader import TrendReader
-from .APIMockService import APIMockService
 from .CSV_Reader import CSV_Reader
-
 from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
@@ -30,13 +27,11 @@ def Summary2(request, account_id):
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
         return HttpResponse("Sorry, your wrap is not ready!")
     wrap = Wrap.objects.get(owner_account_id=account_id)
-    cards = Card.objects.filter(wrap=wrap).values("html_path")
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, "Data preview 2016")
+    cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
+    context = list(Card.objects.filter(wrap=wrap).values("context"))
+
     event = {
-        "totalRevenue": total_revenue_event,
+        "totalRevenue": 69,
         "name": "Wish Outdoor",
         "eventsOrganised": 8,
         "visitorPercentage": 85,
@@ -49,7 +44,12 @@ def Summary2(request, account_id):
         "countryMostVisitors": "The Netherlands"
     }
 
-    slides = list(cards)
+    # slides = list(cards)
+    slides = []
+    for card in cards:
+        slides.append(
+            {"html": card["html_path"], "context": context[cards.index(card)]["context"]})
+    # raise MyException()
 
     return render(request, "summary2.html", {"event": event, "slides": slides})
 
@@ -73,6 +73,19 @@ def Summary(request):
         "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
+
+
+def AddOrganizerPage(request):
+
+    return render(request, "demo/addOrganizer.html")
+
+
+def AddOrganizer(request):
+    obj = {"Organizer": request.GET.get("organizer"),
+           "Events": request.GET.getlist("events")}
+    MockMaker.GenerateMockDataSpecific(obj)
+
+    return HttpResponse(obj["Organizer"])
 
 
 def xrDemo(request):
@@ -224,10 +237,11 @@ def customerLoyalty(request):
 def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
-    total_events_nameguid_keypair = StatsCalculator.StatsCalculate.get_events_name_guid_keypair()
+    total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
-    for ng_kp in total_events_nameguid_keypair:
+
+    for ng_kp in total_organizers_nameguid_keypair:
         alreadyAdded = False
         for dat in data:
             if (dat["Guid"] == ng_kp["Guid"]):
@@ -236,11 +250,12 @@ def Index(request):
             for owner in completed_wraps:
                 if (owner in ng_kp["Guid"]):
                     data.append(
-                        {"Event": ng_kp["Name"], "Wrapped": True, "Guid": ng_kp["Guid"]})
+                        {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
-                    0, {"Event": ng_kp["Name"], "Wrapped": False, "Guid": ng_kp["Guid"]})
+                    0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+  #  raise MyException()
 
     return render(
         request,
@@ -252,10 +267,18 @@ def Index(request):
     )
 
 
-def Event(request, event_name, guid):
+def EditSummary(request, guid):
     if not request.user.is_authenticated:
         return redirect("/login/")
     cards = list(CardTemplate.objects.values_list().order_by("id"))
+    info = StatsCalculator.StatsCalculate.get_organizer_events_cards_guid_by_guid(
+        guid)
+    preselected_cards = []
+    overwrite = False
+    if ("Cards" in info.keys()):
+        preselected_cards = info["Cards"]
+    if (len(preselected_cards) > 0):
+        overwrite = True
 
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
@@ -271,26 +294,15 @@ def Event(request, event_name, guid):
     #    list_of_objects, event_name)
     # average_ticket_price_event = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
     #    list_of_objects, event_name)
-    name = event_name
     data = []
-    completed_wraps_account_ids = Wrap.objects.values_list(
-        'owner_account_id', flat=True)
-    preselected_cards = []
-    overwrite = False
-    for owner in completed_wraps_account_ids:
-        if (owner in guid):
-            preselected_cards = list(Card.objects.all().values("html_path").filter(
-                wrap=Wrap.objects.get(owner_account_id=guid)).values())
-    if (len(preselected_cards) > 0):
-        overwrite = True
-  #  raise MyException()
+
     for _ in range(len(cards)):
         if (len(preselected_cards) > 0):
             data.append(
                 {"id": preselected_cards[0]["html_path"],
                     "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
-                 "Toggled": True, })
+                 "Toggled": True, "Value": CalculateFunction(preselected_cards[0]["html_path"])})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -301,11 +313,37 @@ def Event(request, event_name, guid):
                      "Name": cards[index][2].split(
             '/')[1].split('.')[0].replace('-', ' ').title(),
             "imagePreview": cards[index][1],
-            "Toggled": False})
+            "Toggled": False, "Value": CalculateFunction(cards[index][2])})
         cards.pop(index)
-  #  raise MyException('msg here')
+        bruh = data
 
-    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+    return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+def CalculateFunction(html_path):
+    value = None
+    if ("animated-ticket-sale-amount.html" in html_path):
+        value = "Ticket sale"
+    elif ("average-age-visitors.html" in html_path):
+        value = "Age visitors"
+    elif ("date-most-ticket-sales.html" in html_path):
+        value = "Most ticket sales"
+    elif ("end-overview.html" in html_path):
+        value = "End overview"
+    elif ("events-organised.html" in html_path):
+        value = "Events organised"
+    elif ("find-the-truth.html" in html_path):
+        value = "Find the truth"
+    elif ("start-animation.html" in html_path):
+        value = "Start animation"
+    elif ("ticket-sale-amount.html" in html_path):
+        value = "Ticket sale amount"
+    elif ("ticket-sale-percentage.html" in html_path):
+        value = "Ticket sale percentage"
+    elif ("visitor-origins.html" in html_path):
+        value = "Visitor origins"
+
+    return value
 
 
 def CalculateInsightForCardName(cardname):
@@ -325,6 +363,14 @@ def SaveWrap(request):
         return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+    context = request.GET.getlist("context")
+
+    for card in cards:
+        if ("end-overview.html" in card):
+            c = context.pop(cards.index(card))
+            context.append(c)
+            cards.remove(card)
+            cards.append(card)
 
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
@@ -337,7 +383,7 @@ def SaveWrap(request):
                 html_path=card,
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
+                context=context[cards.index(card)]
             )
             c.save()
     else:
@@ -350,10 +396,10 @@ def SaveWrap(request):
                 html_path=card,
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
+                context=context[cards.index(card)]
             )
             c.save()
-    return HttpResponse(print(w))
+    return redirect("/editsummary/"+owner)
 
 
 def Slideshow(request):

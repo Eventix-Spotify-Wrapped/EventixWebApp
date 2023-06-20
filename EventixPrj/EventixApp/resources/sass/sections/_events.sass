@@ -1,31 +1,55 @@
 .event
-    display: flex
-    padding: 2rem 3rem
-    border-radius: 1rem
-    flex-direction: column
-    width: calc(100% / 2 - 1.5rem)
-    background-color: $color-blue-medium
-
-    &:hover
-        color: $color-white
-        background-color: $color-primary
-
-        .event__amount
-            color: $color-white
-
     &s
-        display: flex
-        flex-wrap: wrap
-        margin-top: 3rem
-        margin-right: -1.5rem
-        margin-bottom: -1.5rem
+        margin-bottom: 2.5rem
 
-        .event
-            margin-bottom: 1.5rem
+        p
+            display: block
+            margin-bottom: 1rem
+
+        &__wrapper
+            display: flex
+            flex-wrap: wrap
+            margin-bottom: -1rem
+
+        &__item
+            font-size: 1.4rem
+            margin-bottom: 1rem
+            color: $color-white
+            border-radius: 1.5rem
+            padding: 1.25rem 2.5rem
+            background-color: $color-primary
 
             &:not(:last-child)
-                margin-right: 1.5rem
+                margin-right: 1rem
 
-    &__amount
-        color: #666
-        margin-top: .5rem
+    &-organizer
+        display: flex
+        padding: 2rem 3rem
+        border-radius: 1rem
+        flex-direction: column
+        width: calc(100% / 2 - 1.5rem)
+        background-color: $color-blue-medium
+
+        &:hover
+            color: $color-white
+            background-color: $color-primary
+
+            .event__amount
+                color: $color-white
+
+        &s
+            display: flex
+            flex-wrap: wrap
+            margin-top: 3rem
+            margin-right: -1.5rem
+            margin-bottom: -1.5rem
+
+            .event-organizer
+                margin-bottom: 1.5rem
+
+                &:not(:last-child)
+                    margin-right: 1.5rem
+
+        &__amount
+            color: #666
+            margin-top: .5rem
