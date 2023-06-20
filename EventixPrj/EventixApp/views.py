@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
+from django.core.mail import send_mail
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -12,10 +13,14 @@ from django.contrib.auth import authenticate, logout, login
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.models import User
 from .mock_maker_3000 import MockMaker
+from PIL import Image
+from io import BytesIO
+import base64
 from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
+import qrcode
 # Create your views here.
 
 
@@ -254,6 +259,29 @@ def Event(request, event_name, guid):
     if not request.user.is_authenticated:
         return redirect("/login/")
     cards = list(CardTemplate.objects.values_list().order_by("id"))
+    host = request.get_host()
+    url = f"https://{host}/summary2/{guid}"
+
+    # Generate QR code
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=6,
+        border=4,
+    )
+    qr.add_data(url)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    # Save the image to a BytesIO object
+    buffered = BytesIO()
+    img.save(buffered, format="PNG")
+
+    # Convert the BytesIO object to base64
+    qr_base64 = base64.b64encode(buffered.getvalue()).decode()
+
+
 
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
@@ -303,7 +331,7 @@ def Event(request, event_name, guid):
         cards.pop(index)
   #  raise MyException('msg here')
 
-    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data})
+    return render(request, "dashboard/event.html", {"Name": name, "Guid": guid, "Overwrite": overwrite, "Cards": data, 'qr_code': qr_base64})
 
 
 def CalculateInsightForCardName(cardname):
@@ -323,6 +351,9 @@ def SaveWrap(request):
         return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+    host = request.get_host()
+    url = f"https://{host}/summary2/{owner}"
+
 
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
@@ -351,6 +382,13 @@ def SaveWrap(request):
                 context=["hey", "sup"]
             )
             c.save()
+    send_mail(
+        'Your Wrap is Ready!',
+        f'There is a lot of fun involved! You can view it at {url}',
+        'cs.eventix.dev.test@gmail.com',
+        ['john.eventix.dev.test@gmail.com'],
+        fail_silently=False,
+    )
     return HttpResponse(print(w))
 
 
@@ -469,6 +507,22 @@ def Stef(request):
         list_of_objects, 'Data preview 2017')
     average_ticket_price_event2 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
         list_of_objects, 'Data preview 2017')
+    total_visitors_event1 = StatsCalculator.StatsCalculate.calculate_total_visitors(
+        list_of_objects, 'Data preview 2016')
+    total_visitors_event2 = StatsCalculator.StatsCalculate.calculate_total_visitors(
+        list_of_objects, 'Data preview 2017')
+    events_per_year1 = StatsCalculator.StatsCalculate.calculate_events_per_year(
+        list_of_objects, 'Data preview 2016')
+    events_per_year2 = StatsCalculator.StatsCalculate.calculate_events_per_year(
+        list_of_objects, 'Data preview 2017')
+    day_most_tickets_sold1 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, 'Data preview 2016')
+    day_most_tickets_sold2 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, 'Data preview 2017')
+    most_popular_country_event1 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+        list_of_objects, 'Data preview 2016')
+    most_popular_country_event2 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+        list_of_objects, 'Data preview 2017')
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
                'gender_event1_male': gender_event1[0], 'gender_event1_female': gender_event1[1],
@@ -477,7 +531,13 @@ def Stef(request):
                'average_age_event2': average_age_event2, 'showup_percentage_event1': showup_percentage_event1,
                'showup_percentage_event2': showup_percentage_event2,
                'most_popular_city_event1': most_popular_city_event1,
-               'most_popular_city_event2': most_popular_city_event2}
+               'most_popular_city_event2': most_popular_city_event2,
+               'total_visitors_event1': total_visitors_event1,
+               'total_visitors_event2': total_visitors_event2, 'events_per_year1': events_per_year1,
+               'events_per_year2': events_per_year2, 'day_most_tickets_sold1': day_most_tickets_sold1,
+               'day_most_tickets_sold2': day_most_tickets_sold2,
+               'most_popular_country_event1': most_popular_country_event1,
+               'most_popular_country_event2': most_popular_country_event2}
     return render(request, 'my_template.html', context)
 
 

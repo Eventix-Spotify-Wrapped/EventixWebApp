@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1 class="h1">{{ Name }}</h1>
+    <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
 
     <hr class="divider">
 
@@ -16,6 +17,7 @@
                 {% for card in Cards%}
                     <div class="screen">
                         <img class="screen__preview" src="{% static card.imagePreview %}" alt="" />
+
 
                         <div class="screen__info">
                             <h3 class="h3"> {{card.Name}} </h3>

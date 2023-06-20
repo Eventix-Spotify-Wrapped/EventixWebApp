@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pandas as pd
 import csv
 import math
@@ -35,6 +37,29 @@ class StatsCalculate:
                 relevant_transactions_counter += 1
         average_ticket_price = ticket_values / relevant_transactions_counter
         return average_ticket_price
+
+    def calculate_total_ticket_sells(transactions, event_name):
+        relevant_transactions_counter = 0
+        for i in range(len(transactions)):
+            if transactions[i]['event_name'] == event_name:
+                relevant_transactions_counter += 1
+        return relevant_transactions_counter
+
+    def calculate_day_most_tickets_sold(transactions, event_name):
+        days = []
+        for i in range(len(transactions)):
+            if transactions[i]['event_name'] == event_name:
+                date_time_obj = datetime.strptime(transactions[i]['created_at'], "%m/%d/%Y %H:%M")
+                days.append(date_time_obj.date())
+        most_common_day = Counter(days).most_common(1)
+        return most_common_day[0][0]
+
+    def calculate_events_per_year(transactions, event_name):
+        events_per_year = 0
+        for i in range(len(transactions)):
+            if transactions[i]['event_name'] == event_name:
+                events_per_year = 1
+        return events_per_year
 
     def calculate_gender_percentage(transactions, event_name):
         male_counter = 0
@@ -79,6 +104,14 @@ class StatsCalculate:
         showup_percentage = showup_counter / relevant_transactions_counter * 100
         return showup_percentage
 
+    def calculate_total_visitors(transactions, event_name):
+        showup_counter = 0
+        for i in range(len(transactions)):
+            if transactions[i]['event_name'] == event_name:
+                if transactions[i]['is_scanned'] == 1:
+                    showup_counter += 1
+        return showup_counter
+
     def calculate_city_percentage(transactions, event_name):
         relevant_transactions = [t for t in transactions if t['event_name'] == event_name and t.get(
             # 'order_metadata_city') is not None and not math.isnan(t['order_metadata_city'])]
@@ -90,6 +123,21 @@ class StatsCalculate:
             return most_common_city[0][0]
         else:
             return None
+
+    def calculate_most_popular_country(transactions, event_name):
+        countries = []
+        total_transactions = 0
+        for i in range(len(transactions)):
+            if transactions[i]['event_name'] == event_name:
+                country = transactions[i]['order_metadata_country']
+                if country:  # This checks that country is not None or an empty string
+                    countries.append(country)
+                    total_transactions += 1
+        most_common_country = Counter(countries).most_common(1)[0]
+        most_common_country_name = most_common_country[0]
+        most_common_country_count = most_common_country[1]
+        percentage = (most_common_country_count / total_transactions) * 100
+        return most_common_country_name, percentage
 
     def get_events_name_list():
         list = CSV_Reader.create_transactions_from_csv(
@@ -107,5 +155,5 @@ class StatsCalculate:
         data = []
         for element in list:
             data.append({"Name": element["event_name"],
-                        "Guid": element["account_id"]})
+                         "Guid": element["account_id"]})
         return data
