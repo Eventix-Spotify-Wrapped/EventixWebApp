@@ -47,13 +47,13 @@ def Summary2(request, account_id):
     wrap = Wrap.objects.get(owner_account_id=account_id)
     cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
     context = list(Card.objects.filter(wrap=wrap).values("context"))
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, "Data preview 2016")
+    # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+    #     "ticketing_export_2023_03_24_11_27_16.csv")
+    # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
+    #     list_of_objects, "Data preview 2016")
     event = {
-        "totalRevenue": total_revenue_event,
-        "name": "Wish Outdoor",
+        "totalRevenue": list(Card.objects.filter(wrap=wrap, html_path="summary-slides/animated-ticket-sale-amount.html"))[0],
+        "name": "list(Wrap.objects.filter(wrap=wrap).values)[0]",
         "eventsOrganised": 8,
         "visitorPercentage": 85,
         "totalOfVisitors": 58472,
@@ -213,6 +213,7 @@ def SaveWrap(request):
         return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+    organizer_name = request.GET.get("organizer")
     context = request.GET.getlist("context")
 
     host = request.get_host()
@@ -228,6 +229,7 @@ def SaveWrap(request):
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
             owner_account_id=owner,
+            organizer_name=organizer_name
         )
         w.save()
         for card in cards:

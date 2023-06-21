@@ -126,6 +126,7 @@ class Post(models.Model):
 class Wrap(models.Model):
     id = models.AutoField(primary_key=True)
     owner_account_id = models.CharField(max_length=250)
+    organizer_name = models.CharField(max_length=250)
 
 
 class CardTemplate(models.Model):
