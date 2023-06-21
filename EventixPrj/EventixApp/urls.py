@@ -20,7 +20,7 @@ urlpatterns = [
     path("visitorsAge2/", views.visitorsAge2, name="visitorsAge2"),
     path("customerLoyalty/", views.customerLoyalty, name="customerLoyalty"),
     path("", views.Summary, name="Panel"),
-    path("summary2/<account_id>", views.Summary2),
+    path("summary/<account_id>", views.Summary2),
     path("create/", views.Create),
     path("finalize/", views.Finalize),
     path("editsummary/<guid>", views.EditSummary),

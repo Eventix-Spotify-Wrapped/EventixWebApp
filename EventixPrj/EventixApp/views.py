@@ -66,7 +66,7 @@ def Summary2(request, account_id):
         slides.append(
             {"html": card["html_path"], "context": context[cards.index(card)]["context"]})
     # raise MyException()
-
+   # raise MyException()
     return render(request, "summary2.html", {"event": event, "slides": slides})
 
 
@@ -456,34 +456,6 @@ def Finalize(request):
 def panel(request):
     template = loader.get_template("dev/panel.html")
     return HttpResponse(template.render())
-
-
-def Summary2(request, account_id):
-    if not Wrap.objects.filter(owner_account_id=account_id).exists():
-        return HttpResponse("Sorry, your wrap is not ready!")
-    wrap = Wrap.objects.get(owner_account_id=account_id)
-    cards = Card.objects.filter(wrap=wrap).values("html_path")
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, "Data preview 2016")
-    event = {
-        "totalRevenue": total_revenue_event,
-        "name": "Wish Outdoor",
-        "eventsOrganised": 8,
-        "visitorPercentage": 85,
-        "totalOfVisitors": 58472,
-        "ticketSaleAmount": 20025,
-        "ticketSalePercentage": 92,
-        "averageAgeOfVisitors": 23,
-        "cityMostVisitors": "Eindhoven",
-        "provinceMostVisitors": "Noord-Brabant",
-        "countryMostVisitors": "The Netherlands"
-    }
-
-    slides = list(cards)
-
-    return render(request, "summary2.html", {"event": event, "slides": slides})
 
 
 def Summary(request):
