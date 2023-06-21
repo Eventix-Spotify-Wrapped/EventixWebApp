@@ -178,12 +178,12 @@ async function main (slideColors) {
 
             case "ticket-sale-percentage":
                 // Initiate the countup animation on the ticket percentage slide
-                new CountUp(document.getElementById("ticketPercentageCountUp"), 95, { duration: 3 }).start();
+                new CountUp(document.getElementById("ticketPercentageCountUp"), document.getElementById("ticketPercentageCountUpValue").innerHTML, { duration: 3 }).start();
             break;
 
             case "visitor-origins":
                 // Initiate the countup animation on the visitor origins page
-                new CountUp(document.getElementById("visitorOriginsPercentageCountUp"), 95, { duration: 3 }).start();
+                new CountUp(document.getElementById("visitorOriginsPercentageCountUp"), document.getElementById("visitorOriginsPercentageCountUpValue").innerHTML, { duration: 3 }).start();
             break;
 
             case "end-overview":

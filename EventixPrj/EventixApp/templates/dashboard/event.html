@@ -30,6 +30,8 @@
 
     <form action="/savewrap">
         <div class="screens">
+            <input type="hidden" name="owner" value={{Guid}}></input>
+            <input type="hidden" name="organizer" value={{Organizer}}></input>
             {% if Cards %}
                 {% for card in Cards%}
                     <div class="screen">
@@ -45,11 +47,9 @@
                                     <div class="lightswitch__back"></div>
                                     <span class="lightswitch__slider"></span>
                                 </label>
-                                <input type="hidden" name="owner" value={{Guid}}></input>
                                 {% comment %} <input type="hidden" name="context" value={{value}}></input> {% endcomment %}
                                 <span class="temp-span" data-id="{{card.Context}}"></span>
                                 <span>Show in summary</span>
-                                <h3 class="h3">{{card.Context}}</h3>
                             </div>
                         </div>
                     </div>

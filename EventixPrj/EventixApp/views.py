@@ -47,22 +47,25 @@ def Summary2(request, account_id):
     wrap = Wrap.objects.get(owner_account_id=account_id)
     cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
     context = list(Card.objects.filter(wrap=wrap).values("context"))
-    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "ticketing_export_2023_03_24_11_27_16.csv")
-    total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, "Data preview 2016")
+    # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+    #     "ticketing_export_2023_03_24_11_27_16.csv")
+    # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
+    #     list_of_objects, "Data preview 2016")
+
     event = {
-        "totalRevenue": total_revenue_event,
-        "name": "Wish Outdoor",
-        "eventsOrganised": 8,
-        "visitorPercentage": 85,
-        "totalOfVisitors": 58472,
-        "ticketSaleAmount": 20025,
-        "ticketSalePercentage": 92,
-        "averageAgeOfVisitors": 23,
-        "cityMostVisitors": "Eindhoven",
-        "provinceMostVisitors": "Noord-Brabant",
-        "countryMostVisitors": "The Netherlands"
+        "name": wrap.organizer_name,
+        "totalRevenue": GetContext(wrap, "summary-slides/animated-ticket-sale-amount.html"),
+        "eventsOrganised": GetContext(wrap, "summary-slides/events-organised.html"),
+        "visitorPercentage": GetContext(wrap, "summary-slides/visitor-origins.html", 1),
+        "totalOfVisitors": GetContext(wrap, "summary-slides/end-overview.html", 0),
+        "countryMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 1),
+        "cityMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 2),
+        "provinceMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 3),
+        "ticketSaleAmount": GetContext(wrap, "summary-slides/ticket-sale-amount.html"),
+        "ticketSalePercentage": GetContext(wrap, "summary-slides/ticket-sale-percentage.html"),
+        "averageAgeOfVisitors": GetContext(wrap, "summary-slides/average-age-visitors.html"),
+        "dayOfMonthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 0),
+        "monthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 1)
     }
 
     # slides = list(cards)
@@ -73,6 +76,17 @@ def Summary2(request, account_id):
     # raise MyException()
    # raise MyException()
     return render(request, "summary2.html", {"event": event, "slides": slides})
+
+
+def GetContext(wrap, html_path, contextIndex=0):
+    awesome = Card.objects.filter(wrap=wrap, html_path=html_path)
+    if not awesome:
+        return None
+    context = list(awesome)[0].context
+
+    if ("|" in context):
+        return context.split('|')[contextIndex]
+    return context
 
 
 def Summary(request):
@@ -213,6 +227,7 @@ def SaveWrap(request):
         return redirect("/login/")
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
+    organizer_name = request.GET.get("organizer")
     context = request.GET.getlist("context")
 
     host = request.get_host()
@@ -228,6 +243,7 @@ def SaveWrap(request):
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
             owner_account_id=owner,
+            organizer_name=organizer_name
         )
         w.save()
         for card in cards:
@@ -634,7 +650,7 @@ def EditSummary(request, guid):
                  "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
                  "Toggled": True,
-                 "Context": CalculateFunction(preselected_cards[0]["html_path"])})
+                 "Context": CalculateFunction(preselected_cards[0]["html_path"], guid)})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -646,7 +662,7 @@ def EditSummary(request, guid):
                          '/')[1].split('.')[0].replace('-', ' ').title(),
                      "imagePreview": cards[index][1],
                      "Toggled": False,
-                     "Context": CalculateFunction(cards[index][2])})
+                     "Context": CalculateFunction(cards[index][2], guid)})
         cards.pop(index)
 
     return render(request, "dashboard/event.html",
@@ -654,16 +670,30 @@ def EditSummary(request, guid):
                    "Cards": data, "qr_code": qr_base64})
 
 
-def CalculateFunction(html_path):
+def CalculateFunction(html_path, guid):
     value = None
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "ticketing_export_2023_03_24_11_27_16.csv")
     if ("animated-ticket-sale-amount.html" in html_path):
-        value = "Ticket sale"
+        value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(
+            list_of_objects, guid)
     elif ("average-age-visitors.html" in html_path):
-        value = "Age visitors"
+        value = StatsCalculator.StatsCalculate.calculate_average_age(
+            list_of_objects, guid)
     elif ("date-most-ticket-sales.html" in html_path):
-        value = "Most ticket sales"
+        value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+            list_of_objects, guid)
     elif ("end-overview.html" in html_path):
-        value = "End overview"
+        visitors = StatsCalculator.StatsCalculate.calculate_total_visitors(
+            list_of_objects, guid)
+        most_popular_country = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+            list_of_objects, guid)
+        most_popular_city = StatsCalculator.StatsCalculate.calculate_most_popular_city(
+            list_of_objects, guid)
+        most_popular_region = StatsCalculator.StatsCalculate.calculate_most_popular_province(
+            list_of_objects, guid)
+        value = '{visitors} | {most_popular_country[0]} | {most_popular_city} | {most_popular_region}' .format(
+            visitors=visitors, most_popular_country=most_popular_country, most_popular_city=most_popular_city, most_popular_region=most_popular_region)
     elif ("events-organised.html" in html_path):
         value = "Events organised"
     elif ("find-the-truth.html" in html_path):
@@ -673,9 +703,12 @@ def CalculateFunction(html_path):
     elif ("ticket-sale-amount.html" in html_path):
         value = "Ticket sale amount"
     elif ("ticket-sale-percentage.html" in html_path):
-        value = "Ticket sale percentage"
+        value = StatsCalculator.StatsCalculate.calculate_showup_percentage(
+            list_of_objects, guid)
     elif ("visitor-origins.html" in html_path):
-        value = "Visitor origins"
+        a = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+            list_of_objects, guid)
+        value = '{a[0]} | {a[1]}' .format(a=a)
 
     return value
 
