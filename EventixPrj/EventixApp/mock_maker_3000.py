@@ -264,8 +264,7 @@ class MockMaker:
                 ticket_pdf_link = fake.url()
 
                 row = [order_id, account_id, shop_name, event_name, event_category, first_event, last_event, first_name, last_name,
-                       email, ticket_name, barcode, order_status, order_invalidated, order_invalidated_at, ticket_invalidated, ticket_invalidated_at, created_at, paid_currency, order_value, order_fees
-                       , transaction_fees, ticket_value, ticket_fees, optionals_value, refunded_amount, payment_method, coupons, device, tracker, tracker_name, seat, is_scanned, first_scanned_at, order_metadata_first_name, order_metadata_last_name, order_metadata_last_name ]
+                       email, ticket_name, barcode, order_status, order_invalidated, order_invalidated_at, ticket_invalidated, ticket_invalidated_at, created_at, paid_currency, order_value, order_fees, transaction_fees, ticket_value, ticket_fees, optionals_value, refunded_amount, payment_method, coupons, device, tracker, tracker_name, seat, is_scanned, first_scanned_at, order_metadata_first_name, order_metadata_last_name, "wrong1", "wrong2", "wrong3", "wrong4", "wrong5", "wrong6", "wrong7", "wrong8", order_metadata_city, order_metadata_gender, order_metadata_province, order_metadata_company, order_metadata_country, "no symptoms", order_metadata_age, "wrong9", "wrong10", "wrong11", "wrong12", "wrong13", "wrong14", "fname", "lname", "twrong1", "email", "steet", "steetno", "strnadd", "postal", "dob", "state", "city", "gender", "province", "company", "country", "no symptoms", "age", "twrong2", "phone", "fullname", "covid_one_household", "yes", "starving", "street", "strnr", "local", "postal", "sub", "admin", "admin", "ccode", "latitude", "longitude", "pdf"]
               #  raise MyException()
                 writer.writerow(dict(zip(column_names, row)))
 
@@ -462,7 +461,8 @@ class MockMaker:
                 order_metadata_wrong7 = fake.word(),
                 order_metadata_wrong8 = fake.word(),
                 order_metadata_city = fake.city(),
-                order_metadata_gender = random.choice(["M", "F"]),
+                order_metadata_gender = random.choice(
+                    ["M", "F"]),
                 order_metadata_province = fake.state(),
                 order_metadata_company = fake.company(),
                 order_metadata_country = fake.country(),
@@ -521,6 +521,7 @@ class MockMaker:
                        admin_level_2, country_code, latitude, longitude]
 
                 writer.writerow(dict(zip(column_names, row)))
+
 
 class MyException(Exception):
     pass
