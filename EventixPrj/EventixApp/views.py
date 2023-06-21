@@ -1,10 +1,11 @@
+from faker import Faker
 import qrcode
 import base64
 from io import BytesIO
 from PIL import Image
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -33,8 +34,12 @@ def panel(request):
 
 def Summary2(request, account_id):
     access_token = request.COOKIES.get('access_token', None)
+    redirect = HttpResponseRedirect('/authorize/')
+    redirect.set_cookie('account_id', account_id)
     if (access_token is None):
-        return redirect("/authorize/")
+        return redirect
+    if (access_token == "None"):
+        return redirect
     if (GetEventixAccountId(request) not in account_id):
         return HttpResponse("Acess denied!")
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
@@ -91,13 +96,8 @@ def Summary(request):
     return render(request, "summary.html", {"event": event})
 
 
-clientid = 'vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0'
-clientsecret = "kTEN7muJIrgWKGgAyDDzaugWT0dTk3OdoV317xOL"
-
-
-def Authorize(request):
-    url = "https://auth.openticket.tech/token/authorize?response_type=code&client_id=vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0&state=awddawdawdawd&redirect_uri=https%3A%2F%2Fbbe2-145-93-112-185.ngrok-free.app%2Fcallback"
-    return redirect(url)
+clientid = 'WctSZaDe8Q6O65dQ66mXMlQ0TkTt7GC2Ebv3wDCk'
+clientsecret = "KUJmrVOYTKqKyGaUCGWzGmy43gmgnv9e2puZU84y"
 
 
 def GetEventixAccountId(request):
@@ -110,14 +110,23 @@ def GetEventixAccountId(request):
     return json.loads(req.text)["guid"]
 
 
+def Authorize(request):
+    url = "https://auth.openticket.tech/token/authorize?response_type=code&client_id=WctSZaDe8Q6O65dQ66mXMlQ0TkTt7GC2Ebv3wDCk&state=sgaedwawd&redirect_uri=https://eventix-wrapped.ngrok.app/callback"
+    return redirect(url)
+
+
 def Callback(request):
-    code = request.GET.get("code")
+    account_id = request.COOKIES.get('account_id', None)
+    if (account_id is None):
+        return redirect('/')
+    code = request.GET.get('code')
+    redir = "/summary/" + account_id
     data = {
         'grant_type': 'authorization_code',
         "code": code,
         "client_id": clientid,
         "client_secret": clientsecret,
-        "redirect_uri": GetNgrokUri() + "/callback/"
+        "redirect_uri": "https://eventix-wrapped.ngrok.app/callback"
     }
 
     req = requests.post("https://auth.openticket.tech/token", data)
@@ -125,9 +134,9 @@ def Callback(request):
     token = None
     if ("token_type" in text):
         token = text["access_token"]
-    resp = HttpResponse(token)
+    resp = HttpResponseRedirect(redir)
     resp.set_cookie('access_token', token)
-
+  #  raise MyException()
     return resp
 
 
@@ -149,6 +158,10 @@ def AddOrganizer(request):
 
 
 def Index(request):
+    # fake = Faker()
+
+    # return HttpResponse(fake.date_time_between(
+   #     start_date='-1y', end_date='now'))
     if not request.user.is_authenticated:
         return redirect("/login/")
     total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
@@ -562,41 +575,6 @@ def visitorsAge2(request):
     # change the context during develop
     context = []
     return render(request, "demo/xinru/visitorsAge2.html", {"context": context})
-
-
-def Index(request):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
-    completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
-    data = []
-
-    for ng_kp in total_organizers_nameguid_keypair:
-        alreadyAdded = False
-        for dat in data:
-            if (dat["Guid"] == ng_kp["Guid"]):
-                alreadyAdded = True
-        if (not alreadyAdded):
-            for owner in completed_wraps:
-                if (owner in ng_kp["Guid"]):
-                    data.append(
-                        {"Wrapped": True, "Guid": ng_kp["Guid"],
-                         "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
-                    alreadyAdded = True
-            if (not alreadyAdded):
-                data.insert(
-                    0, {"Wrapped": False, "Guid": ng_kp["Guid"],
-                        "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
-    #  raise MyException()
-
-    return render(
-        request,
-        "dashboard/index.html",
-        {
-            "events":
-                data,
-        },
-    )
 
 
 def EditSummary(request, guid):
