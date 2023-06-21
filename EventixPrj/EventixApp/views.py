@@ -52,17 +52,17 @@ def Summary2(request, account_id):
     # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
     #     list_of_objects, "Data preview 2016")
     event = {
-        "totalRevenue": list(Card.objects.filter(wrap=wrap, html_path="summary-slides/animated-ticket-sale-amount.html"))[0],
-        "name": "list(Wrap.objects.filter(wrap=wrap).values)[0]",
-        "eventsOrganised": 8,
-        "visitorPercentage": 85,
-        "totalOfVisitors": 58472,
-        "ticketSaleAmount": 20025,
-        "ticketSalePercentage": 92,
-        "averageAgeOfVisitors": 23,
-        "cityMostVisitors": "Eindhoven",
-        "provinceMostVisitors": "Noord-Brabant",
-        "countryMostVisitors": "The Netherlands"
+        "name": GetOrganizerName(wrap),
+        "totalRevenue": GetContext(wrap, "summary-slides/animated-ticket-sale-amount.html"),
+        "eventsOrganised": GetContext(wrap, "summary-slides/events-organised.html"),
+        "visitorPercentage": GetContext(wrap, "summary-slides/visitor-origins.html"),
+        "totalOfVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
+        "ticketSaleAmount": GetContext(wrap, "summary-slides/ticket-sale-amount.html"),
+        "ticketSalePercentage": GetContext(wrap, "summary-slides/ticket-sale-percentage.html"),
+        "averageAgeOfVisitors": GetContext(wrap, "summary-slides/averate-age-visitors.html"),
+        "cityMostVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
+        "provinceMostVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
+        "countryMostVisitors": GetContext(wrap, "summary-slides/visitors"),
     }
 
     # slides = list(cards)
@@ -73,6 +73,20 @@ def Summary2(request, account_id):
     # raise MyException()
    # raise MyException()
     return render(request, "summary2.html", {"event": event, "slides": slides})
+
+
+def GetOrganizerName(wrap):
+    return list(Wrap.objects.filter(wrap=wrap).values)[0]
+
+
+def GetContext(wrap, html_path, contextIndex):
+    awesome = Card.objects.filter(wrap=wrap, html_path=html_path)
+    if not awesome:
+        return None
+    item = list(awesome)[0]
+    if ("|" in item):
+        return item.split('|')[contextIndex]
+    return item
 
 
 def Summary(request):
@@ -661,13 +675,17 @@ def CalculateFunction(html_path, guid):
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
     if ("animated-ticket-sale-amount.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(
+            list_of_objects, guid)
     elif ("average-age-visitors.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_events_per_year(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_events_per_year(
+            list_of_objects, guid)
     elif ("date-most-ticket-sales.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+            list_of_objects, guid)
     elif ("end-overview.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_total_visitors(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_total_visitors(
+            list_of_objects, guid)
     elif ("events-organised.html" in html_path):
         value = "Events organised"
     elif ("find-the-truth.html" in html_path):
@@ -677,9 +695,11 @@ def CalculateFunction(html_path, guid):
     elif ("ticket-sale-amount.html" in html_path):
         value = "Ticket sale amount"
     elif ("ticket-sale-percentage.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_showup_percentage(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_showup_percentage(
+            list_of_objects, guid)
     elif ("visitor-origins.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_most_popular_country(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+            list_of_objects, guid)
 
     return value
 
