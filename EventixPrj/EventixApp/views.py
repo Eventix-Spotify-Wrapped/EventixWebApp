@@ -988,7 +988,7 @@ def EditSummary(request, guid):
 
     return render(request, "dashboard/event.html",
                   {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite,
-                   "Cards": data})
+                   "Cards": data, "qr_code": qr_base64})
 
 
 def CalculateInsightForCardName(cardname):
