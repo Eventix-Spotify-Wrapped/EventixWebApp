@@ -4,18 +4,28 @@
 
 {% block content %}
     <h1 class="h1">{{ Organizer }}</h1>
-    <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
 
-    <div class="events">
-        <p>This event-organiser held a total of {{Events|length}} events:</p>
-        <div class="events__wrapper">
-            {% for event in Events %}
-            <span class="events__item">{{event}}</span>
-            {%endfor%}
+    <div class="event-ready">
+        <p>Your event is ready. You can find your event <a href="#">here</a>.</p>
+    </div>
+
+    <div class="event-head">
+        <div class="event-head__events">
+            <div class="events">
+                <p>This event-organiser held a total of {{Events|length}} events:</p>
+                <div class="events__wrapper">
+                    {% for event in Events %}
+                    <span class="events__item">{{event}}</span>
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+
+        <div class="event-head__qr">
+            <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
         </div>
     </div>
-    
-    
+
     <h2 class="h2">Summary screens</h2>
 
     <form action="/savewrap">
