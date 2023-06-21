@@ -56,7 +56,7 @@ def Summary2(request, account_id):
         "name": wrap.organizer_name,
         "totalRevenue": GetContext(wrap, "summary-slides/animated-ticket-sale-amount.html"),
         "eventsOrganised": GetContext(wrap, "summary-slides/events-organised.html"),
-        "visitorPercentage": GetContext(wrap, "summary-slides/visitor-origins.html"),
+        "visitorPercentage": GetContext(wrap, "summary-slides/visitor-origins.html", 1),
         "totalOfVisitors": GetContext(wrap, "summary-slides/end-overview.html", 0),
         "countryMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 1),
         "cityMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 2),
@@ -678,7 +678,8 @@ def CalculateFunction(html_path, guid):
         value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(
             list_of_objects, guid)
     elif ("average-age-visitors.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_average_age(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_average_age(
+            list_of_objects, guid)
     elif ("date-most-ticket-sales.html" in html_path):
         value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
             list_of_objects, guid)

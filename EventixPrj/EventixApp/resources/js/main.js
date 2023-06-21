@@ -183,7 +183,7 @@ async function main (slideColors) {
 
             case "visitor-origins":
                 // Initiate the countup animation on the visitor origins page
-                new CountUp(document.getElementById("visitorOriginsPercentageCountUp"), 1231, { duration: 3 }).start();
+                new CountUp(document.getElementById("visitorOriginsPercentageCountUp"), document.getElementById("visitorOriginsPercentageCountUpValue").innerHTML, { duration: 3 }).start();
             break;
 
             case "end-overview":
