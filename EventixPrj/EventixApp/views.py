@@ -64,7 +64,6 @@ def Summary2(request, account_id):
         "ticketSaleAmount": GetContext(wrap, "summary-slides/ticket-sale-amount.html"),
         "ticketSalePercentage": GetContext(wrap, "summary-slides/ticket-sale-percentage.html"),
         "averageAgeOfVisitors": GetContext(wrap, "summary-slides/average-age-visitors.html"),
-        "countryMostVisitors": GetContext(wrap, "summary-slides/visitors"),
         "dayOfMonthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 0),
         "monthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 1)
     }
