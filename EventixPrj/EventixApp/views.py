@@ -15,7 +15,7 @@ import random
 from . import StatsCalculator
 import requests
 import json
-
+import urllib.parse
 
 # Create your views here.
 
@@ -29,7 +29,6 @@ def Summary2(request, account_id):
     access_token = request.COOKIES.get('access_token', None)
     if (access_token is None):
         return redirect("/authorize/")
-    breah = GetEventixAccountId(request)
     if (GetEventixAccountId(request) not in account_id):
         return HttpResponse("Acess denied!")
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
@@ -83,13 +82,12 @@ def Summary(request):
     return render(request, "summary.html", {"event": event})
 
 
-clientid = 'sDSLxeeH6DLauCBq5zg7OckUGDKOfDAGgrekjagh'
-clientsecret = "xZy5gRYk3fz9rhwuBvGJbB2sCT218Gjvr1HVK2mm"
+clientid = 'vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0'
+clientsecret = "kTEN7muJIrgWKGgAyDDzaugWT0dTk3OdoV317xOL"
 
 
 def Authorize(request):
-    url = "https://auth.openticket.tech/token/authorize?client_id=sDSLxeeH6DLauCBq5zg7OckUGDKOfDAGgrekjagh&redirect_uri=https%3A%2F%2F4087-145-93-112-225.ngrok-free.app%2Fcallback%2F&response_type=code&state=RANDOM_STRING"
-
+    url = "https://auth.openticket.tech/token/authorize?response_type=code&client_id=vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0&state=awddawdawdawd&redirect_uri=https%3A%2F%2Fbbe2-145-93-112-185.ngrok-free.app%2Fcallback"
     return redirect(url)
 
 
@@ -110,7 +108,7 @@ def Callback(request):
         "code": code,
         "client_id": clientid,
         "client_secret": clientsecret,
-        "redirect_uri": "https://4087-145-93-112-225.ngrok-free.app/callback/"
+        "redirect_uri": GetNgrokUri()+"/callback/"
     }
 
     req = requests.post("https://auth.openticket.tech/token", data)
@@ -122,6 +120,11 @@ def Callback(request):
     resp.set_cookie('access_token', token)
 
     return resp
+
+
+def GetNgrokUri():
+    req = requests.get("http://localhost:4040/api/tunnels")
+    return json.loads(req.text)["tunnels"][0]["public_url"]
 
 
 def AddOrganizerPage(request):
