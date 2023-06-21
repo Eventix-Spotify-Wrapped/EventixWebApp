@@ -3,26 +3,19 @@
 {% load static %}
 
 {% block content %}
-<<<<<<< HEAD
-    <h1 class="h1">{{ Name }}</h1>
-    <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
-=======
     <h1 class="h1">{{ Organizer }}</h1>
->>>>>>> beb566e (Event organizers displayed in /index; events displayed in /editsummary/; /event renamed to /editsummary; functions and logic change to allow new changes)
+    <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
 
     <div class="events">
         <p>This event-organiser held a total of {{Events|length}} events:</p>
-
-    <div class="events">
-        <p>This event-organiser held a total of {{Events|length}} events:</p>
-
         <div class="events__wrapper">
             {% for event in Events %}
             <span class="events__item">{{event}}</span>
             {%endfor%}
         </div>
     </div>
-
+    
+    
     <h2 class="h2">Summary screens</h2>
 
     <form action="/savewrap">
@@ -31,13 +24,9 @@
                 {% for card in Cards%}
                     <div class="screen">
                         <img class="screen__preview" src="{% static card.imagePreview %}" alt="" />
-
-
                         <div class="screen__info">
                             <h3 class="h3"> {{card.Name}} </h3>
                             <p>{{card.Text}}</p>
-                            
-                            <div  {%if card.Name == "Start Animation" or card.Name == "End Overview"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                             
                             <div  {%if card.Name == "Start Animation" or card.Name == "End Overview"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                                 <span>Don't show</span>
