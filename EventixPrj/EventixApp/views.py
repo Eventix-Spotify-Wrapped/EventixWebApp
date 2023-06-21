@@ -606,7 +606,7 @@ def EditSummary(request, guid):
     if (len(preselected_cards) > 0):
         overwrite = True
     host = request.get_host()
-    url = f"https://{host}/summary2/{guid}"
+    url = f"https://{host}/summary/{guid}"
 
     # Generate QR code
     qr = qrcode.QRCode(
