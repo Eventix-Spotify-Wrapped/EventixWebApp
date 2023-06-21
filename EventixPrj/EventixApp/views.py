@@ -1,3 +1,8 @@
+import qrcode
+import base64
+from io import BytesIO
+from PIL import Image
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
@@ -13,6 +18,10 @@ from EventixApp.models import Wrap, Card, CardTemplate
 import pdb
 import random
 from . import StatsCalculator
+import requests
+import json
+import urllib.parse
+
 # Create your views here.
 
 
@@ -22,6 +31,11 @@ def panel(request):
 
 
 def Summary2(request, account_id):
+    access_token = request.COOKIES.get('access_token', None)
+    if (access_token is None):
+        return redirect("/authorize/")
+    if (GetEventixAccountId(request) not in account_id):
+        return HttpResponse("Acess denied!")
     if not Wrap.objects.filter(owner_account_id=account_id).exists():
         return HttpResponse("Sorry, your wrap is not ready!")
     wrap = Wrap.objects.get(owner_account_id=account_id)
@@ -74,6 +88,51 @@ def Summary(request):
         "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
+
+
+clientid = 'vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0'
+clientsecret = "kTEN7muJIrgWKGgAyDDzaugWT0dTk3OdoV317xOL"
+
+
+def Authorize(request):
+    url = "https://auth.openticket.tech/token/authorize?response_type=code&client_id=vUG3sn7qbalfbTMXIwcIXoGjSAi718fZagzzFQX0&state=awddawdawdawd&redirect_uri=https%3A%2F%2Fbbe2-145-93-112-185.ngrok-free.app%2Fcallback"
+    return redirect(url)
+
+
+def GetEventixAccountId(request):
+    access_token = request.COOKIES.get('access_token', None)
+    if (access_token is None):
+        return redirect("/authorize/")
+    headers = {'Authorization': 'Bearer '+access_token}
+    req = requests.get("https://auth.openticket.tech/user/me", headers=headers)
+
+    return json.loads(req.text)["guid"]
+
+
+def Callback(request):
+    code = request.GET.get("code")
+    data = {
+        'grant_type': 'authorization_code',
+        "code": code,
+        "client_id": clientid,
+        "client_secret": clientsecret,
+        "redirect_uri": GetNgrokUri()+"/callback/"
+    }
+
+    req = requests.post("https://auth.openticket.tech/token", data)
+    text = req.json()
+    token = None
+    if ("token_type" in text):
+        token = text["access_token"]
+    resp = HttpResponse(token)
+    resp.set_cookie('access_token', token)
+
+    return resp
+
+
+def GetNgrokUri():
+    req = requests.get("http://localhost:4040/api/tunnels")
+    return json.loads(req.text)["tunnels"][0]["public_url"]
 
 
 def AddOrganizerPage(request):
@@ -578,28 +637,9 @@ def Finalize(request):
         }
     )
 
+
 # on Create call, an eventix wrapped preview is created with cards based on trends found in ticket sales. said preview is saved in a database
 # until it is finalized and sent out
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.template import loader
-from django.core.mail import send_mail
-import json
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from .CSV_Reader import CSV_Reader
-from django.contrib.auth import authenticate, logout, login
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.contrib.auth.models import User
-from .mock_maker_3000 import MockMaker
-from PIL import Image
-from io import BytesIO
-import base64
-from EventixApp.models import Wrap, Card, CardTemplate
-import pdb
-import random
-from . import StatsCalculator
-import qrcode
 # Create your views here.
 
 
@@ -883,8 +923,6 @@ def EditSummary(request, guid):
     # Convert the BytesIO object to base64
     qr_base64 = base64.b64encode(buffered.getvalue()).decode()
 
-
-
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
     # most_popular_city_event = StatsCalculator.StatsCalculate.calculate_city_percentage(
@@ -943,7 +981,6 @@ def SaveWrap(request):
     owner = request.GET.get("owner")
     host = request.get_host()
     url = f"https://{host}/summary2/{owner}"
-
 
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
