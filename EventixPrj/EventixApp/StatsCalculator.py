@@ -22,74 +22,53 @@ class StatsCalculate:
         transactions = CSV_Reader.create_transactions_from_csv(csv_file)
         return transactions
 
-    def calculate_total_revenue_event(transactions, event_name):
+    def calculate_total_revenue_event(transactions, account_id):
 
         total_revenue = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 total_revenue = total_revenue + transactions[i]['ticket_value']
         return total_revenue
 
-    def calculate_average_ticket_price(transactions, event_name):
+    def calculate_average_ticket_price(transactions, account_id):
         ticket_values = 0
         relevant_transactions_counter = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 ticket_values = ticket_values + transactions[i]['ticket_value']
                 relevant_transactions_counter += 1
         average_ticket_price = ticket_values / relevant_transactions_counter
         return average_ticket_price
 
-    def calculate_most_ticket_sales_event(transactions, event_organizer_id):
-        # Initialize a dictionary to store the ticket sales for each event
-        event_sales = {}
+    def calculate_total_ticket_sells(transactions, account_id):
+        relevant_transactions_counter = 0
+        for i in range(len(transactions)):
+            if transactions[i]['account_id'] == account_id:
+                relevant_transactions_counter += 1
+        return relevant_transactions_counter
 
-        # Iterate over each transaction
-        for transaction in transactions:
-            # Check if the transaction is for the given event organizer
-            if transaction['account_id'] == event_organizer_id:
-                # If the event is already in the dictionary, increment its count by 1
-                if transaction['event_name'] in event_sales:
-                    event_sales[transaction['event_name']] += 1
-                # If the event is not in the dictionary, add it with 1 as its count
-                else:
-                    event_sales[transaction['event_name']] = 1
-
-        # Find the event with the most ticket sales
-        most_tickets_event = max(event_sales, key=event_sales.get)
-
-        # Return a tuple with the event name and the sales count
-        return most_tickets_event, event_sales[most_tickets_event]
-
-    def calculate_day_most_tickets_sold(transactions, event_organizer_id):
+    def calculate_day_most_tickets_sold(transactions, account_id):
         days = []
-
-        for transaction in transactions:
-            # Check if the transaction is for the given event organizer
-            if transaction['account_id'] == event_organizer_id:
-                # Parse the date from the 'created_at' field and add it to the list
-                date_time_obj = datetime.strptime(transaction['created_at'], "%m/%d/%Y %H:%M")
+        for i in range(len(transactions)):
+            if transactions[i]['account_id'] == account_id:
+                date_time_obj = datetime.strptime(transactions[i]['created_at'], "%m/%d/%Y %H:%M")
                 days.append(date_time_obj.date())
-
-        # Use Counter to find the most common day
         most_common_day = Counter(days).most_common(1)
-
-        # Return the most common day
         return most_common_day[0][0]
 
-    def calculate_events_per_year(transactions, event_name):
+    def calculate_events_per_year(transactions, account_id):
         events_per_year = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 events_per_year = 1
         return events_per_year
 
-    def calculate_gender_percentage(transactions, event_name):
+    def calculate_gender_percentage(transactions, account_id):
         male_counter = 0
         female_counter = 0
         relevant_transactions_counter = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 if transactions[i]['order_metadata_gender'] == 'male':
                     male_counter += 1
                     relevant_transactions_counter += 1
@@ -106,37 +85,37 @@ class StatsCalculate:
         # the frontend. On position 0 there is always going to be the male percentage. On position 2 there is always going
         # to be the female percentage
 
-    def calculate_average_age(transactions, event_name):
+    def calculate_average_age(transactions, account_id):
         age_sum = 0
         relevant_transactions_counter = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 age_sum = age_sum + transactions[i]['order_metadata_age']
                 relevant_transactions_counter += 1
         average_age = age_sum / relevant_transactions_counter
         return average_age
 
-    def calculate_showup_percentage(transactions, event_name):
+    def calculate_showup_percentage(transactions, account_id):
         showup_counter = 0
         relevant_transactions_counter = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 relevant_transactions_counter += 1
                 if transactions[i]['is_scanned'] == 1:
                     showup_counter += 1
         showup_percentage = showup_counter / relevant_transactions_counter * 100
         return showup_percentage
 
-    def calculate_total_visitors(transactions, event_name):
+    def calculate_total_visitors(transactions, account_id):
         showup_counter = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 if transactions[i]['is_scanned'] == 1:
                     showup_counter += 1
         return showup_counter
 
-    def calculate_city_percentage(transactions, event_name):
-        relevant_transactions = [t for t in transactions if t['event_name'] == event_name and t.get(
+    def calculate_city_percentage(transactions, account_id):
+        relevant_transactions = [t for t in transactions if t['account_id'] == account_id and t.get(
             # 'order_metadata_city') is not None and not math.isnan(t['order_metadata_city'])]
             'order_metadata_city') is not None and not ['order_metadata_city']]
         city_counts = Counter(t['order_metadata_city'] for t in relevant_transactions if
@@ -147,11 +126,11 @@ class StatsCalculate:
         else:
             return None
 
-    def calculate_most_popular_country(transactions, event_name):
+    def calculate_most_popular_country(transactions, account_id):
         countries = []
         total_transactions = 0
         for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
+            if transactions[i]['account_id'] == account_id:
                 country = transactions[i]['order_metadata_country']
                 if country:  # This checks that country is not None or an empty string
                     countries.append(country)

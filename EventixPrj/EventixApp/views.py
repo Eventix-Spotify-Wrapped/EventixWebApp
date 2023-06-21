@@ -785,49 +785,47 @@ def GetOrganizers(request):
 def Stef(request):
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
-    list_of_objects2 = StatsCalculator.StatsCalculate.create_list_of_objects(
-        "mock.csv")
     most_popular_city_event1 = StatsCalculator.StatsCalculate.calculate_city_percentage(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     most_popular_city_event2 = StatsCalculator.StatsCalculate.calculate_city_percentage(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     showup_percentage_event1 = StatsCalculator.StatsCalculate.calculate_showup_percentage(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     showup_percentage_event2 = StatsCalculator.StatsCalculate.calculate_showup_percentage(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     average_age_event1 = StatsCalculator.StatsCalculate.calculate_average_age(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     average_age_event2 = StatsCalculator.StatsCalculate.calculate_average_age(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     gender_event1 = StatsCalculator.StatsCalculate.calculate_gender_percentage(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     gender_event2 = StatsCalculator.StatsCalculate.calculate_gender_percentage(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     total_revenue_event1 = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     average_ticket_price_event1 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     total_revenue_event2 = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     average_ticket_price_event2 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     total_visitors_event1 = StatsCalculator.StatsCalculate.calculate_total_visitors(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     total_visitors_event2 = StatsCalculator.StatsCalculate.calculate_total_visitors(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     events_per_year1 = StatsCalculator.StatsCalculate.calculate_events_per_year(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     events_per_year2 = StatsCalculator.StatsCalculate.calculate_events_per_year(
-        list_of_objects, 'Data preview 2017')
-    day_most_tickets_sold = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
-        list_of_objects2, '809ba510-bcf0-11ed-9443-0bea660ca7b7')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     most_popular_country_event1 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
-        list_of_objects, 'Data preview 2016')
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
     most_popular_country_event2 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
-        list_of_objects, 'Data preview 2017')
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
     ##############################
-    most_ticket_sales_event = StatsCalculator.StatsCalculate.calculate_most_ticket_sales_event(
-        list_of_objects2, '809ba510-bcf0-11ed-9443-0bea660ca7b7')
+    day_most_tickets_sold1 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, '36a9179d-7c3a-4ccb-aa0c-83e4f484ea40')
+    day_most_tickets_sold2 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, '14009dfa-b925-4e5f-ab8b-4aa077c04299')
 
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
@@ -840,11 +838,10 @@ def Stef(request):
                'most_popular_city_event2': most_popular_city_event2,
                'total_visitors_event1': total_visitors_event1,
                'total_visitors_event2': total_visitors_event2, 'events_per_year1': events_per_year1,
-               'events_per_year2': events_per_year2, 'day_most_tickets_sold': day_most_tickets_sold,
-
+               'events_per_year2': events_per_year2, 'day_most_tickets_sold1': day_most_tickets_sold1,
+               'day_most_tickets_sold2': day_most_tickets_sold2,
                'most_popular_country_event1': most_popular_country_event1,
-               'most_popular_country_event2': most_popular_country_event2,
-               'most_ticket_sales_event': most_ticket_sales_event}
+               'most_popular_country_event2': most_popular_country_event2}
     return render(request, 'my_template.html', context)
 
 

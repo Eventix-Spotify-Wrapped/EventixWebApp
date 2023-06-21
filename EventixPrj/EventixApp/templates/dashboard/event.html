@@ -48,7 +48,7 @@
                                     <span class="lightswitch__slider"></span>
                                 </label>
                                 {% comment %} <input type="hidden" name="context" value={{value}}></input> {% endcomment %}
-                                    <span class="temp-span" data-id="{{card.Context}}"></span>
+                                <span class="temp-span" data-id="{{card.Context}}"></span>
                                 <span>Show in summary</span>
                                 <h3 class="h3">{{card.Context}}</h3>
                             </div>
@@ -63,6 +63,7 @@
 
     <script>
         var inputs = document.getElementsByClassName("lightswitch__input");
+
         for (let i = 0; i < inputs.length; i++) {
             const id = inputs[i].parentElement.parentElement.getElementsByClassName("temp-span")[0].dataset.id;
 

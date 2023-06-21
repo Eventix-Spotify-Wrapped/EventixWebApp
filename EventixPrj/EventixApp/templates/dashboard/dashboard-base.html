@@ -61,18 +61,5 @@
             {% block content %}{% endblock %}
         </div>
     </div>
-    
-    <script>
-        let events = document.getElementsByClassName("event");
-
-        document.getElementsByClassName("searchbar__input")[0].addEventListener("input", (e) => {
-            const keyword = e.target.value.toLowerCase();
-            
-            for (let i = 0; i < events.length; i++) { 
-                if (!events[i].getElementsByClassName("h2")[0].innerHTML.toLowerCase().includes(keyword)) events[i].style.display = "none";
-                else events[i].style.display = "block";
-            }
-        });
-    </script>
 </body>
 </html>
