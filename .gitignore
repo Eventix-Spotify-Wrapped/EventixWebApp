@@ -3,6 +3,7 @@ EventixPrj/EventixApp/static/js/*.js
 EventixPrj/EventixApp/static/css/*.css
 
 .idea/
+idea/
 
 # User-specific stuff
 .idea/**/workspace.xml
