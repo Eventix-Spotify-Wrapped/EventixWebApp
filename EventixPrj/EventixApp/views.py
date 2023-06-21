@@ -51,6 +51,7 @@ def Summary2(request, account_id):
     #     "ticketing_export_2023_03_24_11_27_16.csv")
     # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
     #     list_of_objects, "Data preview 2016")
+
     event = {
         "name": wrap.organizer_name,
         "totalRevenue": GetContext(wrap, "summary-slides/animated-ticket-sale-amount.html"),
@@ -62,7 +63,7 @@ def Summary2(request, account_id):
         "provinceMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 3),
         "ticketSaleAmount": GetContext(wrap, "summary-slides/ticket-sale-amount.html"),
         "ticketSalePercentage": GetContext(wrap, "summary-slides/ticket-sale-percentage.html"),
-        "averageAgeOfVisitors": GetContext(wrap, "summary-slides/averate-age-visitors.html"),
+        "averageAgeOfVisitors": GetContext(wrap, "summary-slides/average-age-visitors.html"),
         "countryMostVisitors": GetContext(wrap, "summary-slides/visitors"),
         "dayOfMonthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 0),
         "monthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 1)
@@ -83,6 +84,7 @@ def GetContext(wrap, html_path, contextIndex=0):
     if not awesome:
         return None
     context = list(awesome)[0].context
+
     if ("|" in context):
         return context.split('|')[contextIndex]
     return context
