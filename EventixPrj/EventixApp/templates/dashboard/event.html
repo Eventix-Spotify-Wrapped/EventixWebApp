@@ -5,9 +5,11 @@
 {% block content %}
     <h1 class="h1">{{ Organizer }}</h1>
 
+    {%if Overwrite == True %}
     <div class="event-ready">
         <p>Your event is ready. You can find your event <a href="/summary/{{Guid}}">here</a>.</p>
     </div>
+    {%endif%}
 
     <div class="event-head">
         <div class="event-head__events">
@@ -21,9 +23,11 @@
             </div>
         </div>
 
+        {%if Overwrite == True %}
         <div class="event-head__qr">
             <img src="data:image/png;base64, {{ qr_code }}" alt="QR code" />
         </div>
+        {%endif%}
     </div>
 
     <h2 class="h2">Summary screens</h2>
