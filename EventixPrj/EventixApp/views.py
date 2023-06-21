@@ -216,7 +216,7 @@ def SaveWrap(request):
     context = request.GET.getlist("context")
 
     host = request.get_host()
-    url = f"https://{host}/summary2/{owner}"
+    url = f"https://{host}/summary/{owner}"
 
     for card in cards:
         if ("end-overview.html" in card):
@@ -256,7 +256,7 @@ def SaveWrap(request):
         'Your Wrap is Ready!',
         f'There is a lot of fun involved! You can view it at {url}',
         'cs.eventix.dev.test@gmail.com',
-        ['john.eventix.dev.test@gmail.com'],
+        ['andisavauserul@gmail.com'],
         fail_silently=False,
     )
 
@@ -783,7 +783,8 @@ def GetOrganizers(request):
 def Stef(request):
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
-    list_of_objects2 = StatsCalculator.StatsCalculate.create_list_of_objects("mock.csv")
+    list_of_objects2 = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "mock.csv")
     most_popular_city_event1 = StatsCalculator.StatsCalculate.calculate_city_percentage(
         list_of_objects, 'Data preview 2016')
     most_popular_city_event2 = StatsCalculator.StatsCalculate.calculate_city_percentage(
