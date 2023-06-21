@@ -183,32 +183,6 @@ def Index(request):
     )
 
 
-def CalculateFunction(html_path):
-    value = None
-    if ("animated-ticket-sale-amount.html" in html_path):
-        value = "Ticket sale"
-    elif ("average-age-visitors.html" in html_path):
-        value = "Age visitors"
-    elif ("date-most-ticket-sales.html" in html_path):
-        value = "Most ticket sales"
-    elif ("end-overview.html" in html_path):
-        value = "End overview"
-    elif ("events-organised.html" in html_path):
-        value = "Events organised"
-    elif ("find-the-truth.html" in html_path):
-        value = "Find the truth"
-    elif ("start-animation.html" in html_path):
-        value = "Start animation"
-    elif ("ticket-sale-amount.html" in html_path):
-        value = "Ticket sale amount"
-    elif ("ticket-sale-percentage.html" in html_path):
-        value = "Ticket sale percentage"
-    elif ("visitor-origins.html" in html_path):
-        value = "Visitor origins"
-
-    return value
-
-
 def CalculateInsightForCardName(cardname):
     bruh = ["Template"]
     return bruh[0]
@@ -227,6 +201,9 @@ def SaveWrap(request):
     cards = request.GET.getlist("cards")
     owner = request.GET.get("owner")
     context = request.GET.getlist("context")
+
+    host = request.get_host()
+    url = f"https://{host}/summary2/{owner}"
 
     for card in cards:
         if ("end-overview.html" in card):
@@ -262,6 +239,14 @@ def SaveWrap(request):
                 context=context[cards.index(card)]
             )
             c.save()
+    send_mail(
+        'Your Wrap is Ready!',
+        f'There is a lot of fun involved! You can view it at {url}',
+        'cs.eventix.dev.test@gmail.com',
+        ['john.eventix.dev.test@gmail.com'],
+        fail_silently=False,
+    )
+
     return redirect("/editsummary/" + owner)
 
 
@@ -698,7 +683,8 @@ def EditSummary(request, guid):
                 {"id": preselected_cards[0]["html_path"],
                  "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
-                 "Toggled": True, })
+                 "Toggled": True,
+                 "Context": CalculateFunction(preselected_cards[0]["html_path"])})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -709,12 +695,39 @@ def EditSummary(request, guid):
                      "Name": cards[index][2].split(
                          '/')[1].split('.')[0].replace('-', ' ').title(),
                      "imagePreview": cards[index][1],
-                     "Toggled": False})
+                     "Toggled": False,
+                     "Context": CalculateFunction(cards[index][2])})
         cards.pop(index)
 
     return render(request, "dashboard/event.html",
                   {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite,
                    "Cards": data, "qr_code": qr_base64})
+
+
+def CalculateFunction(html_path):
+    value = None
+    if ("animated-ticket-sale-amount.html" in html_path):
+        value = "Ticket sale"
+    elif ("average-age-visitors.html" in html_path):
+        value = "Age visitors"
+    elif ("date-most-ticket-sales.html" in html_path):
+        value = "Most ticket sales"
+    elif ("end-overview.html" in html_path):
+        value = "End overview"
+    elif ("events-organised.html" in html_path):
+        value = "Events organised"
+    elif ("find-the-truth.html" in html_path):
+        value = "Find the truth"
+    elif ("start-animation.html" in html_path):
+        value = "Start animation"
+    elif ("ticket-sale-amount.html" in html_path):
+        value = "Ticket sale amount"
+    elif ("ticket-sale-percentage.html" in html_path):
+        value = "Ticket sale percentage"
+    elif ("visitor-origins.html" in html_path):
+        value = "Visitor origins"
+
+    return value
 
 
 def CalculateInsightForCardName(cardname):
@@ -727,51 +740,6 @@ def CalculateInsightForCardName(cardname):
 
 class MyException(Exception):
     pass
-
-
-def SaveWrap(request):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    cards = request.GET.getlist("cards")
-    owner = request.GET.get("owner")
-    host = request.get_host()
-    url = f"https://{host}/summary2/{owner}"
-
-    if (not Wrap.objects.filter(owner_account_id=owner).exists()):
-        w = Wrap(
-            owner_account_id=owner,
-        )
-        w.save()
-        for card in cards:
-            c = Card(
-                wrap=w,
-                html_path=card,
-                thumbnail_path=CardTemplate.objects.all().values(
-                    "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
-            )
-            c.save()
-    else:
-        w = Wrap.objects.get(owner_account_id=owner)
-        w.save()
-        Card.objects.filter(wrap=w).delete()
-        for card in cards:
-            c = Card(
-                wrap=w,
-                html_path=card,
-                thumbnail_path=CardTemplate.objects.all().values(
-                    "thumbnail_path").get(html_path=card)["thumbnail_path"],
-                context=["hey", "sup"]
-            )
-            c.save()
-    send_mail(
-        'Your Wrap is Ready!',
-        f'There is a lot of fun involved! You can view it at {url}',
-        'cs.eventix.dev.test@gmail.com',
-        ['john.eventix.dev.test@gmail.com'],
-        fail_silently=False,
-    )
-    return HttpResponse(print(w))
 
 
 def Slideshow(request):
