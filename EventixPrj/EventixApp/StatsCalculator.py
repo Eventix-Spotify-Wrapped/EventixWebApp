@@ -54,7 +54,8 @@ class StatsCalculate:
                 date_time_obj = datetime.strptime(transactions[i]['created_at'], "%m/%d/%Y %H:%M")
                 days.append(date_time_obj.date())
         most_common_day = Counter(days).most_common(1)
-        return most_common_day[0][0]
+        formatted_day = most_common_day[0][0].strftime("%d, %B")  # Format the date to only display month and day
+        return formatted_day
 
     def calculate_events_per_year(transactions, account_id):
         events_per_year = 0
@@ -104,6 +105,7 @@ class StatsCalculate:
                 if transactions[i]['is_scanned'] == 1:
                     showup_counter += 1
         showup_percentage = showup_counter / relevant_transactions_counter * 100
+        showup_percentage = round(showup_percentage)
         return showup_percentage
 
     def calculate_total_visitors(transactions, account_id):
@@ -139,6 +141,7 @@ class StatsCalculate:
         most_common_country_name = most_common_country[0]
         most_common_country_count = most_common_country[1]
         percentage = (most_common_country_count / total_transactions) * 100
+        percentage = round(percentage)
         return most_common_country_name, percentage
 
     def get_events_name_list():
@@ -162,7 +165,7 @@ class StatsCalculate:
 
     def get_events_name_guid_keypair():
         list = CSV_Reader.create_transactions_from_csv(
-            "mock.csv"
+            "ticketing_export_2023_03_24_11_27_16.csv"
         )
         data = []
         for element in list:
@@ -172,7 +175,7 @@ class StatsCalculate:
 
     def get_organizer_events_guid():
         list = CSV_Reader.create_transactions_from_csv(
-            "mock.csv"
+            "ticketing_export_2023_03_24_11_27_16.csv"
         )
         checkedOrganizers = []
 
@@ -193,7 +196,7 @@ class StatsCalculate:
 
     def get_organizer_name_by_guid(guid):
         list = CSV_Reader.create_transactions_from_csv(
-            "mock.csv"
+            "ticketing_export_2023_03_24_11_27_16.csv"
         )
 
         data = []
@@ -205,7 +208,7 @@ class StatsCalculate:
 
     def get_organizer_events_guid_by_guid(guid):
         list = CSV_Reader.create_transactions_from_csv(
-            "mock.csv"
+            "ticketing_export_2023_03_24_11_27_16.csv"
         )
         checkedOrganizers = []
 

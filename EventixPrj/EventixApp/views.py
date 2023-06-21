@@ -634,7 +634,7 @@ def EditSummary(request, guid):
                  "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
                  "Toggled": True,
-                 "Context": CalculateFunction(preselected_cards[0]["html_path"])})
+                 "Context": CalculateFunction(preselected_cards[0]["html_path"], guid)})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -646,7 +646,7 @@ def EditSummary(request, guid):
                          '/')[1].split('.')[0].replace('-', ' ').title(),
                      "imagePreview": cards[index][1],
                      "Toggled": False,
-                     "Context": CalculateFunction(cards[index][2])})
+                     "Context": CalculateFunction(cards[index][2], guid)})
         cards.pop(index)
 
     return render(request, "dashboard/event.html",
@@ -654,16 +654,18 @@ def EditSummary(request, guid):
                    "Cards": data, "qr_code": qr_base64})
 
 
-def CalculateFunction(html_path):
+def CalculateFunction(html_path, guid):
     value = None
+    list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
+        "ticketing_export_2023_03_24_11_27_16.csv")
     if ("animated-ticket-sale-amount.html" in html_path):
-        value = "Ticket sale"
+        value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(list_of_objects, guid)
     elif ("average-age-visitors.html" in html_path):
-        value = "Age visitors"
+        value = StatsCalculator.StatsCalculate.calculate_events_per_year(list_of_objects, guid)
     elif ("date-most-ticket-sales.html" in html_path):
-        value = "Most ticket sales"
+        value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(list_of_objects, guid)
     elif ("end-overview.html" in html_path):
-        value = "End overview"
+        value = StatsCalculator.StatsCalculate.calculate_total_visitors(list_of_objects, guid)
     elif ("events-organised.html" in html_path):
         value = "Events organised"
     elif ("find-the-truth.html" in html_path):
@@ -673,9 +675,9 @@ def CalculateFunction(html_path):
     elif ("ticket-sale-amount.html" in html_path):
         value = "Ticket sale amount"
     elif ("ticket-sale-percentage.html" in html_path):
-        value = "Ticket sale percentage"
+        value = StatsCalculator.StatsCalculate.calculate_showup_percentage(list_of_objects, guid)
     elif ("visitor-origins.html" in html_path):
-        value = "Visitor origins"
+        value = StatsCalculator.StatsCalculate.calculate_most_popular_country(list_of_objects, guid)
 
     return value
 
