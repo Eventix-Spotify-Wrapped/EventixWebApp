@@ -663,7 +663,7 @@ def CalculateFunction(html_path, guid):
     if ("animated-ticket-sale-amount.html" in html_path):
         value = StatsCalculator.StatsCalculate.calculate_total_ticket_sells(list_of_objects, guid)
     elif ("average-age-visitors.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_events_per_year(list_of_objects, guid)
+        value = StatsCalculator.StatsCalculate.calculate_average_age(list_of_objects, guid)
     elif ("date-most-ticket-sales.html" in html_path):
         value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(list_of_objects, guid)
     elif ("end-overview.html" in html_path):

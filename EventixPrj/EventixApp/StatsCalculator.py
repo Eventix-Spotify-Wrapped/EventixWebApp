@@ -91,10 +91,16 @@ class StatsCalculate:
         relevant_transactions_counter = 0
         for i in range(len(transactions)):
             if transactions[i]['account_id'] == account_id:
-                age_sum = age_sum + transactions[i]['order_metadata_age']
-                relevant_transactions_counter += 1
-        average_age = age_sum / relevant_transactions_counter
-        return average_age
+                age = transactions[i]['order_metadata_age']
+                if isinstance(age, (int, float)) and not math.isnan(age):  # Check if age is a number and not NaN
+                    age_sum = age_sum + age
+                    relevant_transactions_counter += 1
+
+        if relevant_transactions_counter > 0:  # Check to avoid division by zero
+            average_age = age_sum / relevant_transactions_counter
+            return round(average_age)
+        else:
+            return None
 
     def calculate_showup_percentage(transactions, account_id):
         showup_counter = 0
