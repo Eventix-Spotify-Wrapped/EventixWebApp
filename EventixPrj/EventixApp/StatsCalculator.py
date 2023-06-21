@@ -23,6 +23,7 @@ class StatsCalculate:
         return transactions
 
     def calculate_total_revenue_event(transactions, event_name):
+
         total_revenue = 0
         for i in range(len(transactions)):
             if transactions[i]['event_name'] == event_name:
@@ -39,20 +40,41 @@ class StatsCalculate:
         average_ticket_price = ticket_values / relevant_transactions_counter
         return average_ticket_price
 
-    def calculate_total_ticket_sells(transactions, event_name):
-        relevant_transactions_counter = 0
-        for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
-                relevant_transactions_counter += 1
-        return relevant_transactions_counter
+    def calculate_most_ticket_sales_event(transactions, event_organizer_id):
+        # Initialize a dictionary to store the ticket sales for each event
+        event_sales = {}
 
-    def calculate_day_most_tickets_sold(transactions, event_name):
+        # Iterate over each transaction
+        for transaction in transactions:
+            # Check if the transaction is for the given event organizer
+            if transaction['account_id'] == event_organizer_id:
+                # If the event is already in the dictionary, increment its count by 1
+                if transaction['event_name'] in event_sales:
+                    event_sales[transaction['event_name']] += 1
+                # If the event is not in the dictionary, add it with 1 as its count
+                else:
+                    event_sales[transaction['event_name']] = 1
+
+        # Find the event with the most ticket sales
+        most_tickets_event = max(event_sales, key=event_sales.get)
+
+        # Return a tuple with the event name and the sales count
+        return most_tickets_event, event_sales[most_tickets_event]
+
+    def calculate_day_most_tickets_sold(transactions, event_organizer_id):
         days = []
-        for i in range(len(transactions)):
-            if transactions[i]['event_name'] == event_name:
-                date_time_obj = datetime.strptime(transactions[i]['created_at'], "%m/%d/%Y %H:%M")
+
+        for transaction in transactions:
+            # Check if the transaction is for the given event organizer
+            if transaction['account_id'] == event_organizer_id:
+                # Parse the date from the 'created_at' field and add it to the list
+                date_time_obj = datetime.strptime(transaction['created_at'], "%m/%d/%Y %H:%M")
                 days.append(date_time_obj.date())
+
+        # Use Counter to find the most common day
         most_common_day = Counter(days).most_common(1)
+
+        # Return the most common day
         return most_common_day[0][0]
 
     def calculate_events_per_year(transactions, event_name):

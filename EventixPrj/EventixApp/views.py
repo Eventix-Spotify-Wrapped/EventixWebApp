@@ -805,6 +805,7 @@ def GetOrganizers(request):
 def Stef(request):
     list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
         "ticketing_export_2023_03_24_11_27_16.csv")
+    list_of_objects2 = StatsCalculator.StatsCalculate.create_list_of_objects("mock.csv")
     most_popular_city_event1 = StatsCalculator.StatsCalculate.calculate_city_percentage(
         list_of_objects, 'Data preview 2016')
     most_popular_city_event2 = StatsCalculator.StatsCalculate.calculate_city_percentage(
@@ -837,14 +838,16 @@ def Stef(request):
         list_of_objects, 'Data preview 2016')
     events_per_year2 = StatsCalculator.StatsCalculate.calculate_events_per_year(
         list_of_objects, 'Data preview 2017')
-    day_most_tickets_sold1 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
-        list_of_objects, 'Data preview 2016')
-    day_most_tickets_sold2 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
-        list_of_objects, 'Data preview 2017')
+    day_most_tickets_sold = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects2, '809ba510-bcf0-11ed-9443-0bea660ca7b7')
     most_popular_country_event1 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
         list_of_objects, 'Data preview 2016')
     most_popular_country_event2 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
         list_of_objects, 'Data preview 2017')
+    ##############################
+    most_ticket_sales_event = StatsCalculator.StatsCalculate.calculate_most_ticket_sales_event(
+        list_of_objects2, '809ba510-bcf0-11ed-9443-0bea660ca7b7')
+
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
                'gender_event1_male': gender_event1[0], 'gender_event1_female': gender_event1[1],
@@ -856,10 +859,11 @@ def Stef(request):
                'most_popular_city_event2': most_popular_city_event2,
                'total_visitors_event1': total_visitors_event1,
                'total_visitors_event2': total_visitors_event2, 'events_per_year1': events_per_year1,
-               'events_per_year2': events_per_year2, 'day_most_tickets_sold1': day_most_tickets_sold1,
-               'day_most_tickets_sold2': day_most_tickets_sold2,
+               'events_per_year2': events_per_year2, 'day_most_tickets_sold': day_most_tickets_sold,
+
                'most_popular_country_event1': most_popular_country_event1,
-               'most_popular_country_event2': most_popular_country_event2}
+               'most_popular_country_event2': most_popular_country_event2,
+               'most_ticket_sales_event': most_ticket_sales_event}
     return render(request, 'my_template.html', context)
 
 

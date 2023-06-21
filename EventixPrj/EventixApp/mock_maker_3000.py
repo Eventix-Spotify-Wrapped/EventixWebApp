@@ -263,12 +263,10 @@ class MockMaker:
                 longitude = fake.longitude()
                 ticket_pdf_link = fake.url()
 
-                row = [order_id, account_id, shop_name, event_name, event_category, first_event, street, street_number,
-                       street_number_additional, postal, dob, state, city, gender, province, company, country,
-                       covid_no_symptoms, age, wrong2, phone, fullname, covid_one_household, keep_me_informed,
-                       diet, street_name, street_number, locality, postal_code, sub_locality, admin_level_1,
-                       admin_level_2, country_code, latitude, longitude, ticket_pdf_link]
-
+                row = [order_id, account_id, shop_name, event_name, event_category, first_event, last_event, first_name, last_name,
+                       email, ticket_name, barcode, order_status, order_invalidated, order_invalidated_at, ticket_invalidated, ticket_invalidated_at, created_at, paid_currency, order_value, order_fees
+                       , transaction_fees, ticket_value, ticket_fees, optionals_value, refunded_amount, payment_method, coupons, device, tracker, tracker_name, seat, is_scanned, first_scanned_at, order_metadata_first_name, order_metadata_last_name, order_metadata_last_name ]
+              #  raise MyException()
                 writer.writerow(dict(zip(column_names, row)))
 
 # must be like: {"Organizer":name, "Events":[events]}
@@ -516,10 +514,13 @@ class MockMaker:
                 longitude = fake.longitude()
                 ticket_pdf_link = fake.url()
 
-                row = [order_id, account_id, shop_name, event_name, event_category, first_event, street, street_number,
+                row = [order_id, account_id, shop_name, event_name, event_category, first_event, last_event, first_name,
                        street_number_additional, postal, dob, state, city, gender, province, company, country,
                        covid_no_symptoms, age, wrong2, phone, fullname, covid_one_household, keep_me_informed,
                        diet, street_name, street_number, locality, postal_code, sub_locality, admin_level_1,
-                       admin_level_2, country_code, latitude, longitude, ticket_pdf_link]
+                       admin_level_2, country_code, latitude, longitude]
 
                 writer.writerow(dict(zip(column_names, row)))
+
+class MyException(Exception):
+    pass
