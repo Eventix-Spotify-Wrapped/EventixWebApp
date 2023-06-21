@@ -43,8 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "EventixApp.apps.EventixAppConfig",
-    "oauth2_provider"
+    "EventixApp.apps.EventixAppConfig"
 ]
 
 MIDDLEWARE = [
