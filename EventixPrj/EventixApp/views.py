@@ -22,6 +22,7 @@ import requests
 import json
 import urllib.parse
 
+
 # Create your views here.
 
 
@@ -103,7 +104,7 @@ def GetEventixAccountId(request):
     access_token = request.COOKIES.get('access_token', None)
     if (access_token is None):
         return redirect("/authorize/")
-    headers = {'Authorization': 'Bearer '+access_token}
+    headers = {'Authorization': 'Bearer ' + access_token}
     req = requests.get("https://auth.openticket.tech/user/me", headers=headers)
 
     return json.loads(req.text)["guid"]
@@ -116,7 +117,7 @@ def Callback(request):
         "code": code,
         "client_id": clientid,
         "client_secret": clientsecret,
-        "redirect_uri": GetNgrokUri()+"/callback/"
+        "redirect_uri": GetNgrokUri() + "/callback/"
     }
 
     req = requests.post("https://auth.openticket.tech/token", data)
@@ -136,7 +137,6 @@ def GetNgrokUri():
 
 
 def AddOrganizerPage(request):
-
     return render(request, "demo/addOrganizer.html")
 
 
@@ -310,12 +310,14 @@ def Index(request):
             for owner in completed_wraps:
                 if (owner in ng_kp["Guid"]):
                     data.append(
-                        {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+                        {"Wrapped": True, "Guid": ng_kp["Guid"],
+                         "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
-                    0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
-  #  raise MyException()
+                    0, {"Wrapped": False, "Guid": ng_kp["Guid"],
+                        "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+    #  raise MyException()
 
     return render(
         request,
@@ -360,7 +362,7 @@ def EditSummary(request, guid):
         if (len(preselected_cards) > 0):
             data.append(
                 {"id": preselected_cards[0]["html_path"],
-                    "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                 "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
                  "Toggled": True, "Value": CalculateFunction(preselected_cards[0]["html_path"])})
             for card in cards:
@@ -371,13 +373,15 @@ def EditSummary(request, guid):
         index = 0
         data.append({"id": cards[index][2],
                      "Name": cards[index][2].split(
-            '/')[1].split('.')[0].replace('-', ' ').title(),
-            "imagePreview": cards[index][1],
-            "Toggled": False, "Value": CalculateFunction(cards[index][2])})
+                         '/')[1].split('.')[0].replace('-', ' ').title(),
+                     "imagePreview": cards[index][1],
+                     "Toggled": False, "Value": CalculateFunction(cards[index][2])})
         cards.pop(index)
         bruh = data
 
-    return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
+    return render(request, "dashboard/event.html",
+                  {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite,
+                   "Cards": data})
 
 
 def CalculateFunction(html_path):
@@ -459,7 +463,7 @@ def SaveWrap(request):
                 context=context[cards.index(card)]
             )
             c.save()
-    return redirect("/editsummary/"+owner)
+    return redirect("/editsummary/" + owner)
 
 
 def Slideshow(request):
@@ -577,6 +581,22 @@ def Stef(request):
         list_of_objects, 'Data preview 2017')
     average_ticket_price_event2 = StatsCalculator.StatsCalculate.calculate_average_ticket_price(
         list_of_objects, 'Data preview 2017')
+    total_visitors_event1 = StatsCalculator.StatsCalculate.calculate_total_visitors(
+        list_of_objects, 'Data preview 2016')
+    total_visitors_event2 = StatsCalculator.StatsCalculate.calculate_total_visitors(
+        list_of_objects, 'Data preview 2017')
+    events_per_year1 = StatsCalculator.StatsCalculate.calculate_events_per_year(
+        list_of_objects, 'Data preview 2016')
+    events_per_year2 = StatsCalculator.StatsCalculate.calculate_events_per_year(
+        list_of_objects, 'Data preview 2017')
+    day_most_tickets_sold1 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, 'Data preview 2016')
+    day_most_tickets_sold2 = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(
+        list_of_objects, 'Data preview 2017')
+    most_popular_country_event1 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+        list_of_objects, 'Data preview 2016')
+    most_popular_country_event2 = StatsCalculator.StatsCalculate.calculate_most_popular_country(
+        list_of_objects, 'Data preview 2017')
     context = {'total_revenue1': total_revenue_event1, 'average_ticket_price1': average_ticket_price_event1,
                'total_revenue2': total_revenue_event2, 'average_ticket_price2': average_ticket_price_event2,
                'gender_event1_male': gender_event1[0], 'gender_event1_female': gender_event1[1],
@@ -585,7 +605,13 @@ def Stef(request):
                'average_age_event2': average_age_event2, 'showup_percentage_event1': showup_percentage_event1,
                'showup_percentage_event2': showup_percentage_event2,
                'most_popular_city_event1': most_popular_city_event1,
-               'most_popular_city_event2': most_popular_city_event2}
+               'most_popular_city_event2': most_popular_city_event2,
+               'total_visitors_event1': total_visitors_event1,
+               'total_visitors_event2': total_visitors_event2, 'events_per_year1': events_per_year1,
+               'events_per_year2': events_per_year2, 'day_most_tickets_sold1': day_most_tickets_sold1,
+               'day_most_tickets_sold2': day_most_tickets_sold2,
+               'most_popular_country_event1': most_popular_country_event1,
+               'most_popular_country_event2': most_popular_country_event2}
     return render(request, 'my_template.html', context)
 
 
@@ -698,7 +724,6 @@ def Summary(request):
 
 
 def AddOrganizerPage(request):
-
     return render(request, "demo/addOrganizer.html")
 
 
@@ -872,12 +897,14 @@ def Index(request):
             for owner in completed_wraps:
                 if (owner in ng_kp["Guid"]):
                     data.append(
-                        {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+                        {"Wrapped": True, "Guid": ng_kp["Guid"],
+                         "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
-                    0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
-  #  raise MyException()
+                    0, {"Wrapped": False, "Guid": ng_kp["Guid"],
+                        "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+    #  raise MyException()
 
     return render(
         request,
@@ -943,7 +970,7 @@ def EditSummary(request, guid):
         if (len(preselected_cards) > 0):
             data.append(
                 {"id": preselected_cards[0]["html_path"],
-                    "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
+                 "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
                  "Toggled": True, })
             for card in cards:
@@ -954,12 +981,14 @@ def EditSummary(request, guid):
         index = 0
         data.append({"id": cards[index][2],
                      "Name": cards[index][2].split(
-            '/')[1].split('.')[0].replace('-', ' ').title(),
-            "imagePreview": cards[index][1],
-            "Toggled": False})
+                         '/')[1].split('.')[0].replace('-', ' ').title(),
+                     "imagePreview": cards[index][1],
+                     "Toggled": False})
         cards.pop(index)
 
-    return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
+    return render(request, "dashboard/event.html",
+                  {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite,
+                   "Cards": data})
 
 
 def CalculateInsightForCardName(cardname):
