@@ -667,7 +667,11 @@ def CalculateFunction(html_path, guid):
     elif ("date-most-ticket-sales.html" in html_path):
         value = StatsCalculator.StatsCalculate.calculate_day_most_tickets_sold(list_of_objects, guid)
     elif ("end-overview.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_total_visitors(list_of_objects, guid)
+        visitors = StatsCalculator.StatsCalculate.calculate_total_visitors(list_of_objects, guid)
+        most_popular_country = StatsCalculator.StatsCalculate.calculate_most_popular_country(list_of_objects, guid)
+        most_popular_city = StatsCalculator.StatsCalculate.calculate_most_popular_city(list_of_objects, guid)
+        most_popular_region = StatsCalculator.StatsCalculate.calculate_most_popular_province(list_of_objects, guid)
+        value = '{visitors} | {most_popular_country[0]} | {most_popular_city} | {most_popular_region}' .format(visitors=visitors, most_popular_country=most_popular_country, most_popular_city=most_popular_city, most_popular_region=most_popular_region)
     elif ("events-organised.html" in html_path):
         value = "Events organised"
     elif ("find-the-truth.html" in html_path):
@@ -679,7 +683,8 @@ def CalculateFunction(html_path, guid):
     elif ("ticket-sale-percentage.html" in html_path):
         value = StatsCalculator.StatsCalculate.calculate_showup_percentage(list_of_objects, guid)
     elif ("visitor-origins.html" in html_path):
-        value = StatsCalculator.StatsCalculate.calculate_most_popular_country(list_of_objects, guid)
+        a = StatsCalculator.StatsCalculate.calculate_most_popular_country(list_of_objects, guid)
+        value = '{a[0]} | {a[1]}' .format(a=a)
 
     return value
 

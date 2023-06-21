@@ -54,7 +54,7 @@ class StatsCalculate:
                 date_time_obj = datetime.strptime(transactions[i]['created_at'], "%m/%d/%Y %H:%M")
                 days.append(date_time_obj.date())
         most_common_day = Counter(days).most_common(1)
-        formatted_day = most_common_day[0][0].strftime("%d, %B")  # Format the date to only display month and day
+        formatted_day = most_common_day[0][0].strftime("%d | %B")  # Format the date to only display month and day
         return formatted_day
 
     def calculate_events_per_year(transactions, account_id):
@@ -143,6 +143,56 @@ class StatsCalculate:
         percentage = (most_common_country_count / total_transactions) * 100
         percentage = round(percentage)
         return most_common_country_name, percentage
+
+    def calculate_most_popular_city(transactions, account_id):
+        cities = []
+        total_transactions = 0
+        for i in range(len(transactions)):
+            if transactions[i]['account_id'] == account_id:
+                city = transactions[i]['order_metadata_city']
+                if city:
+                    if isinstance(city, float):  # If the city is float (possibly NaN), skip it
+                        continue
+                    if city.strip() in ['<null>', '<unset>',
+                                        '']:  # If it's '<null>', '<unset>', or an empty string, skip it
+                        continue
+                    cities.append(city)
+                    total_transactions += 1
+
+        if cities:  # Check if cities list is not empty
+            most_common_city = Counter(cities).most_common(1)[0]
+            most_common_city_name = most_common_city[0]
+            most_common_city_count = most_common_city[1]
+            percentage = (most_common_city_count / total_transactions) * 100
+            percentage = round(percentage)
+            return most_common_city_name
+        else:
+            return None, 0
+
+    def calculate_most_popular_province(transactions, account_id):
+        provinces = []
+        total_transactions = 0
+        for i in range(len(transactions)):
+            if transactions[i]['account_id'] == account_id:
+                province = transactions[i]['order_metadata_province']
+                if province:
+                    if isinstance(province, float):  # If the province is float (possibly NaN), skip it
+                        continue
+                    if province.strip() in ['<null>', '<unset>',
+                                            '']:  # If it's '<null>', '<unset>', or an empty string, skip it
+                        continue
+                    provinces.append(province)
+                    total_transactions += 1
+
+        if provinces:  # Check if provinces list is not empty
+            most_common_province = Counter(provinces).most_common(1)[0]
+            most_common_province_name = most_common_province[0]
+            most_common_province_count = most_common_province[1]
+            percentage = (most_common_province_count / total_transactions) * 100
+            percentage = round(percentage)
+            return most_common_province_name
+        else:
+            return None, 0
 
     def get_events_name_list():
         list = CSV_Reader.create_transactions_from_csv(
