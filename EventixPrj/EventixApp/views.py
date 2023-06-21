@@ -20,6 +20,8 @@ from . import StatsCalculator
 import qrcode, StatsCalculator
 
 
+
+
 # Create your views here.
 
 
@@ -35,7 +37,11 @@ def Summary2(request, account_id):
     cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
     context = list(Card.objects.filter(wrap=wrap).values("context"))
 
+    cards = list(Card.objects.filter(wrap=wrap).values("html_path"))
+    context = list(Card.objects.filter(wrap=wrap).values("context"))
+
     event = {
+        "totalRevenue": 69,
         "totalRevenue": 69,
         "name": "Wish Outdoor",
         "eventsOrganised": 8,
@@ -49,6 +55,12 @@ def Summary2(request, account_id):
         "countryMostVisitors": "The Netherlands"
     }
 
+    # slides = list(cards)
+    slides = []
+    for card in cards:
+        slides.append(
+            {"html": card["html_path"], "context": context[cards.index(card)]["context"]})
+    # raise MyException()
     # slides = list(cards)
     slides = []
     for card in cards:
@@ -78,6 +90,19 @@ def Summary(request):
         "countryMostVisitors": "The Netherlands"
     }
     return render(request, "summary.html", {"event": event})
+
+
+def AddOrganizerPage(request):
+
+    return render(request, "demo/addOrganizer.html")
+
+
+def AddOrganizer(request):
+    obj = {"Organizer": request.GET.get("organizer"),
+           "Events": request.GET.getlist("events")}
+    MockMaker.GenerateMockDataSpecific(obj)
+
+    return HttpResponse(obj["Organizer"])
 
 
 def AddOrganizerPage(request):
@@ -243,8 +268,11 @@ def Index(request):
     if not request.user.is_authenticated:
         return redirect("/login/")
     total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
+    total_organizers_nameguid_keypair = StatsCalculator.StatsCalculate.get_organizer_events_guid()
     completed_wraps = Wrap.objects.values_list('owner_account_id', flat=True)
     data = []
+
+    for ng_kp in total_organizers_nameguid_keypair:
 
     for ng_kp in total_organizers_nameguid_keypair:
         alreadyAdded = False
@@ -256,9 +284,12 @@ def Index(request):
                 if (owner in ng_kp["Guid"]):
                     data.append(
                         {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+                        {"Wrapped": True, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
                     alreadyAdded = True
             if (not alreadyAdded):
                 data.insert(
+                    0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
+  #  raise MyException()
                     0, {"Wrapped": False, "Guid": ng_kp["Guid"], "Organizer": StatsCalculator.StatsCalculate.get_organizer_name_by_guid(ng_kp["Guid"])})
   #  raise MyException()
 
@@ -272,6 +303,7 @@ def Index(request):
     )
 
 
+def EditSummary(request, guid):
 def EditSummary(request, guid):
     if not request.user.is_authenticated:
         return redirect("/login/")
@@ -307,6 +339,14 @@ def EditSummary(request, guid):
     qr_base64 = base64.b64encode(buffered.getvalue()).decode()
 
 
+    info = StatsCalculator.StatsCalculate.get_organizer_events_cards_guid_by_guid(
+        guid)
+    preselected_cards = []
+    overwrite = False
+    if ("Cards" in info.keys()):
+        preselected_cards = info["Cards"]
+    if (len(preselected_cards) > 0):
+        overwrite = True
 
     # list_of_objects = StatsCalculator.StatsCalculate.create_list_of_objects(
     #    "mock.csv")
@@ -324,13 +364,14 @@ def EditSummary(request, guid):
     #    list_of_objects, event_name)
     data = []
 
+
     for _ in range(len(cards)):
         if (len(preselected_cards) > 0):
             data.append(
                 {"id": preselected_cards[0]["html_path"],
                     "Name": preselected_cards[0]["html_path"].split('/')[1].split('.')[0].replace('-', ' ').title(),
                  "imagePreview": preselected_cards[0]["thumbnail_path"],
-                 "Toggled": True, "Value": CalculateFunction(preselected_cards[0]["html_path"])})
+                 "Toggled": True, "Value": CalculateFunction(preselected_cards[0]["html_path"])"Value": CalculateFunction(preselected_cards[0]["html_path"])})
             for card in cards:
                 if (card[2] in preselected_cards[0]["html_path"]):
                     cards.remove(card)
@@ -341,8 +382,35 @@ def EditSummary(request, guid):
                      "Name": cards[index][2].split(
             '/')[1].split('.')[0].replace('-', ' ').title(),
             "imagePreview": cards[index][1],
-            "Toggled": False, "Value": CalculateFunction(cards[index][2])})
+            "Toggled": False, "Value": CalculateFunction(cards[index][2]), "Value": CalculateFunction(cards[index][2])})
         cards.pop(index)
+        bruh = data
+
+    return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
+
+
+def CalculateFunction(html_path):
+    value = None
+    if ("animated-ticket-sale-amount.html" in html_path):
+        value = "Ticket sale"
+    elif ("average-age-visitors.html" in html_path):
+        value = "Age visitors"
+    elif ("date-most-ticket-sales.html" in html_path):
+        value = "Most ticket sales"
+    elif ("end-overview.html" in html_path):
+        value = "End overview"
+    elif ("events-organised.html" in html_path):
+        value = "Events organised"
+    elif ("find-the-truth.html" in html_path):
+        value = "Find the truth"
+    elif ("start-animation.html" in html_path):
+        value = "Start animation"
+    elif ("ticket-sale-amount.html" in html_path):
+        value = "Ticket sale amount"
+    elif ("ticket-sale-percentage.html" in html_path):
+        value = "Ticket sale percentage"
+    elif ("visitor-origins.html" in html_path):
+        value = "Visitor origins"
         bruh = data
 
     return render(request, "dashboard/event.html", {"Organizer": info["Organizer"], "Events": info["Events"], "Guid": guid, "Overwrite": overwrite, "Cards": data})
@@ -402,6 +470,14 @@ def SaveWrap(request):
     host = request.get_host()
     url = f"https://{host}/summary2/{owner}"
 
+    context = request.GET.getlist("context")
+
+    for card in cards:
+        if ("end-overview.html" in card):
+            c = context.pop(cards.index(card))
+            context.append(c)
+            cards.remove(card)
+            cards.append(card)
 
     if (not Wrap.objects.filter(owner_account_id=owner).exists()):
         w = Wrap(
@@ -414,6 +490,7 @@ def SaveWrap(request):
                 html_path=card,
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
+                context=context[cards.index(card)]
                 context=context[cards.index(card)]
             )
             c.save()
@@ -428,6 +505,7 @@ def SaveWrap(request):
                 thumbnail_path=CardTemplate.objects.all().values(
                     "thumbnail_path").get(html_path=card)["thumbnail_path"],
                 context=context[cards.index(card)]
+                context=context[cards.index(card)]
             )
             c.save()
     send_mail(
@@ -437,7 +515,7 @@ def SaveWrap(request):
         ['john.eventix.dev.test@gmail.com'],
         fail_silently=False,
     )
-    return HttpResponse(print(w))
+    return redirect("/editsummary/"+owner)
 
 
 def Slideshow(request):

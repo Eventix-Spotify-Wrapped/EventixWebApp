@@ -13,6 +13,9 @@
     <div class="events">
         <p>This event-organiser held a total of {{Events|length}} events:</p>
 
+    <div class="events">
+        <p>This event-organiser held a total of {{Events|length}} events:</p>
+
         <div class="events__wrapper">
             {% for event in Events %}
             <span class="events__item">{{event}}</span>
@@ -33,6 +36,8 @@
                         <div class="screen__info">
                             <h3 class="h3"> {{card.Name}} </h3>
                             <p>{{card.Text}}</p>
+                            
+                            <div  {%if card.Name == "Start Animation" or card.Name == "End Overview"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                             
                             <div  {%if card.Name == "Start Animation" or card.Name == "End Overview"%} style="pointer-events: none;" {%endif%} class="lightswitch__wrapper">
                                 <span>Don't show</span>
