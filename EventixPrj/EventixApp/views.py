@@ -52,17 +52,20 @@ def Summary2(request, account_id):
     # total_revenue_event = StatsCalculator.StatsCalculate.calculate_total_revenue_event(
     #     list_of_objects, "Data preview 2016")
     event = {
-        "name": GetOrganizerName(wrap),
+        "name": wrap.organizer_name,
         "totalRevenue": GetContext(wrap, "summary-slides/animated-ticket-sale-amount.html"),
         "eventsOrganised": GetContext(wrap, "summary-slides/events-organised.html"),
         "visitorPercentage": GetContext(wrap, "summary-slides/visitor-origins.html"),
-        "totalOfVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
+        "totalOfVisitors": GetContext(wrap, "summary-slides/end-overview.html", 0),
+        "countryMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 1),
+        "cityMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 2),
+        "provinceMostVisitors": GetContext(wrap, "summary-slides/end-overview.html", 3),
         "ticketSaleAmount": GetContext(wrap, "summary-slides/ticket-sale-amount.html"),
         "ticketSalePercentage": GetContext(wrap, "summary-slides/ticket-sale-percentage.html"),
         "averageAgeOfVisitors": GetContext(wrap, "summary-slides/averate-age-visitors.html"),
-        "cityMostVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
-        "provinceMostVisitors": GetContext(wrap, "summary-slides/end-overview.html"),
         "countryMostVisitors": GetContext(wrap, "summary-slides/visitors"),
+        "dayOfMonthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 0),
+        "monthMostTicketSales": GetContext(wrap, "summary-slides/date-most-ticket-sales.html", 1)
     }
 
     # slides = list(cards)
@@ -75,18 +78,14 @@ def Summary2(request, account_id):
     return render(request, "summary2.html", {"event": event, "slides": slides})
 
 
-def GetOrganizerName(wrap):
-    return list(Wrap.objects.filter(wrap=wrap).values)[0]
-
-
-def GetContext(wrap, html_path, contextIndex):
+def GetContext(wrap, html_path, contextIndex=0):
     awesome = Card.objects.filter(wrap=wrap, html_path=html_path)
     if not awesome:
         return None
-    item = list(awesome)[0]
-    if ("|" in item):
-        return item.split('|')[contextIndex]
-    return item
+    context = list(awesome)[0].context
+    if ("|" in context):
+        return context.split('|')[contextIndex]
+    return context
 
 
 def Summary(request):
