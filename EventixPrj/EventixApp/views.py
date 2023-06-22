@@ -272,7 +272,7 @@ def SaveWrap(request):
         'Your Wrap is Ready!',
         f'There is a lot of fun involved! You can view it at {url}',
         'cs.eventix.dev.test@gmail.com',
-        ['andisavauserul@gmail.com'],
+        ['tepa.popescu@gmail.com'],
         fail_silently=False,
     )
 
